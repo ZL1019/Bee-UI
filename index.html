@@ -3,18 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <title>Bee UI</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      --btn-bg:white;
+      --btn-radius: 4px;
+      --btn-font-size: 12px;
+      --btn-line-height: 1.5;
+
+      --btn-color: #515a6e;
+      --btn-color-hover: #57a3f3;
+      --btn-color-active: #2b85e4;
+
+      --btn-border-color: #dcdee2;
+      --btn-border-color-hover: #57a3f3;
+      --btn-border-color-active: #2b85e4;
+
+      --btn-padding-vertial:5px;
+      --btn-padding-horizontal:15px;
+    }
+  </style>
+  <style>
+    .b-button {
+      outline: 0;
+      cursor: pointer;
+      text-align: center;
+      white-space: nowrap;
+      transition: color 0.2s linear,border-color 0.2s linear,background-color 0.2s linear;
+      color: var(--btn-color);
+      font-size: var(--btn-font-size);
+      background-color:var(--btn-bg);
+      border: 1px solid var(--btn-border-color);
+      line-height: var(--btn-line-height);
+      padding: var(--btn-padding-vertial) var(--btn-padding-horizontal);
+      border-radius: var(--btn-radius);
+
+    }
+    .b-button:hover{
+      color: var(--btn-color-hover);
+      border-color: var(--btn-border-color-hover);
+    }
+    .b-button:focus{
+      box-shadow: 0 0 0 2px rgba(45,140,240,.2);
+    }
+    .b-button:active{
+      color: var(--btn-color-active);
+      border-color: var(--btn-border-color-active);
+    }
+  </style>
 </head>
 <body>
 <div id="app">
   {{msg}}
+  <b-button></b-button>
 </div>
 <script src="./node_modules/vue/dist/vue.min.js"></script>
+<script src="./src/button.js"></script>
 <script>
   let app = new Vue({
-    el:'#app',
-    data(){
+    el: '#app',
+    data() {
       return {
-        msg:123
+        msg: 123
       }
     }
   })
