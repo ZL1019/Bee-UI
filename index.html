@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <title>Bee UI</title>
+</head>
+<body>
+<div id="app">
+  {{msg}}
+</div>
+<script src="./node_modules/vue/dist/vue.min.js"></script>
+<script>
+  let app = new Vue({
+    el:'#app',
+    data(){
+      return {
+        msg:123
+      }
+    }
+  })
+</script>
+</body>
+</html>
