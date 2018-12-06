@@ -1,27 +1,88 @@
 <template>
-  <button class="b-btn"
-          :class="{[`b-btn-${type}`]:true}">
-    <slot/>
+  <button :class="{
+              'b-btn':true,
+              'icon-loading':loading,
+              [`b-btn-${type}`]:true,
+              [`icon-${iconPosition}`]:true
+            }"
+            @click="triggerClick">
+    <icon v-if="loading" name="loading" :color="iconColor"></icon>
+    <icon v-else :name="iconName" :color="iconColor"></icon>
+    <slot></slot>
   </button>
 </template>
 
 <script>
+  import icon from './icon'
+
   export default {
     name: "b-button",
+    components: {
+      icon
+    },
     data() {
       return {}
+    },
+    computed: {
+      iconColor() {
+        return this.type !== 'default' ? 'white' : '';
+      }
     },
     props: {
       type: {
         type: String,
         default: 'default'
+      },
+      loading:{
+        type: Boolean,
+        default: false
+      },
+      iconName: {
+        type: String
+      },
+      iconPosition: {
+        type: String,
+        default: 'left',
+        validator(value){
+          let state = ['left','right'].indexOf(value) !== -1;
+          if(!state){
+            console.warn(`b-button prop icon-position not contain:${value},it must be left or right`);
+            return true
+          }else{
+            return true
+          }
+        }
+      },
+    },
+    mounted(){},
+    methods:{
+      triggerClick(){
+        this.$emit('click')
       }
     }
   }
 </script>
 
 <style scoped lang="scss">
+  @keyframes spin{
+    0%{
+      transform: rotate(0deg);
+    }
+    100%{
+      transform: rotate(360deg);
+    }
+  }
+  .b-btn.icon-loading{
+    pointer-events: none;
+    position: relative;
+    .icon{
+      animation: spin 1.5s linear infinite;
+    }
+  }
   .b-btn {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: top;
     outline: 0;
     cursor: pointer;
     text-align: center;
@@ -34,16 +95,46 @@
     line-height: var(--btn-line-height);
     padding: var(--btn-padding-vertial) var(--btn-padding-horizontal);
     border-radius: var(--btn-radius);
+
     &:hover {
       color: var(--btn-color-hover);
       border-color: var(--btn-border-color-hover);
     }
+
     &:focus {
       box-shadow: 0 0 0 2px rgba(45, 140, 240, .2);
     }
+
     &:active {
       color: var(--btn-color-active);
       border-color: var(--btn-border-color-active);
+    }
+  }
+  .b-btn.icon-loading:before{
+    content:'';
+    display: block;
+    position:absolute;
+    z-index: 1;
+    top:-1px;
+    left:-1px;
+    right:-1px;
+    bottom:-1px;
+    background:#fff;
+    border-radius:inherit;
+    pointer-events: none;
+    opacity: 0.3;
+    transition: opacity 0.2s;
+  }
+  .icon-left{
+    .icon{
+      order:0;
+      margin-right:5px;
+    }
+  }
+  .icon-right{
+    .icon{
+      order:1;
+      margin-left:5px;
     }
   }
 
@@ -70,11 +161,13 @@
     background-color: var(--btn-bg-info);
     border-color: var(--btn-border-color-info);
   }
+
   .b-btn-info:hover {
     color: var(--btn-color-info);
     background-color: var(--btn-bg-info-hover);
     border-color: var(--btn-border-color-info-hover);
   }
+
   .b-btn-info:active {
     color: var(--btn-color-info-active);
     background-color: var(--btn-bg-info-active);
@@ -86,18 +179,21 @@
     background-color: var(--btn-bg-success);
     border-color: var(--btn-border-color-success);
   }
+
   .b-btn-success:hover {
     color: var(--btn-color-success);
     background-color: var(--btn-bg-success-hover);
     border-color: var(--btn-border-color-success-hover);
   }
+
   .b-btn-success:active {
     color: var(--btn-color-success-active);
     background-color: var(--btn-bg-success-active);
     border-color: var(--btn-border-color-success-active);
   }
+
   .b-btn-success:focus {
-    box-shadow: 0 0 0 2px rgba(25,190,107,.2);
+    box-shadow: 0 0 0 2px rgba(25, 190, 107, .2);
   }
 </style>
 
