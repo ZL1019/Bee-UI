@@ -2,10 +2,13 @@
   <button :class="{
               'b-btn':true,
               'icon-loading':loading,
+              'btn-disabled':disabled,
+              'btn-circle':circle,
               [`b-btn-${type}`]:true,
-              [`icon-${iconPosition}`]:true
+              [`icon-${iconPosition}`]:true,
             }"
-            @click="triggerClick">
+          :disabled='disabled'
+          @click="triggerClick">
     <icon v-if="loading" name="loading" :color="iconColor"></icon>
     <icon v-else :name="iconName" :color="iconColor"></icon>
     <slot></slot>
@@ -33,7 +36,15 @@
         type: String,
         default: 'default'
       },
-      loading:{
+      disabled: {
+        type: Boolean,
+        default: false
+      },
+      circle: {
+        type: Boolean,
+        default: false
+      },
+      loading: {
         type: Boolean,
         default: false
       },
@@ -43,20 +54,21 @@
       iconPosition: {
         type: String,
         default: 'left',
-        validator(value){
-          let state = ['left','right'].indexOf(value) !== -1;
-          if(!state){
+        validator(value) {
+          let state = ['left', 'right'].indexOf(value) !== -1;
+          if (!state) {
             console.warn(`b-button prop icon-position not contain:${value},it must be left or right`);
             return true
-          }else{
+          } else {
             return true
           }
         }
       },
     },
-    mounted(){},
-    methods:{
-      triggerClick(){
+    mounted() {
+    },
+    methods: {
+      triggerClick() {
         this.$emit('click')
       }
     }
@@ -64,21 +76,23 @@
 </script>
 
 <style scoped lang="scss">
-  @keyframes spin{
-    0%{
+  @keyframes spin {
+    0% {
       transform: rotate(0deg);
     }
-    100%{
+    100% {
       transform: rotate(360deg);
     }
   }
-  .b-btn.icon-loading{
+
+  .b-btn.icon-loading {
     pointer-events: none;
     position: relative;
-    .icon{
+    .icon {
       animation: spin 1.5s linear infinite;
     }
   }
+
   .b-btn {
     display: inline-flex;
     align-items: center;
@@ -110,32 +124,44 @@
       border-color: var(--btn-border-color-active);
     }
   }
-  .b-btn.icon-loading:before{
-    content:'';
+
+  .b-btn.icon-loading:before {
+    content: '';
     display: block;
-    position:absolute;
+    position: absolute;
     z-index: 1;
-    top:-1px;
-    left:-1px;
-    right:-1px;
-    bottom:-1px;
-    background:#fff;
-    border-radius:inherit;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: #fff;
+    border-radius: inherit;
     pointer-events: none;
     opacity: 0.3;
     transition: opacity 0.2s;
   }
-  .icon-left{
-    .icon{
-      order:0;
-      margin-right:5px;
+
+  .icon-left {
+    .icon {
+      order: 0;
+      margin-right: 5px;
     }
   }
-  .icon-right{
-    .icon{
-      order:1;
-      margin-left:5px;
+
+  .icon-right {
+    .icon {
+      order: 1;
+      margin-left: 5px;
     }
+  }
+
+  .btn-disabled {
+    /*pointer-events: none;*/
+    cursor: not-allowed;
+  }
+
+  .btn-circle {
+    border-radius: 50%;
   }
 
   .b-btn-primary {

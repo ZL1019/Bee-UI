@@ -12,7 +12,7 @@
     }
 
     * {
-      box-sizing: border-box
+      box-sizing: border-box;
     }
 
     html {
@@ -82,11 +82,17 @@
 <div id="app">
   <span>Button: </span>
   <b-button @click="download" icon-name="download" :loading="isLoading">Default</b-button>
-  <b-button type="primary" icon-name="set" icon-position="right">Primary</b-button>
-  <b-button type="info" icon-name="search">Information</b-button>
+  <b-button type="primary" icon-name="set" @click="openMsg" icon-position="right">Primary</b-button>
+  <b-button type="info" icon-name="search" @click="openMsg" :disabled="isDisabled">Information</b-button>
   <b-button @click="download" type="success" icon-name="download" :loading="isLoading">Click to Download</b-button>
-  <b-icon name="set" color="#18b566"></b-icon>
-
+  <b-button icon-name="set" type="info"></b-button>
+  <b-button-group>
+    <b-button icon-name="left">left</b-button>
+    <b-button>middle</b-button>
+    <b-button icon-name="right" icon-position="right">right</b-button>
+  </b-button-group>
+  <div id="test"></div>
+  <div id="test2"></div>
 </div>
 <script src="./src/app.js"></script>
 
