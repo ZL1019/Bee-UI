@@ -50,8 +50,23 @@ const expect = chai.expect
   })
   vm.$mount()
   let classList = vm.$el.classList.value;
-  let haveClass = classList.indexOf('b-btn-success') !== -1;
-  expect(haveClass).to.eq(true)
+  let haveType = classList.indexOf('b-btn-success') !== -1;
+  expect(haveType).to.eq(true)
+  vm.$destroy()
+}
+{
+  // circle
+  const Constructor = Vue.extend(Button)
+  const vm = new Constructor({
+    propsData: {
+      circle: true
+    }
+  })
+  vm.$mount()
+  let classList = vm.$el.classList.value;
+  let haveCircle = classList.indexOf('b-btn-circle') !== -1;
+  expect(haveCircle).to.eq(true)
+  vm.$destroy()
 }
 {
   // iconName
@@ -65,6 +80,7 @@ const expect = chai.expect
   let useElement = vm.$el.querySelector('use')
   let href = useElement.getAttribute('xlink:href')
   expect(href).to.eq('#b-left')
+  vm.$destroy()
 }
 {
   // loading
@@ -79,8 +95,21 @@ const expect = chai.expect
   let useElement = vm.$el.querySelector('use')
   let href = useElement.getAttribute('xlink:href')
   expect(href).to.eq('#b-loading')
+  vm.$destroy()
 }
-
+{
+  // disabled
+  const Constructor = Vue.extend(Button)
+  const vm = new Constructor({
+    propsData: {
+      disabled: true,
+    }
+  })
+  vm.$mount()
+  let disabled = vm.$el.disabled
+  expect(disabled).to.eq(true)
+  vm.$destroy()
+}
 {
   // order
   const div = document.createElement('div')
@@ -89,13 +118,14 @@ const expect = chai.expect
   const vm = new Constructor({
     propsData: {
       iconName:'set',
-      iconPosition: 'left',
-    }
+      iconPosition: 'right',
+    },
   })
+  vm.$slots.default = [{'text':'test'}];
   vm.$mount(div)
   let svgElement = vm.$el.querySelector('svg')
   let {order} = window.getComputedStyle(svgElement)
-  expect(order).to.eq('0')
+  expect(order).to.eq('1')
   vm.$el.remove()
   vm.$destroy()
 }
@@ -114,4 +144,5 @@ const expect = chai.expect
   vm.$on('click',spy)
   vm.$el.click()
   expect(spy).to.have.been.called()
+  vm.$destroy()
 }

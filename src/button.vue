@@ -10,7 +10,7 @@
               [`icon-${iconPosition}`]:true,
             }"
           :disabled='disabled'
-          @click="triggerClick">
+          @click="onClick">
     <icon v-if="loading" name="loading" :color="iconColor"></icon>
     <icon v-else :name="iconName" :color="iconColor"></icon>
     <slot></slot>
@@ -28,6 +28,7 @@
     data() {
       return {}
     },
+    mounted(){},
     computed: {
       iconColor() {
         return this.type !== 'default' ? 'white' : '';
@@ -35,9 +36,6 @@
       haveSlot() {
         return this.$slots.default !== undefined
       }
-    },
-    mounted() {
-      console.log(this.$slots.default);
     },
     props: {
       type: {
@@ -63,8 +61,8 @@
         type: String,
         default: 'left',
         validator(value) {
-          let state = ['left', 'right'].indexOf(value) !== -1;
-          if (!state) {
+          let state = ['left', 'right'].indexOf(value) === -1;
+          if (state) {
             console.warn(`b-button prop icon-position not contain:${value},it must be left or right`);
             return true
           } else {
@@ -74,7 +72,7 @@
       },
     },
     methods: {
-      triggerClick() {
+      onClick() {
         this.$emit('click')
       }
     }

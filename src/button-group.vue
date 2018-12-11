@@ -17,7 +17,7 @@
 <style scoped lang="scss">
   .button-group{
     display: inline-flex;
-    >.b-btn{
+    &>.b-btn{
       border-radius:0;
       &:not(first-child){
         margin-left:-1px;
