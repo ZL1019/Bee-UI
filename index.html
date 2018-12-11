@@ -68,6 +68,7 @@
       /*padding*/
       --btn-padding-vertial: 5px;
       --btn-padding-horizontal: 15px;
+      --btn-padding-vertial-icon: 8px;
     }
 
     body {
@@ -85,7 +86,7 @@
   <b-button type="primary" icon-name="set" @click="openMsg" icon-position="right">Primary</b-button>
   <b-button type="info" icon-name="search" @click="openMsg" :disabled="isDisabled">Information</b-button>
   <b-button @click="download" type="success" icon-name="download" :loading="isLoading">Click to Download</b-button>
-  <b-button icon-name="set" type="info"></b-button>
+  <b-button icon-name="set" type="info" circle></b-button>
   <b-button-group>
     <b-button icon-name="left">left</b-button>
     <b-button>middle</b-button>

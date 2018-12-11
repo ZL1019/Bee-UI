@@ -1,9 +1,11 @@
 <template>
   <button :class="{
               'b-btn':true,
-              'icon-loading':loading,
-              'btn-disabled':disabled,
-              'btn-circle':circle,
+              'b-btn-loading':loading,
+              'b-btn-disabled':disabled,
+              'b-btn-circle':circle,
+              'b-btn-onlyIcon':!haveSlot,
+              'b-btn-haveSlot':haveSlot,
               [`b-btn-${type}`]:true,
               [`icon-${iconPosition}`]:true,
             }"
@@ -29,7 +31,13 @@
     computed: {
       iconColor() {
         return this.type !== 'default' ? 'white' : '';
+      },
+      haveSlot() {
+        return this.$slots.default !== undefined
       }
+    },
+    mounted() {
+      console.log(this.$slots.default);
     },
     props: {
       type: {
@@ -65,8 +73,6 @@
         }
       },
     },
-    mounted() {
-    },
     methods: {
       triggerClick() {
         this.$emit('click')
@@ -85,9 +91,10 @@
     }
   }
 
-  .b-btn.icon-loading {
+  .b-btn.b-btn-loading {
     pointer-events: none;
     position: relative;
+
     .icon {
       animation: spin 1.5s linear infinite;
     }
@@ -110,9 +117,17 @@
     padding: var(--btn-padding-vertial) var(--btn-padding-horizontal);
     border-radius: var(--btn-radius);
 
+    .icon {
+      transition: fill 0.2s linear;
+    }
+
     &:hover {
       color: var(--btn-color-hover);
       border-color: var(--btn-border-color-hover);
+
+      .icon {
+        fill: var(--btn-border-color-hover);
+      }
     }
 
     &:focus {
@@ -125,7 +140,7 @@
     }
   }
 
-  .b-btn.icon-loading:before {
+  .b-btn.b-btn-loading:before {
     content: '';
     display: block;
     position: absolute;
@@ -141,28 +156,34 @@
     transition: opacity 0.2s;
   }
 
-  .icon-left {
+  .b-btn-onlyIcon.b-btn {
+    padding: var(--btn-padding-vertial-icon) var(--btn-padding-horizontal);
+  }
+
+  .b-btn-onlyIcon.b-btn.b-btn-circle {
+    border-radius: 50%;
+    padding: var(--btn-padding-vertial-icon) var(--btn-padding-vertial-icon);
+  }
+
+  .icon-left.b-btn-haveSlot {
     .icon {
       order: 0;
       margin-right: 5px;
     }
   }
 
-  .icon-right {
+  .icon-right.b-btn-haveSlot {
     .icon {
       order: 1;
       margin-left: 5px;
     }
   }
 
-  .btn-disabled {
+  .b-btn-disabled {
     /*pointer-events: none;*/
     cursor: not-allowed;
   }
 
-  .btn-circle {
-    border-radius: 50%;
-  }
 
   .b-btn-primary {
     color: var(--btn-color-primary);
