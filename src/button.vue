@@ -1,5 +1,6 @@
 <template>
   <button :class="{
+              'test2':true,
               'b-btn':true,
               'b-btn-loading':loading,
               'b-btn-disabled':disabled,
