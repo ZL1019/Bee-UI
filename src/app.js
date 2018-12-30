@@ -1,11 +1,13 @@
 import Vue from 'vue'
-import Button from './button'
 import Icon from './icon'
+import Button from './button'
 import ButtonGroup from './button-group'
+import Input from './input'
 
-Vue.component('b-button', Button);
 Vue.component('b-icon', Icon);
+Vue.component('b-button', Button);
 Vue.component('b-button-group', ButtonGroup);
+Vue.component('b-input', Input);
 
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
@@ -18,7 +20,9 @@ new Vue({
   data() {
     return {
       isLoading: false,
-      isDisabled: true
+      isDisabled: true,
+      msg:0,
+      xxx:2
     }
   },
   methods: {

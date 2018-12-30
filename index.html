@@ -2,7 +2,7 @@
 <html lang="zh-Hans">
 <head>
   <meta charset="UTF-8">
-  <title>Bee UI</title>
+  <title>Bear UI</title>
   <link rel="icon" href="./img/bear4.png">
   <style lang="scss">
     * {
@@ -80,18 +80,31 @@
 </head>
 <body>
 <div id="app">
-  <span>Button: </span>
-  <b-button icon-name="download" icon-position="right">test</b-button>
-  <b-button @click="download" icon-name="download" :loading="isLoading">Default</b-button>
-  <b-button type="primary" icon-name="set" @click="openMsg" icon-position="right">Primary</b-button>
-  <b-button type="info" icon-name="search" @click="openMsg" :disabled="isDisabled">Information</b-button>
-  <b-button @click="download" type="success" icon-name="download" :loading="isLoading">Click to Download</b-button>
-  <b-button icon-name="set" type="info" circle></b-button>
-  <b-button-group>
-    <b-button icon-name="left">left</b-button>
-    <b-button>middle</b-button>
-    <b-button icon-name="right" icon-position="right">right</b-button>
-  </b-button-group>
+
+  <div class="inputs" style="margin:30px 0; vertical-align: middle;">
+    <span style="margin-right:20px;">Input: </span>
+    <b-input :clearable="true" v-model="msg" type="password"></b-input>
+    <b-input :clearable="true" v-model="msg" type="password2"></b-input>
+    <b-input :clearable="true" v-model="msg"></b-input>
+    <b-input :clearable="true" type="textarea" :rows="5" :autosize="{minRows:2,maxRows:null}" v-model="msg"></b-input>
+    {{msg}}
+    <button @click="msg+=1">add</button>
+  </div>
+
+  <div class="buttons">
+    <span style="margin-right:20px;">Button: </span>
+    <b-button @click="download" icon-name="download" :loading="isLoading">Default</b-button>
+    <b-button type="primary" icon-name="set" @click="openMsg" icon-position="right">Primary</b-button>
+    <b-button type="info" icon-name="search" @click="openMsg" :disabled="isDisabled">Information</b-button>
+    <b-button @click="download" type="success" icon-name="download" :loading="isLoading">Click to Download</b-button>
+    <b-button icon-name="set" type="info" circle></b-button>
+    <b-button-group>
+      <b-button icon-name="left">left</b-button>
+      <b-button>middle</b-button>
+      <b-button icon-name="right" icon-position="right">right</b-button>
+    </b-button-group>
+  </div>
+
   <div id="test"></div>
   <div id="test2"></div>
 </div>

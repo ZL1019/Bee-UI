@@ -1,17 +1,16 @@
 <template>
   <button :class="{
-              'test2':true,
               'b-btn':true,
+              'b-btn-circle':circle,
+               [`b-btn-${type}`]:true,
               'b-btn-loading':loading,
               'b-btn-disabled':disabled,
-              'b-btn-circle':circle,
-              'b-btn-onlyIcon':!haveSlot,
               'b-btn-haveSlot':haveSlot,
-              [`b-btn-${type}`]:true,
+              'b-btn-onlyIcon':!haveSlot,
               [`icon-${iconPosition}`]:true,
             }"
           :disabled='disabled'
-          @click="onClick">
+          @click="$emit('click')" >
     <icon v-if="loading" name="loading" :color="iconColor"></icon>
     <icon v-else :name="iconName" :color="iconColor"></icon>
     <slot></slot>
@@ -29,7 +28,6 @@
     data() {
       return {}
     },
-    mounted(){},
     computed: {
       iconColor() {
         return this.type !== 'default' ? 'white' : '';
@@ -65,18 +63,11 @@
           let state = ['left', 'right'].indexOf(value) === -1;
           if (state) {
             console.warn(`b-button prop icon-position not contain:${value},it must be left or right`);
-            return true
-          } else {
-            return true
           }
+          return true
         }
       },
     },
-    methods: {
-      onClick() {
-        this.$emit('click')
-      }
-    }
   }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <svg v-if="name" class="icon" :style="{fill:`${color}`}">
+  <svg @click="$emit('click')" v-if="name" class="icon" :style="{fill:`${color}`}">
     <use :xlink:href="`#b-${name}`"></use>
   </svg>
 </template>
@@ -7,7 +7,7 @@
 <script>
   import './svg.js'
   export default {
-    name: "icon",
+    name: "b-icon",
     props: {
       name: {
         type: String,
@@ -15,7 +15,7 @@
       color: {
         type: String,
       }
-    }
+    },
   }
 </script>
 
