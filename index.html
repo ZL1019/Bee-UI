@@ -21,6 +21,7 @@
       /*bg*/
       /*default*/
       --btn-bg: #fff;
+      
       /*primary*/
       --btn-bg-primary: #2d8cf0;
       --btn-bg-primary-hover: #57a3f3;
@@ -80,6 +81,48 @@
 </head>
 <body>
 <div id="app">
+  <!-- <article></article>
+  <div class="test123">
+    <dad></dad>
+  </div> -->
+
+  <div class="grid" style="margin:30px; vertical-align: middle; border:1px solid #eee;">
+    <div style="margin-bottom:20px;">Grid: </div>
+    <b-row gutter=20 style='margin-bottom: 20px;'>
+      <b-col><div style='background-color:#2db7f5;'>col 1</div></b-col>
+      <b-col><div style='background-color:#2db7f5;'>col 2</div></b-col>
+    </b-row>
+    <b-row gutter=20 style='margin-bottom: 20px;'>
+      <b-col span="2" ><div style='background-color:#2db7f5;'>col 1</div></b-col>
+      <b-col span="4" ><div style='background-color:#2db7f5;'>col 2</div></b-col>
+      <b-col span="6" ><div style='background-color:#2db7f5;'>col 3</div></b-col>
+    </b-row>
+    <b-row gutter=20 style='margin-bottom: 20px;'>
+      <b-col span="4"><div style='background-color:#2db7f5;'>col 1</div></b-col>
+      <b-col span="4"><div style='background-color:#2db7f5;'>col 2</div></b-col>
+      <b-col span="4"><div style='background-color:#2db7f5;'>col 3</div></b-col>
+      <b-col span="4"><div style='background-color:#2db7f5;'>col 4</div></b-col>
+      <b-col span="4"><div style='background-color:#2db7f5;'>col 5</div></b-col>
+      <b-col span="4"><div style='background-color:#2db7f5;'>col 6</div></b-col>
+    </b-row>
+    <b-row style='margin-bottom: 20px;'>
+      <b-col span="4" offset=2>
+        <div style='background-color:#2db7f5;'>col 1</div>
+      </b-col>
+      <b-col span="2" offset=2>
+        <div style='background-color:#2db7f5;'>col 2</div>
+      </b-col>
+      <b-col span="2" offset=2>
+        <div style='background-color:#2db7f5;'>col 3</div>
+      </b-col>
+      <b-col span="2" offset=1>
+        <div style='background-color:#2db7f5;'>col 4</div>
+      </b-col>
+      <b-col span="4" offset=3>
+        <div style='background-color:#2db7f5;'>col 5</div>
+      </b-col>
+    </b-row>
+  </div>
 
   <div class="inputs" style="margin:30px 0; vertical-align: middle;">
     <span style="margin-right:20px;">Input: </span>

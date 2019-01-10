@@ -3,16 +3,23 @@ import Icon from './icon'
 import Button from './button'
 import ButtonGroup from './button-group'
 import Input from './input'
+import Row from './row'
+import Col from './col'
+import Wrapper from './test/wrapper'
+import dad from './test/dad'
 
 Vue.component('b-icon', Icon);
 Vue.component('b-button', Button);
 Vue.component('b-button-group', ButtonGroup);
 Vue.component('b-input', Input);
+Vue.component('b-row', Row)
+Vue.component('b-col', Col)
+Vue.component('b-wrapper', Wrapper)
+Vue.component('dad', dad)
 
-import iView from 'iview';
-import 'iview/dist/styles/iview.css';
-
-Vue.use(iView);
+// import iView from 'iview';
+// import 'iview/dist/styles/iview.css';
+//Vue.use(iView);
 
 
 new Vue({
@@ -21,8 +28,8 @@ new Vue({
     return {
       isLoading: false,
       isDisabled: true,
-      msg:0,
-      xxx:2
+      msg: 0,
+      xxx: 2
     }
   },
   methods: {
@@ -40,6 +47,7 @@ new Vue({
 
 import chai from 'chai'
 import spies from 'chai-spies'
+
 chai.use(spies)
 const expect = chai.expect
 
@@ -121,11 +129,11 @@ const expect = chai.expect
   const Constructor = Vue.extend(Button)
   const vm = new Constructor({
     propsData: {
-      iconName:'set',
+      iconName: 'set',
       iconPosition: 'right',
     },
   })
-  vm.$slots.default = [{'text':'test'}];
+  vm.$slots.default = [{'text': 'test'}];
   vm.$mount(div)
   let svgElement = vm.$el.querySelector('svg')
   let {order} = window.getComputedStyle(svgElement)
@@ -143,9 +151,10 @@ const expect = chai.expect
       loading: true
     }
   })
-  let spy = chai.spy(function(){})
+  let spy = chai.spy(function () {
+  })
   vm.$mount()
-  vm.$on('click',spy)
+  vm.$on('click', spy)
   vm.$el.click()
   expect(spy).to.have.been.called()
   vm.$destroy()

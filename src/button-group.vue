@@ -7,7 +7,7 @@
 <script>
   import button from './button.vue'
   export default {
-    name: "button-group",
+    name: "bear-button-group",
     components:{
       'b-button':button
     }

@@ -7,7 +7,7 @@
 <script>
   import './svg.js'
   export default {
-    name: "b-icon",
+    name: "bear-icon",
     props: {
       name: {
         type: String,

@@ -1,14 +1,5 @@
 <template>
-  <button :class="{
-              'b-btn':true,
-              'b-btn-circle':circle,
-               [`b-btn-${type}`]:true,
-              'b-btn-loading':loading,
-              'b-btn-disabled':disabled,
-              'b-btn-haveSlot':haveSlot,
-              'b-btn-onlyIcon':!haveSlot,
-              [`icon-${iconPosition}`]:true,
-            }"
+  <button :class=classes
           :disabled='disabled'
           @click="$emit('click')" >
     <icon v-if="loading" name="loading" :color="iconColor"></icon>
@@ -21,7 +12,7 @@
   import icon from './icon'
 
   export default {
-    name: "b-button",
+    name: "bear-button",
     components: {
       icon
     },
@@ -34,6 +25,18 @@
       },
       haveSlot() {
         return this.$slots.default !== undefined
+      },
+      classes(){
+        return {
+          'b-btn':true,
+          'b-btn-circle':this.circle,
+          [`b-btn-${this.type}`]:true,
+          'b-btn-loading':this.loading,
+          'b-btn-disabled':this.disabled,
+          'b-btn-haveSlot':this.haveSlot,
+          'b-btn-onlyIcon':!this.haveSlot,
+          [`icon-${this.iconPosition}`]:true,     
+        }
       }
     },
     props: {

@@ -3,7 +3,7 @@
     <textarea
         :rows = rows
         ref ="textarea"
-        :value = value
+        :value = value   
         class ="b-textarea"
         :autosize = autosize
         :readonly = readonly
@@ -13,21 +13,17 @@
         :placeholder = placeholder
         @input="$emit('input', $event.target.value)"></textarea>
     <input
-          v-else
-          ref = "input"
-          :type = "type"
-          :value = value
-          :readonly = readonly
-          :disabled = disabled
-          :placeholder = placeholder
-          :class="{
-            'b-input-error': error,
-            'b-input-disabled':disabled,
-            'b-input-clearable':showClearable
-          }"
-          @input = "$emit('input', $event.target.value)"
+        v-else
+        ref = "input"
+        :type = "type"
+        :value = value
+        :readonly = readonly
+        :disabled = disabled
+        :placeholder = placeholder
+        :class="classes"
+        @input = "$emit('input', $event.target.value)"
       >
-    <icon @click="clearValue"  ref="icon" class="b-input-icon" name="set"></icon>
+    <icon @click="clearValue"  ref="icon" class="b-input-icon" name="set" ></icon>
   </div>
 </template>
 
@@ -36,7 +32,7 @@
   import calcTextareaHeight from './calcTextareaHeight';
 
   export default {
-    name: "b-input",
+    name: "bear-input",
     components:{
       icon
     },
@@ -93,6 +89,13 @@
       showClearable(){
         return this.clearable && !!(this.value+'') && !this.type
       },
+      classes () {
+        return {
+          'b-input-error': this.error,
+          'b-input-disabled':this.disabled,
+          'b-input-clearable':this.showClearable
+        }
+      }
     },
     methods:{
       clearValue() {

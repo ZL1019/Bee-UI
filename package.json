@@ -25,6 +25,7 @@
   "homepage": "https://github.com/ZL1019/Bee-UI#readme",
   "dependencies": {
     "iview": "^3.1.5",
+    "package": "^1.0.1",
     "vue": "^2.5.17",
     "vue-hot-reload-api": "^2.3.1"
   },
