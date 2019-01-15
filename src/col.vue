@@ -1,14 +1,9 @@
-<template>
-  <div :style="colStyle" :class="colClasses">
-    <slot></slot>
-  </div>
-</template>
-
 <script>
-function validator (value,msg) {
+function validator (value, msg) {
   let keys = Object.keys(value)
   if (!keys.includes('span') && !keys.includes('offset')) {
     console.warn(`col prop ${msg}(object) must have one key of [span,offset] at least!`)
+    return false
   }
   return true
 };
@@ -20,6 +15,10 @@ export default {
     }
   },
   props: {
+    tag: {
+      type: String,
+      default: 'div'
+    },
     xs: {
       type: Object,
       validator
@@ -42,8 +41,14 @@ export default {
     offset: {
       type: [String, Number],
     },
-    className:{
-      type:String
+  },
+  methods: {
+    createClass (obj, prefix = '') {
+      if (!obj) { return [] }
+      let array = []
+      if (obj.span) { array.push(`b-col-${prefix}${obj.span}`) }
+      if (obj.offset) { array.push(`b-col-${prefix}offset-${obj.offset}`) }
+      return array
     }
   },
   computed: {
@@ -54,36 +59,51 @@ export default {
         paddingRight: gutter / 2 + 'px'
       }
     },
+    // colClasses () {
+    //   let {
+    //     span,
+    //     offset,
+    //     xs: { span: xsSpan, offset: xsOffset } = {},
+    //     sm: { span: smSpan, offset: smOffset } = {},
+    //     md: { span: mdSpan, offset: mdOffset } = {},
+    //     lg: { span: lgSpan, offset: lgOffset } = {},
+    //   } = this
+    //   return {
+    //     'b-col': true,
+    //     [`b-col-${span}`]: span,
+    //     [`b-col-offset-${offset}`]: offset,
+    //     [`b-col-xs-${xsSpan}`]: xsSpan,
+    //     [`b-col-sm-${smSpan}`]: smSpan,
+    //     [`b-col-md-${mdSpan}`]: mdSpan,
+    //     [`b-col-lg-${lgSpan}`]: lgSpan,
+    //     [`b-col-xs-offset-${xsOffset}`]: xsOffset,
+    //     [`b-col-sm-offset-${smOffset}`]: smOffset,
+    //     [`b-col-md-offset-${mdOffset}`]: mdOffset,
+    //     [`b-col-lg-offset-${lgOffset}`]: lgOffset
+    //   }
+    // },
     colClasses () {
-      let {
-        span,
-        offset,
-        className,
-        xs: { span: xsSpan, offset: xsOffset } = {},
-        sm: { span: smSpan, offset: smOffset } = {},
-        md: { span: mdSpan, offset: mdOffset } = {},
-        lg: { span: lgSpan, offset: lgOffset } = {},
-      } = this
+      let { span, offset, xs, sm, md, lg, createClass } = this
       return [
         'b-col',
-        className && `${className}`,
-        span && `b-col-${span}`,
-        offset && `b-offset-${offset}`,
-        xsSpan && `b-xs-span-${xsSpan}`,
-        smSpan && `b-sm-span-${smSpan}`,
-        mdSpan && `b-md-span-${mdSpan}`,
-        lgSpan && `b-lg-span-${lgSpan}`,
-        xsOffset && `b-xs-offset-${xsOffset}`,
-        smOffset && `b-sm-offset-${smOffset}`,
-        mdOffset && `b-md-offset-${mdOffset}`,
-        lgOffset && `b-lg-offset-${lgOffset}`
+        ...createClass(xs, 'xs-'),
+        ...createClass(sm, 'sm-'),
+        ...createClass(md, 'md-'),
+        ...createClass(lg, 'lg-'),
+        ...createClass({ span, offset })
       ]
     }
-  }
+  },
+  render (h) {
+    return h(this.tag, {
+      style: this.colStyle,
+      class: this.colClasses,
+    }, this.$slots.default)
+  },
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .b-col {
   width: 100%;
   @for $n from 1 through 24 {
@@ -92,54 +112,54 @@ export default {
     }
   }
   @for $m from 1 through 24 {
-    &.b-offset-#{$m} {
+    &.b-col-offset-#{$m} {
       margin-left: ($m/24) * 100%;
     }
   }
   @media screen and (min-width: 0px) {
     @for $n from 1 through 24 {
-      &.b-xs-span-#{$n} {
+      &.b-col-xs-#{$n} {
         width: ($n/24) * 100%;
       }
     }
     @for $m from 1 through 24 {
-      &.b-xs-offset-#{$m} {
+      &.b-col-xs-offset-#{$m} {
         margin-left: ($m/24) * 100%;
       }
     }
   }
   @media screen and (min-width: 768px) {
     @for $n from 1 through 24 {
-      &.b-sm-span-#{$n} {
+      &.b-col-sm-#{$n} {
         width: ($n/24) * 100%;
       }
     }
     @for $m from 1 through 24 {
-      &.b-sm-offset-#{$m} {
+      &.b-col-sm-offset-#{$m} {
         margin-left: ($m/24) * 100%;
       }
     }
   }
   @media screen and (min-width: 992px) {
     @for $n from 1 through 24 {
-      &.b-md-span-#{$n} {
+      &.b-col-md-#{$n} {
         width: ($n/24) * 100%;
       }
     }
     @for $m from 1 through 24 {
-      &.b-md-offset-#{$m} {
+      &.b-col-md-offset-#{$m} {
         margin-left: ($m/24) * 100%;
       }
     }
   }
   @media screen and (min-width: 1200px) {
     @for $n from 1 through 24 {
-      &.b-lg-span-#{$n} {
+      &.b-col-lg-#{$n} {
         width: ($n/24) * 100%;
       }
     }
     @for $m from 1 through 24 {
-      &.b-lg-offset-#{$m} {
+      &.b-col-lg-offset-#{$m} {
         margin-left: ($m/24) * 100%;
       }
     }

@@ -1,34 +1,30 @@
-<template>
-  <div class="b-row" :style='rowStyle' :class='rowClasses'>
-    <slot></slot>
-  </div>
-</template>
-
 <script>
 export default {
   name: "bear-row",
   props: {
+    tag: {
+      type: String,
+      default: 'div'
+    },
     gutter: {
       type: [String, Number]
     },
-    justify:{
+    justify: {
       type: String,
-      validator(value){
-        let valueArray = ['start','end','center','space-around','space-between']
-        if(valueArray.indexOf(value) === -1){
-          console.warn(`b-row's prop justify must be one of [${valueArray}]`)
-        }
-        return true
+      validator (value) {
+        let valueArray = ['start', 'end', 'center', 'around', 'between']
+        let res = valueArray.includes(value)
+        res || console.warn(`b-row's prop justify must be one of [${valueArray}]`)
+        return res
       }
     },
-    align:{
+    align: {
       type: String,
-      validator(value){
-        let valueArray = ['top','middle','bottom']
-        if(valueArray.indexOf(value) === -1){
-          console.warn(`b-row's prop justify must be one of [${valueArray}]`)
-        }
-        return true
+      validator (value) {
+        let valueArray = ['top', 'middle', 'bottom']
+        let res = valueArray.includes(value)
+        res || console.warn(`b-row's prop justify must be one of [${valueArray}]`)
+        return res
       }
     },
   },
@@ -46,43 +42,49 @@ export default {
       }
     },
     rowClasses () {
-      let {justify,align} = this
-      return [
-        justify && `b-justify-${justify}`,
-        align && `b-align-${align}`
-      ]
+      let { justify, align } = this;
+      return {
+        [`b-align-${align}`]: align,
+        [`b-justify-${justify}`]: justify,
+      }
     }
-  }
+  },
+  render (h) {
+    return h(this.tag, {
+      style: this.rowStyle,
+      class: { 'b-row': true, ...this.rowClasses }
+    }, this.$slots.default)
+  },
 }
 </script>
 
-<style scoped lang="scss">
+<style  lang="scss">
 .b-row {
   display: flex;
   flex-wrap: wrap;
 }
-.b-justify-center{
-  justify-content: center;
-}
-.b-justify-start{
-  justify-content: flex-start;
-}
-.b-justify-end{
-  justify-content: flex-end;
-}
-.b-justify-around{
-  justify-content: space-around;
-}
-.b-justify-between{
-  justify-content: space-between;
-}
-.b-align-top{
+.b-align-top {
   align-items: flex-start;
 }
-.b-align-middle{
+.b-align-middle {
   align-items: center;
 }
-.b-align-bottom{
+.b-align-bottom {
   align-items: flex-end;
+}
+.b-justify-center {
+  justify-content: center;
+}
+.b-justify-start {
+  justify-content: flex-start;
+}
+.b-justify-end {
+  justify-content: flex-end;
+}
+.b-justify-around {
+  justify-content: space-around;
+}
+.b-justify-between {
+  justify-content: space-between;
 }
 </style>
