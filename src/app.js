@@ -5,8 +5,6 @@ import ButtonGroup from './button-group'
 import Input from './input'
 import Row from './row'
 import Col from './col'
-import Wrapper from './test/wrapper'
-import dad from './test/dad'
 
 Vue.component('b-icon', Icon);
 Vue.component('b-button', Button);
@@ -14,13 +12,12 @@ Vue.component('b-button-group', ButtonGroup);
 Vue.component('b-input', Input);
 Vue.component('b-row', Row)
 Vue.component('b-col', Col)
-Vue.component('b-wrapper', Wrapper)
-Vue.component('dad', dad)
 
+import plugins from '../plugins'
 // import iView from 'iview';
 // import 'iview/dist/styles/iview.css';
 //Vue.use(iView);
-
+Vue.use(plugins)
 
 new Vue({
   el: '#app',
@@ -28,13 +25,20 @@ new Vue({
     return {
       isLoading: false,
       isDisabled: true,
-      msg: 0,
-      xxx: 2
+      msg:123
     }
   },
   methods: {
     openMsg() {
-      alert('tip')
+      this.$message('This is a message !',{
+        autoClose: false,
+        closeButton: {
+          text: 'close',
+          callback: ()=>{
+            console.log('用户关闭 message 之后的回调')
+          }
+        }
+      })
     },
     download() {
       this.isLoading = true;
