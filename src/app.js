@@ -30,13 +30,13 @@ new Vue({
   },
   methods: {
     openMsg() {
-      this.$message('This is a message !',{
-        autoClose: false,
-        closeButton: {
-          text: 'close',
-          callback: ()=>{
-            console.log('用户关闭 message 之后的回调')
-          }
+      this.$message('网络错误!!!',{
+        top: 24,
+        enableHtml: true,
+        duration:100,
+        showClose: true,
+        onClose: ()=> {
+          console.log('用户关闭 message 之后的回调')
         }
       })
     },
