@@ -30,7 +30,7 @@ new Vue({
   },
   methods: {
     openMsg() {
-      this.$message('网络错误!!!',{
+      this.$message(`网络错误!!! ${(Math.random()*100).toFixed(2)}`,{
         top: 24,
         enableHtml: true,
         duration:100,

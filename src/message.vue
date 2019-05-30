@@ -1,5 +1,5 @@
 <template>
-  <div id="xxx" class="b-message" :style="{top:`${this.top}px`}">
+  <div class="b-message" :style="{top:`${this.top}px`}">
     <div class="b-message-content">
       <slot v-if="!enableHtml"></slot>
       <div v-else v-html="$slots.default[0]"></div>
@@ -49,7 +49,10 @@ export default {
   },
   methods: {
     close() {
+      console.log('this: ', this.$el.innerText);
+
       this.$el.remove();
+      this.$emit('close')
       this.$destroy();
       if (this.onClose && typeof this.onClose === 'function') {
         this.onClose()
