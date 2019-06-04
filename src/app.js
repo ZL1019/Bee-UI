@@ -5,6 +5,11 @@ import ButtonGroup from './button-group'
 import Input from './input'
 import Row from './row'
 import Col from './col'
+import Tabs from './tabs'
+import TabsHead from './tabs-head'
+import TabsBody from './tabs-body'
+import TabsItem from './tabs-item'
+import TabsPane from './tabs-pane'
 
 Vue.component('b-icon', Icon);
 Vue.component('b-button', Button);
@@ -12,6 +17,11 @@ Vue.component('b-button-group', ButtonGroup);
 Vue.component('b-input', Input);
 Vue.component('b-row', Row)
 Vue.component('b-col', Col)
+Vue.component('b-tabs', Tabs)
+Vue.component('b-tabs-head', TabsHead)
+Vue.component('b-tabs-body', TabsBody)
+Vue.component('b-tabs-item', TabsItem)
+Vue.component('b-tabs-pane', TabsPane)
 
 import plugins from '../plugins'
 // import iView from 'iview';
@@ -25,10 +35,29 @@ new Vue({
     return {
       isLoading: false,
       isDisabled: true,
-      msg:123
+      msg:123,
+      selectedTab:'item3'
+    }
+  },
+  watch:{
+    selectedTab(newValue,oldValue){
+      console.log('oldValue: ', oldValue);
+      console.log('newValue: ', newValue);
     }
   },
   methods: {
+    tabClick(a,b){
+      console.log('b: ', b);
+      console.log('a: ', a);
+
+    },
+    changeSelected(name){
+      this.selectedTab = name
+    },
+    xxx(){
+      console.log('xxx')
+      console.log(this.selectedTab);
+    },
     openMsg() {
       this.$message(`网络错误!!! ${(Math.random()*100).toFixed(2)}`,{
         top: 24,

@@ -44,13 +44,10 @@ export default {
     }
   },
   mounted() {
-    console.log(this);
     this.autoClose();
   },
   methods: {
     close() {
-      console.log('this: ', this.$el.innerText);
-
       this.$el.remove();
       this.$emit('close')
       this.$destroy();
