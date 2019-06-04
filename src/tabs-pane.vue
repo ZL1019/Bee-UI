@@ -21,6 +21,7 @@ export default {
   },
   mounted() {
     this.eventBus.$on('updateSelected', name => {
+      // console.log('tabs-pane 接收到 updateSelected');
       this.active = this.name === name
     });
   },

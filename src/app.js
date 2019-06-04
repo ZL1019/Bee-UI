@@ -41,14 +41,14 @@ new Vue({
   },
   watch:{
     selectedTab(newValue,oldValue){
-      console.log('oldValue: ', oldValue);
-      console.log('newValue: ', newValue);
+      // console.log('oldValue: ', oldValue);
+      // console.log('newValue: ', newValue);
     }
   },
   methods: {
     tabClick(a,b){
-      console.log('b: ', b);
-      console.log('a: ', a);
+      // console.log('b: ', b);
+      // console.log('a: ', a);
 
     },
     changeSelected(name){

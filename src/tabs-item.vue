@@ -21,6 +21,7 @@ export default {
   },
   mounted() {
     this.eventBus.$on('updateSelected',(name)=>{
+      // console.log('tabs-item 接收到 updateSelected');
       this.active = name === this.name
     })
   },
@@ -34,7 +35,7 @@ export default {
   },
   methods: {
     onClick() {
-      this.eventBus.$emit('updateSelected', this.name);
+      this.eventBus.$emit('updateSelected', this.name, this);
       this.eventBus.$emit('tabItemClick',this) 
     }
   },
