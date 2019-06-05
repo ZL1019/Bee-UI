@@ -1,5 +1,5 @@
 <template>
-  <div class="b-body">
+  <div class="b-tabs-body">
     <slot></slot>
   </div>
 </template>
@@ -11,5 +11,7 @@ export default {
 </script>
 
 <style lang="scss">
-  
+  .b-tabs-body{
+    padding: 16px;
+  }
 </style>

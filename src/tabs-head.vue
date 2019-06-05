@@ -1,6 +1,8 @@
 <template>
   <div ref="tabsHead" class="b-tabs-head">
-    <slot></slot>
+    <div class="tabs-item-container">
+      <slot></slot>
+    </div>
     <div ref="tabsLine" class="b-tabs-line"></div>
   </div>
 </template>
@@ -9,29 +11,37 @@
 export default {
   name: 'bear-tabs-head',
   inject: ['eventBus'],
-  mounted(){
-    this.eventBus.$on('updateSelected',(tabName,tab)=>{
-      let {width,left} = tab.$el.getBoundingClientRect()
-      let {left:headLeft} = this.$refs.tabsHead.getBoundingClientRect()
-
-      console.log('left: ', left);
-      console.log('width: ', width);
-      this.$refs.tabsLine.style.width = `${width}px`
-      this.$refs.tabsLine.style.left = `${left - headLeft}px`
-
-    })
-  }
-}
+  mounted() {
+    this.eventBus.$on('updateSelected', (tabName, tab) => {
+      let { width, left } = tab.$el.getBoundingClientRect();
+      let { left: headLeft } = this.$refs.tabsHead.getBoundingClientRect();
+      this.$refs.tabsLine.style.width = `${width}px`;
+      this.$refs.tabsLine.style.left = `${left - headLeft}px`;
+    });
+  },
+};
 </script>
 
 <style lang="scss">
-  .b-tabs-head{
+.b-tabs-head { 
+  position: relative;
+  .tabs-item-container{
     display: flex;
-    position: relative;
-    .b-tabs-line{
-      position: absolute;
-      bottom:0;
-      border-bottom:2px red solid;
-    }
   }
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: #dcdee2;
+  }
+  .b-tabs-line {
+    position: absolute;
+    bottom: 0;
+    border-bottom: 1px #2d8cf5 solid;
+    transition: all 0.3s ease-in-out;
+    z-index: 1;
+  }
+}
 </style>

@@ -85,20 +85,20 @@
 <body>
   <div id="app">
     <div>
-      {{selectedTab}}
-      <button @click="selectedTab = 'item1'">change</button>
-      <b-tabs v-model="selectedTab" @tab-click='tabClick'>
+      <!-- {{selectedTab}}
+      <button @click="selectedTab = 'item1'">change</button> -->
+      <b-tabs v-model="selectedTab" type='card' @tab-click='tabClick'>
         <b-tabs-head>
           <b-tabs-item name="item1">
-            <b-icon name="download"></b-icon>
-            item1</b-tabs-item>
-          <b-tabs-item :name="2">item2</b-tabs-item>
-          <b-tabs-item name="item3">item3</b-tabs-item>
+            <!-- <b-icon name="download"></b-icon> -->
+            标签一</b-tabs-item>
+          <b-tabs-item :name="2">标签二</b-tabs-item>
+          <b-tabs-item name="item3">标签三</b-tabs-item>
         </b-tabs-head>
         <b-tabs-body>
-          <b-tabs-pane name="item1">pane1</b-tabs-pane>
-          <b-tabs-pane :name="2">pane2</b-tabs-pane>
-          <b-tabs-pane name="item3">pane3</b-tabs-pane>
+          <b-tabs-pane name="item1">内容一</b-tabs-pane>
+          <b-tabs-pane :name="2">内容二</b-tabs-pane>
+          <b-tabs-pane name="item3">内容三</b-tabs-pane>
         </b-tabs-body>
       </b-tabs>
     </div>
@@ -170,7 +170,7 @@
     <div class="inputs" style="margin:30px 0; vertical-align: middle;">
       <span style="margin-right:20px;">Input: </span>
       <b-input :clearable="true" v-model="msg" type="password"></b-input>
-      <b-input :clearable="true" v-model="msg" type="password2"></b-input>
+      <b-input :clearable="true" v-model="msg" type="password"></b-input>
       <b-input :clearable="true" v-model="msg"></b-input>
       <b-input :clearable="true" type="textarea" :rows="5" :autosize="{minRows:2,maxRows:null}" v-model="msg"></b-input>
       {{msg}}

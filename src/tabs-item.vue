@@ -12,6 +12,9 @@ export default {
     name: {
       type: [String , Number],
       required: true
+    },
+    disabled: {
+      type: Boolean
     }
   },
   data(){
@@ -29,7 +32,8 @@ export default {
     classes(){
       return {
         'b-tabs-item': true,
-        'b-tabs-item-active': this.active
+        'b-tabs-item-active': this.active,
+        'b-tabs-item-disabled': this.disabled
       }
     }
   },
@@ -48,13 +52,24 @@ export default {
     cursor: pointer;
     display: flex;
     align-items: center;
+    line-height: 1.5;
     transition: color 0.3s ease-in-out;
     color: #515a6e;
+    
+    &:not(:last-child){
+      margin-right:16px;
+    }
     &:hover{
       color:#57a3f3;
     }
+
   }
   .b-tabs-item-active{
     color: #2d8cf0;;
+  }
+  .b-tabs-item-disabled{
+
+    pointer-events: none;
+    color: #ccc;
   }
 </style>
