@@ -25,19 +25,18 @@ export default {
       show: false,
     };
   },
-  mounted() {},
   methods: {
     locateContent() {
       document.body.appendChild(this.$refs.contentWrapper);
       let { left, top } = this.$refs.triggerWrapper.getBoundingClientRect();
-      this.$refs.contentWrapper.style.left = left + 'px';
-      this.$refs.contentWrapper.style.top = top + 'px';
+      this.$refs.contentWrapper.style.left = left + window.scrollX + 'px';
+      this.$refs.contentWrapper.style.top = top + window.scrollY +'px';
     },
     listenDocument() {
       console.log('++ 新增监听器');
-      document.addEventListener('click', this.eventHandler);
+      document.addEventListener('click', this.onClickDocument);
     },
-    eventHandler(event) {
+    onClickDocument(event) {
       if (
         this.$refs.contentWrapper &&
         (this.$refs.contentWrapper.contains(event.target) ||
@@ -57,7 +56,7 @@ export default {
     close() {
       this.show = false;
       console.log('关闭 ');
-      document.removeEventListener('click', this.eventHandler);
+      document.removeEventListener('click', this.onClickDocument);
       console.log('-- 移除监听器');
     },
     onClick(event) {
