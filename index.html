@@ -76,7 +76,7 @@
       padding: 20px !important;
       display: flex;
       justify-content: center;
-      min-height: 100vh;
+      /* min-height: 100vh; */
     }
 
   </style>
@@ -84,13 +84,18 @@
 
 <body>
   <div id="app">
-    <div>
-      <!-- {{selectedTab}}
-      <button @click="selectedTab = 'item1'">change</button> -->
+    <b-popover  >
+        <template slot="content">
+          888
+        </template>
+      <button>123</button>      
+    </b-popover>
+
+
+    <!-- <div>
       <b-tabs v-model="selectedTab" type='card' @tab-click='tabClick'>
         <b-tabs-head>
           <b-tabs-item name="item1">
-            <!-- <b-icon name="download"></b-icon> -->
             标签一</b-tabs-item>
           <b-tabs-item :name="2">标签二</b-tabs-item>
           <b-tabs-item name="item3">标签三</b-tabs-item>
@@ -101,7 +106,7 @@
           <b-tabs-pane name="item3">内容三</b-tabs-pane>
         </b-tabs-body>
       </b-tabs>
-    </div>
+    </div> -->
 
     <!-- <div class="grid" style="margin:30px; vertical-align: middle; border:1px solid #eee;">
       <div style="margin-bottom:20px;">Grid: </div>
