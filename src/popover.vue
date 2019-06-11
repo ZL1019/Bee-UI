@@ -1,6 +1,6 @@
 <template>
-  <div class="b-popover" @click="onClick" ref="popover">
-    <div ref="contentWrapper" :class="classes" v-if="show">
+  <div ref="popover" class="b-popover">
+    <div v-if="show" ref="contentWrapper" :class="classes" >
       <slot name="content" :close="close"></slot>
     </div>
     <div ref="triggerWrapper" class="b-popover-trigger">
@@ -48,13 +48,20 @@ export default {
     },
   },
   mounted(){
+    const {triggerWrapper} = this.$refs
     if(this.trigger === 'click'){
-      this.$refs.popover.addEventListener('click',this.onClick())
+      triggerWrapper.addEventListener('click',this.onClick)
     }else{
-      this.$refs.popover.addEventListener('mouseenter',this.open)
-      this.$refs.popover.addEventListener('mouseleave',this.close)
-    }
-    
+      triggerWrapper.addEventListener('mouseenter',this.open)
+    }   
+  },
+  destroyed(){
+    const {triggerWrapper} = this.$refs
+    if(this.trigger === 'click'){
+      triggerWrapper.removeEventListener('click',this.onClick)
+    }else{
+      triggerWrapper.removeEventListener('mouseenter',this.open)
+    }   
   },
   methods: {
     locateContent() {
@@ -88,7 +95,7 @@ export default {
       contentWrapper.style.left = positions[this.position].left + 'px';
     },
     listenDocument() {
-      console.log('++ 新增监听器');
+      console.log('++ 新增 click 监听器');
       document.addEventListener('click', this.onClickDocument);
     },
     onClickDocument(event) {
@@ -105,14 +112,24 @@ export default {
       this.show = true;
       this.$nextTick(() => {
         this.locateContent();
-        this.listenDocument();
+        if(this.trigger==='click'){
+          this.listenDocument();
+        }else{
+          console.log('++ 新增 mouseleave 监听器');
+          this.$refs.triggerWrapper.addEventListener('mouseleave',this.close)
+        }       
       });
     },
     close() {
       this.show = false;
       console.log('关闭 ');
-      document.removeEventListener('click', this.onClickDocument);
-      console.log('-- 移除监听器');
+      if(this.trigger==='click'){
+        document.removeEventListener('click', this.onClickDocument);
+        console.log('-- 移除 click 监听器');
+      }else{
+        this.$refs.triggerWrapper.removeEventListener('mouseleave',this.close)
+        console.log('-- 移除 mouseleave 监听器');
+      }    
     },
     onClick(event) {
       if (this.$refs.triggerWrapper.contains(event.target)) {
