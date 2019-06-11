@@ -84,11 +84,30 @@
 
 <body>
   <div id="app">
-    <b-popover  >
+    <b-popover>
         <template slot="content">
-          888
+          内容文字一
         </template>
-      <button>123</button>      
+      <b-button>上方</b-button>      
+    </b-popover>
+    <b-popover position="bottom">
+        <template slot="content">
+          内容文字二
+        </template>
+      <b-button>下方</b-button>      
+    </b-popover>
+    <br>
+    <b-popover position="left">
+        <template slot="content">
+          内容文字三
+        </template>
+      <b-button>左方</b-button>      
+    </b-popover>
+    <b-popover position="right">
+        <template slot="content">
+          内容文字四
+        </template>
+      <b-button>右方</b-button>      
     </b-popover>
 
 
