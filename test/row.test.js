@@ -41,7 +41,7 @@ describe('Row', () => {
       vm.$destroy()
     })
   });
-  it('能设置 justify 属性', (done) => {
+  it('能设置 justify 属性', () => {
     const div = document.createElement('div')
     document.body.appendChild(div)
     const Constructor = Vue.extend(Row)
@@ -52,6 +52,7 @@ describe('Row', () => {
     }).$mount(div)
     const element = vm.$el
     expect(getComputedStyle(element).justifyContent).to.eq('flex-end')
+    vm.$el.remove()
     vm.$destroy()
   })
 })
