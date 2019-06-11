@@ -1,7 +1,7 @@
 <template>
   <div class="b-popover" @click="onClick" ref="popover">
     <div ref="contentWrapper" :class="classes" v-if="show">
-      <slot name="content"></slot>
+      <slot name="content" :close="close"></slot>
     </div>
     <div ref="triggerWrapper" class="b-popover-trigger">
       <slot></slot>
@@ -26,6 +26,13 @@ export default {
         return ['top', 'bottom', 'left', 'right'].indexOf(value) > -1;
       },
     },
+    trigger:{
+      type: String,
+      default: 'click',
+      validator(value){
+        return ['click','hover'].indexOf(value) > -1
+      }
+    }
   },
   data() {
     return {
@@ -40,28 +47,45 @@ export default {
       };
     },
   },
+  mounted(){
+    if(this.trigger === 'click'){
+      this.$refs.popover.addEventListener('click',this.onClick())
+    }else{
+      this.$refs.popover.addEventListener('mouseenter',this.open)
+      this.$refs.popover.addEventListener('mouseleave',this.close)
+    }
+    
+  },
   methods: {
     locateContent() {
-      document.body.appendChild(this.$refs.contentWrapper);
+      const { contentWrapper } = this.$refs;
+      document.body.appendChild(contentWrapper);
       let {
-        left,
         top,
+        left, 
         width,
         height,
       } = this.$refs.triggerWrapper.getBoundingClientRect();
-      if (this.position === 'top') {
-        this.$refs.contentWrapper.style.left = left + window.scrollX + 'px';
-        this.$refs.contentWrapper.style.top = top + window.scrollY + 'px';
-      } else if (this.position === 'bottom') {
-        this.$refs.contentWrapper.style.left = left + window.scrollX + 'px';
-        this.$refs.contentWrapper.style.top = top + window.scrollY + height + 'px';
-      } else if (this.position === 'left') {
-        this.$refs.contentWrapper.style.left = left + window.scrollX + 'px';
-        this.$refs.contentWrapper.style.top = top + window.scrollY + 'px';
-      } else {
-        this.$refs.contentWrapper.style.left = left + window.scrollX + width + 'px';
-        this.$refs.contentWrapper.style.top = top + window.scrollY + 'px';
-      }
+      const positions = {
+        top: {
+          top: top + window.scrollY,
+          left: left + window.scrollX,
+        },
+        left: {
+          top: top + window.scrollY,
+          left: left + window.scrollX,
+        },
+        right: {
+          top: top + window.scrollY,
+          left: left + window.scrollX + width,
+        },
+        bottom: {
+          left: left + window.scrollX,
+          top: top + window.scrollY + height,
+        },
+      };
+      contentWrapper.style.top = positions[this.position].top + 'px';
+      contentWrapper.style.left = positions[this.position].left + 'px';
     },
     listenDocument() {
       console.log('++ 新增监听器');
@@ -110,56 +134,51 @@ export default {
   display: inline-block;
 }
 .b-popover-content {
+  width: 200px;
   position: absolute;
-  
   border-radius: 4px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
   padding: 8px 16px;
-  
+  word-break: break-all;
+  color: #515a6e;
+  &:before {
+    content: '';
+    display: block;
+    border: 6px transparent solid;
+    position: absolute;
+  }
   &.position-top {
     transform: translateY(-100%);
     margin-top: -8px;
     &:before {
-      content: '';
-      display: block;
-      border: 6px transparent solid;
-      border-top-color: white;
-      position: absolute;
       top: 100%;
+      border-bottom:none;
+      border-top-color: white;        
     }
   }
   &.position-bottom {
     margin-top: 8px;
     &:before {
-      content: '';
-      display: block;
-      border: 6px transparent solid;
-      border-bottom-color: white;
-      position: absolute;
       bottom: 100%;
+      border-top:none;
+      border-bottom-color: white;     
     }
   }
   &.position-left {
     margin-left: -8px;
     transform: translateX(-100%);
     &:before {
-      content: '';
-      display: block;
-      border: 6px transparent solid;
-      border-left-color: white;
-      position: absolute;
-      left:100%;
+      left: 100%;
+      border-right:none;
+      border-left-color: white;   
     }
   }
   &.position-right {
     margin-left: 8px;
     &:before {
-      content: '';
-      display: block;
-      border: 6px transparent solid;
-      border-right-color: white;
-      position: absolute;
-      right:100%;
+      right: 100%;
+      border-left:none;
+      border-right-color: white;    
     }
   }
 }
