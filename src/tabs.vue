@@ -34,29 +34,32 @@ export default {
     },
   },
   mounted() {
+    this.eventBus.$on('tabItemClick', currentTab => {
+      this.$emit('tab-click', currentTab);
+    });
     this.eventBus.$on('updateSelected', tabName => {
       // console.log('tabs 接收到 updateSelected');
       this.$emit('input', tabName ? tabName : this.value);
     });
-
-    this.$children.forEach(tabsChild => {
-      if (tabsChild.$options.name === 'bear-tabs-head') {
-        tabsChild.$children.forEach(currentTab => {
-          if (currentTab.name === this.value) {
-            this.eventBus.$emit('updateSelected', this.value, currentTab);
-          }
-        });
-      }
-    });
-
-    this.eventBus.$on('tabItemClick', currentTab => {
-      this.$emit('tab-click', currentTab);
-    });
+    this.checkChildren();
   },
   data() {
     return {
       eventBus: new Vue(),
     };
+  },
+  methods: {
+    checkChildren() {
+      this.$children.forEach(tabsChild => {
+        if (tabsChild.$options.name === 'bear-tabs-head') {
+          tabsChild.$children.forEach(currentTab => {
+            if (currentTab.name === this.value) {
+              this.eventBus.$emit('updateSelected', this.value, currentTab);
+            }
+          });
+        }
+      });
+    },
   },
 };
 </script>
