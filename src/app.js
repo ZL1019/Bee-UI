@@ -42,7 +42,8 @@ new Vue({
       isLoading: false,
       isDisabled: true,
       msg:123,
-      selectedTab:'item3'
+      selectedTab:'item3',
+      selected:'a'
     }
   },
   watch:{

@@ -1,6 +1,6 @@
 <template>
   <div class="b-collapse-item">
-    <div @click="open = !open" :class="classes">
+    <div @click="onClick" :class="classes">
       {{title}}
     </div>
     <div v-show="open" class="b-collapse-item-content">
@@ -12,25 +12,52 @@
 <script>
 export default {
   name: 'bear-collapse-item',
+  inject: ['eventBus'],
   props: {
     title: {
       type: [String, Number],
       required: true,
     },
+    name: {
+      type: [String, Number],
+      required: true,
+    },
   },
-  data(){
+  data() {
     return {
-      open: false
-    }
+      open: false,
+    };
   },
-  computed:{
-    classes(){
+  computed: {
+    classes() {
       return {
-        'b-collapse-item-title':true,
-        'b-collapse-item-title-last':!this.open
+        'b-collapse-item-title': true,
+        'b-collapse-item-title-last': !this.open,
+      };
+    },
+  },
+  mounted() {
+    this.$nextTick(() => {
+      console.log('this.accordion: ', this.accordion);
+    });
+
+    this.eventBus.$on('update:selected', name => {
+      if (this.name !== name && this.accordion) {
+        this.open = false;
+      } else {
+        this.open = true;
       }
-    }
-  }
+    });
+  },
+  methods: {
+    onClick() {
+      if (this.open) {
+        this.open = false;
+      } else {
+        this.eventBus.$emit('update:selected', this.name);
+      }
+    },
+  },
 };
 </script>
 
@@ -38,12 +65,12 @@ export default {
 .b-collapse-item {
   > .b-collapse-item-title {
     cursor: pointer;
-    padding:8px 16px;
+    padding: 8px 16px;
     margin: -1px -1px 0;
     border: 1px solid #dcdee2;
-    color:#666;
+    color: #666;
     font-size: 12px;
-    line-height: 1.5;    
+    line-height: 1.5;
   }
   &:first-child {
     > .b-collapse-item-title {
@@ -53,13 +80,15 @@ export default {
   }
   &:last-child {
     > .b-collapse-item-title.b-collapse-item-title-last {
-      margin-bottom:-1px;
+      margin-bottom: -1px;
       border-bottom-left-radius: 4px;
       border-bottom-right-radius: 4px;
     }
   }
-  > .b-collapse-item-content{
-    padding:8px 16px;
+  > .b-collapse-item-content {
+    color: #515a6e;
+    font-size: 12px;
+    padding: 8px 16px;
   }
 }
 </style>

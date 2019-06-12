@@ -22,7 +22,7 @@
       /*bg*/
       /*default*/
       --btn-bg: #fff;
-      
+
       /*primary*/
       --btn-bg-primary: #2d8cf0;
       --btn-bg-primary-hover: #57a3f3;
@@ -78,36 +78,44 @@
       justify-content: center;
       /* min-height: 100vh; */
     }
-
   </style>
 </head>
 
 <body>
   <div id="app">
+    <b-button @click="selected='c'">change</b-button>
+    {{selected}}
+    <b-collapse :selected.sync="selected" accordion>
+      <b-collapse-item name='a' title="标题一">内容一</b-collapse-item>
+      <b-collapse-item name='b' title="标题二">内容二</b-collapse-item>
+      <b-collapse-item name='c' title="标题三">内容三</b-collapse-item>
+    </b-collapse>
+
     <b-popover>
-        <template slot="content" slot-scope={close}>
-          内容文字一
-          <b-button @click="close">close</b-button>
-        </template>
-      <b-button>上方</b-button>      
+      <template slot="content" slot-scope={close}>
+        内容文字一
+        <b-button @click="close">close</b-button>
+      </template>
+      <b-button>上方</b-button>
     </b-popover>
     <b-popover position="bottom" trigger="hover">
-        <template slot="content">
-          Easily sync your GitHub projects with Travis CI and you’ll be testing your code in minutes! Sign Up The home of open source testing Over 900k open...        </template>
-      <b-button>下方</b-button>      
+      <template slot="content">
+        Easily sync your GitHub projects with Travis CI and you’ll be testing your code in minutes! Sign Up The home of
+        open source testing Over 900k open... </template>
+      <b-button>下方</b-button>
     </b-popover>
     <br>
     <b-popover position="left" trigger="hover" style="margin-top:200px;">
-        <template slot="content">
-          内容文字三
-        </template>
-      <b-button>左方</b-button>      
+      <template slot="content">
+        内容文字三
+      </template>
+      <b-button>左方</b-button>
     </b-popover>
     <b-popover position="right" trigger="hover">
-        <template slot="content">
-          内容文字四
-        </template>
-      <b-button>右方</b-button>      
+      <template slot="content">
+        内容文字四
+      </template>
+      <b-button>右方</b-button>
     </b-popover>
 
 
