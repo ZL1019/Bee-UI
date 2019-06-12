@@ -43,7 +43,7 @@ new Vue({
       isDisabled: true,
       msg:123,
       selectedTab:'item3',
-      selected:'a'
+      selected:['a','b']
     }
   },
   watch:{

@@ -10,13 +10,18 @@ import Vue from 'vue';
 export default {
   name: 'bear-collapse',
   props: {
+    selected: {
+      type: [String, Number, Array],
+    },
     accordion: {
       type: Boolean,
       default: false,
     },
-    selected: {
-      type: [String, Number, Array],
-    },
+  },
+  provide() {
+    return {
+      eventBus: this.eventBus,
+    };
   },
   data() {
     return {
@@ -24,18 +29,25 @@ export default {
     };
   },
   mounted() {
-    this.$children.forEach(vm => vm.accordion = this.accordion)
-  
-    this.eventBus.$on('update:selected', name => {
-      this.$emit('update:selected', name);
-    });
     this.eventBus.$emit('update:selected', this.selected);
-    
-  },
-  provide() {
-    return {
-      eventBus: this.eventBus,
-    };
+
+    this.eventBus.$on('addSelected', name => {
+      let selectedCopy = JSON.parse(JSON.stringify(this.selected));
+      if (this.accordion) {
+        selectedCopy = [];
+      }
+      selectedCopy.push(name);
+      this.eventBus.$emit('update:selected', selectedCopy);
+      this.$emit('update:selected', selectedCopy);
+    });
+
+    this.eventBus.$on('removeSelected', name => {
+      let selectedCopy = JSON.parse(JSON.stringify(this.selected));
+      let index = selectedCopy.indexOf(name);
+      selectedCopy.splice(index, 1);
+      this.eventBus.$emit('update:selected', selectedCopy);
+      this.$emit('update:selected', selectedCopy);
+    });
   },
 };
 </script>

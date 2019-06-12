@@ -14,11 +14,11 @@ export default {
   name: 'bear-collapse-item',
   inject: ['eventBus'],
   props: {
-    title: {
+    name: {
       type: [String, Number],
       required: true,
     },
-    name: {
+    title: {
       type: [String, Number],
       required: true,
     },
@@ -37,24 +37,20 @@ export default {
     },
   },
   mounted() {
-    this.$nextTick(() => {
-      console.log('this.accordion: ', this.accordion);
-    });
-
-    this.eventBus.$on('update:selected', name => {
-      if (this.name !== name && this.accordion) {
-        this.open = false;
-      } else {
+    this.eventBus.$on('update:selected', names => {
+      if (names.indexOf(this.name) > -1) {
         this.open = true;
+      } else {
+        this.open = false;
       }
     });
   },
   methods: {
     onClick() {
       if (this.open) {
-        this.open = false;
+        this.eventBus.$emit('removeSelected', this.name);
       } else {
-        this.eventBus.$emit('update:selected', this.name);
+        this.eventBus.$emit('addSelected', this.name);
       }
     },
   },
