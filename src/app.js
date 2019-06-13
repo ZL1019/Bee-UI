@@ -41,7 +41,9 @@ new Vue({
     return {
       isLoading: false,
       isDisabled: true,
-      msg:123,
+      value1:'',
+      value2:'',
+      value3:'',
       selectedTab:'item3',
       selected:['a','b']
     }

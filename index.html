@@ -198,23 +198,15 @@
         </b-col>
       </b-row>
     </div>
-
-    <div class="inputs" style="margin:30px 0; vertical-align: middle;">
-      <span style="margin-right:20px;">Input: </span>
-      <b-input :clearable="true" v-model="msg" type="password"></b-input>
-      <b-input :clearable="true" v-model="msg" type="password"></b-input>
-      <b-input :clearable="true" v-model="msg"></b-input>
-      <b-input :clearable="true" type="textarea" :rows="5" :autosize="{minRows:2,maxRows:null}" v-model="msg"></b-input>
-      {{msg}}
-      <button @click="msg+=1">add</button>
-    </div>
 -->
+
+
     <div class="buttons">
       <span style="margin-right:20px;">Button: </span>
       <b-button>Default</b-button>
       <b-button disabled>Disabled</b-button>
       <b-button type="primary" icon-name="set" icon-position="right">Primary</b-button>
-      <b-button type="info" icon-name="search" >Information</b-button>
+      <b-button type="info" icon-name="search">Information</b-button>
       <b-button type="success" icon-name="download">Success</b-button>
       <b-button type="info" icon-name="download" @click="download" :loading="isLoading" circle></b-button>
       <b-button-group>
@@ -222,8 +214,15 @@
         <b-button>当前页</b-button>
         <b-button icon-name="right" icon-position="right">下一页</b-button>
       </b-button-group>
-    </div> 
-
+    </div>
+    <div class="inputs" style="margin:30px 0; vertical-align: middle;">
+      <span style="margin-right:20px;">Input: </span>
+      <b-input clearable v-model="value1"></b-input>
+      <b-input clearable v-model="value2" type="password"></b-input>
+      <b-input value="disabled" disabled></b-input>
+      <b-input value="readonly" readonly></b-input>
+      <b-input clearable v-model="value3" type="textarea" :rows="5" :autosize="{minRows:2,maxRows:8}" ></b-input>
+    </div>
   </div>
   <script src="./src/app.js"></script>
 </body>

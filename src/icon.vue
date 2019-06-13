@@ -5,23 +5,23 @@
 </template>
 
 <script>
-  import './svg.js'
-  export default {
-    name: "bear-icon",
-    props: {
-      name: {
-        type: String,
-      },
-      color: {
-        type: String,
-      }
+import './svg.js';
+export default {
+  name: 'bear-icon',
+  props: {
+    name: {
+      type: String,
     },
-  }
+    color: {
+      type: String,
+    },
+  },
+};
 </script>
 
 <style scoped>
-  .icon {
-    width: 1em;
-    height: 1em;
-  }
+.icon {
+  width: 1em;
+  height: 1em;
+}
 </style>
