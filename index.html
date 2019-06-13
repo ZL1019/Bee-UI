@@ -83,13 +83,13 @@
 
 <body>
   <div id="app">
-    <b-button @click="selected='c'">change</b-button>
+    <!-- <b-button @click="selected='c'">change</b-button>
     {{selected}}
     <b-collapse :selected.sync="selected">
       <b-collapse-item name='a' title="标题一">内容 1</b-collapse-item>
       <b-collapse-item name='b' title="标题二">内容 2</b-collapse-item>
       <b-collapse-item name='c' title="标题三">内容 3</b-collapse-item>
-    </b-collapse>
+    </b-collapse> -->
 
     <!-- <b-popover>
       <template slot="content" slot-scope={close}>
@@ -119,7 +119,7 @@
     </b-popover> -->
 
 
-    <div>
+    <!-- <div>
       <b-tabs v-model="selectedTab" type='card' @tab-click='tabClick'>
         <b-tabs-head>
           <b-tabs-item name="item1">
@@ -133,7 +133,7 @@
           <b-tabs-pane name="item3">内容三</b-tabs-pane>
         </b-tabs-body>
       </b-tabs>
-    </div>
+    </div> -->
 
     <!-- <div class="grid" style="margin:30px; vertical-align: middle; border:1px solid #eee;">
       <div style="margin-bottom:20px;">Grid: </div>
@@ -208,23 +208,22 @@
       {{msg}}
       <button @click="msg+=1">add</button>
     </div>
-
+-->
     <div class="buttons">
       <span style="margin-right:20px;">Button: </span>
-      <b-button @click="download" icon-name="download" :loading="isLoading">Default</b-button>
-      <b-button type="primary" icon-name="set" @click="openMsg" icon-position="right">Primary</b-button>
-      <b-button type="info" icon-name="search" @click="openMsg" :disabled="isDisabled">Information</b-button>
-      <b-button @click="download" type="success" icon-name="download" :loading="isLoading">Click to Download</b-button>
-      <b-button icon-name="set" type="info" circle></b-button>
+      <b-button>Default</b-button>
+      <b-button disabled>Disabled</b-button>
+      <b-button type="primary" icon-name="set" icon-position="right">Primary</b-button>
+      <b-button type="info" icon-name="search" >Information</b-button>
+      <b-button type="success" icon-name="download">Success</b-button>
+      <b-button type="info" icon-name="download" @click="download" :loading="isLoading" circle></b-button>
       <b-button-group>
-        <b-button icon-name="left">left</b-button>
-        <b-button>middle</b-button>
-        <b-button icon-name="right" icon-position="right">right</b-button>
+        <b-button icon-name="left">上一页</b-button>
+        <b-button>当前页</b-button>
+        <b-button icon-name="right" icon-position="right">下一页</b-button>
       </b-button-group>
-    </div> -->
+    </div> 
 
-    <div id="test"></div>
-    <div id="test2"></div>
   </div>
   <script src="./src/app.js"></script>
 </body>

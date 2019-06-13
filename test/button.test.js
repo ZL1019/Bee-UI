@@ -12,7 +12,7 @@ describe('Button', () => {
     // expect(Button).be.ok
     expect(Button).to.exist
     // expect(Button).be.not.ok
-    // expect([1,2]).to.deep.eq([1,2])
+    // expect([1,2]).to.deep.eq([1,3])
   });
   it('可以设置icon.', () => {
     const Constructor = Vue.extend(Button)
@@ -24,6 +24,39 @@ describe('Button', () => {
     const useElement = vm.$el.querySelector('use')
     let href = useElement.getAttribute('xlink:href')
     expect(href).to.eq('#b-set')
+    vm.$destroy()
+  })
+  it('可以设置disabled.', () => {
+    const Constructor = Vue.extend(Button)
+    const vm = new Constructor({
+      propsData: {
+        disabled: true
+      }
+    }).$mount()
+    let disabled = vm.$el.getAttribute('disabled')
+    expect(disabled).to.eq('disabled')
+    vm.$destroy()
+  })
+  it('可以设置type.', () => {
+    const Constructor = Vue.extend(Button)
+    const vm = new Constructor({
+      propsData: {
+        type: 'success'
+      }
+    }).$mount()
+    let haveTypeClass = vm.$el.className.indexOf('b-btn-success') > -1
+    expect(haveTypeClass).to.eq(true)
+    vm.$destroy()
+  })
+  it('可以设置 circle.', () => {
+    const Constructor = Vue.extend(Button)
+    const vm = new Constructor({
+      propsData: {
+        circle: true
+      }
+    }).$mount()
+    let haveCircleClass = vm.$el.className.indexOf('b-btn-circle') > -1
+    expect(haveCircleClass).to.eq(true)
     vm.$destroy()
   })
   it('可以设置loading.', () => {
