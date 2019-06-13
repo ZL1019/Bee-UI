@@ -11,7 +11,7 @@ export default {
   name: 'bear-collapse',
   props: {
     selected: {
-      type: [String, Number, Array],
+      type: Array,
     },
     accordion: {
       type: Boolean,
@@ -29,25 +29,30 @@ export default {
     };
   },
   mounted() {
-    this.eventBus.$emit('update:selected', this.selected);
-
-    this.eventBus.$on('addSelected', name => {
-      let selectedCopy = JSON.parse(JSON.stringify(this.selected));
-      if (this.accordion) {
-        selectedCopy = [];
-      }
-      selectedCopy.push(name);
-      this.eventBus.$emit('update:selected', selectedCopy);
+    this.eventBus.$emit('updateSelected', this.selected);
+    this.listenAddSelected();
+    this.listenRemoveSelected();
+  },
+  methods: {
+    listenAddSelected() {
+      this.eventBus.$on('addSelected', name => {
+        let selectedCopy = JSON.parse(JSON.stringify(this.selected));
+        this.accordion ? (selectedCopy = []) : '';
+        selectedCopy.push(name);
+        this.emitUpdateSelected(selectedCopy);
+      });
+    },
+    listenRemoveSelected() {
+      this.eventBus.$on('removeSelected', name => {
+        let selectedCopy = JSON.parse(JSON.stringify(this.selected));
+        selectedCopy.splice(selectedCopy.indexOf(name), 1);
+        this.emitUpdateSelected(selectedCopy);
+      });
+    },
+    emitUpdateSelected(selectedCopy) {
       this.$emit('update:selected', selectedCopy);
-    });
-
-    this.eventBus.$on('removeSelected', name => {
-      let selectedCopy = JSON.parse(JSON.stringify(this.selected));
-      let index = selectedCopy.indexOf(name);
-      selectedCopy.splice(index, 1);
-      this.eventBus.$emit('update:selected', selectedCopy);
-      this.$emit('update:selected', selectedCopy);
-    });
+      this.eventBus.$emit('updateSelected', selectedCopy);     
+    },
   },
 };
 </script>

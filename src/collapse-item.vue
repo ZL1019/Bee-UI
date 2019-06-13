@@ -1,7 +1,8 @@
 <template>
   <div class="b-collapse-item">
     <div @click="onClick" :class="classes">
-      {{title}}
+      <icon name="right" :class="iconClasses"></icon>
+      <span>{{title}}</span>  
     </div>
     <div v-show="open" class="b-collapse-item-content">
       <slot></slot>
@@ -10,8 +11,12 @@
 </template>
 
 <script>
+
+import icon from './icon'
+
 export default {
   name: 'bear-collapse-item',
+  components:{ icon },
   inject: ['eventBus'],
   props: {
     name: {
@@ -35,9 +40,15 @@ export default {
         'b-collapse-item-title-last': !this.open,
       };
     },
+    iconClasses(){
+      return {
+        'b-collapse-icon': true,
+        'b-collapse-icon-open': this.open
+      }
+    }
   },
   mounted() {
-    this.eventBus.$on('update:selected', names => {
+    this.eventBus.$on('updateSelected', names => {
       if (names.indexOf(this.name) > -1) {
         this.open = true;
       } else {
@@ -67,6 +78,17 @@ export default {
     color: #666;
     font-size: 12px;
     line-height: 1.5;
+    display: flex;
+    align-items: center;
+    .b-collapse-icon{
+      transition: transform 0.1s ease-in-out;
+    }
+    .b-collapse-icon-open{
+      transform: rotate(90deg);
+    }
+    span{
+      margin-left:8px;
+    }
   }
   &:first-child {
     > .b-collapse-item-title {
