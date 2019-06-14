@@ -55,8 +55,23 @@ new Vue({
     }
   },
   methods: {
-    xxx(){
-      console.log('xxx');
+    focus(){
+      this.$refs.input.focus()
+    },
+    inputKeyup(value){
+      console.log('keyup: ', value);
+    },
+    inputBlur(value){
+      console.log('blur: ', value);
+    },
+    inputFocus(value){
+      console.log('focus: ', value);
+    },
+    inputEnter(value){
+      console.log('enter: ', value);
+    },
+    inputChange(value){
+      console.log('change: ', value);
     },
     tabClick(a,b){
       // console.log('b: ', b);

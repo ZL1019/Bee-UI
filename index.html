@@ -216,11 +216,12 @@
       </b-button-group>
     </div>
     <div class="inputs" style="margin:30px 0; vertical-align: middle;">
-      <span style="margin-right:20px;">Input: </span>
-      <b-input clearable v-model="value1"></b-input>
-      <b-input clearable v-model="value2" type="password"></b-input>
+      <span style="margin-right:20px;" @click="focus">Input: </span>
+      <b-input ref="input" clearable v-model="value1" @on-enter="inputEnter" @on-focus="inputFocus" @on-blur="inputBlur"></b-input>
+      <b-input clearable v-model="value2" @on-change="inputChange" type="password"></b-input>
       <b-input value="disabled" disabled></b-input>
       <b-input value="readonly" readonly></b-input>
+      <b-input value="error" error @on-keypress="inputKeyup"></b-input>
       <b-input clearable v-model="value3" type="textarea" :rows="5" :autosize="{minRows:2,maxRows:8}" ></b-input>
     </div>
   </div>

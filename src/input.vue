@@ -22,6 +22,13 @@
       :disabled=disabled 
       :class="inputClasses" 
       :placeholder=placeholder 
+      @blur="$emit('on-blur')"
+      @focus="$emit('on-focus')"
+      @keyup.enter="$emit('on-enter')"    
+      @keyup="$emit('on-keyup',$event)"  
+      @change="$emit('on-change',$event)"
+      @keydown="$emit('on-keydown',$event)"
+      @keypress="$emit('on-keypress',$event)"
       @input="$emit('input', $event.target.value)">
     <icon @click="clearValue" class="b-input-icon" name="close" />
   </div>
@@ -129,6 +136,9 @@ export default {
   },
   mounted() {
     this.resizeTextarea();
+    this.focus = ()=>{
+      this.type === 'textarea' ? this.$refs.textarea.focus() : this.$refs.input.focus()
+    }
   },
   watch: {
     value() {
@@ -196,6 +206,15 @@ export default {
   input:focus {
     outline: none;
     border-color: #409eff;
+  }
+  input.b-input-error{
+    border-color:#ed4014;
+  }
+  input.b-input-error:hover{
+    border-color:#ed4014;
+  }
+  input.b-input-error:focus{
+    border-color:#ed4014;
   }
   .b-input-disabled {
     cursor: not-allowed;
