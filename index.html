@@ -217,7 +217,7 @@
     </div>
     <div class="inputs" style="margin:30px 0; vertical-align: middle;">
       <span style="margin-right:20px;" @click="focus">Input: </span>
-      <b-input ref="input" clearable v-model="value1" @on-enter="inputEnter" @on-focus="inputFocus" @on-blur="inputBlur"></b-input>
+      <b-input xx="qq" autocomplete="on" autofocus ref="input" clearable v-model="value1" @on-enter="inputEnter" @on-focus="inputFocus" @on-blur="inputBlur"></b-input>
       <b-input clearable v-model="value2" @on-change="inputChange" type="password"></b-input>
       <b-input value="disabled" disabled></b-input>
       <b-input value="readonly" readonly></b-input>

@@ -44,6 +44,42 @@ describe('Input', () => {
     expect(readonly).to.eq('readonly')
     vm.$destroy()
   })
+  it('可以设置 autofocus.', () => {
+    const Constructor = Vue.extend(Input)
+    const vm = new Constructor({
+      propsData: {
+        autofocus: true
+      }
+    }).$mount()
+    let inputEl = vm.$el.querySelector('input')
+    let autofocus = inputEl.getAttribute('autofocus')
+    expect(autofocus).to.eq('autofocus')
+    vm.$destroy()
+  })
+  it('可以设置 maxlength.', () => {
+    const Constructor = Vue.extend(Input)
+    const vm = new Constructor({
+      propsData: {
+        maxlength: 2
+      }
+    }).$mount()
+    let inputEl = vm.$el.querySelector('input')
+    let maxlength = inputEl.getAttribute('maxlength')
+    expect(maxlength).to.eq('2')
+    vm.$destroy()
+  })
+  it('可以设置 autocomplete.', () => {
+    const Constructor = Vue.extend(Input)
+    const vm = new Constructor({
+      propsData: {
+        autocomplete: "on"
+      }
+    }).$mount()
+    let inputEl = vm.$el.querySelector('input')
+    let autocomplete = inputEl.getAttribute('autocomplete')
+    expect(autocomplete).to.eq('on')
+    vm.$destroy()
+  })
   it('可以设置 placeholder.', () => {
     const Constructor = Vue.extend(Input)
     const vm = new Constructor({

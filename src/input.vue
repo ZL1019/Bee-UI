@@ -7,8 +7,11 @@
       class="b-textarea" 
       :autosize=autosize 
       :readonly=readonly 
-      :disabled=disabled 
-      :placeholder=placeholder 
+      :disabled=disabled
+      :autofocus=autofocus
+      :maxlength=maxlength
+      :placeholder=placeholder
+      :autocomplete=autocomplete
       v-if="type === 'textarea'"    
       :style="textareaCalcStyle"   
       @input="$emit('input', $event.target.value)">
@@ -17,11 +20,14 @@
       v-else 
       ref="input" 
       :type="type" 
-      :value=value 
+      :value=value  
       :readonly=readonly 
       :disabled=disabled 
-      :class="inputClasses" 
+      :class=inputClasses 
+      :autofocus=autofocus
+      :maxlength=maxlength 
       :placeholder=placeholder 
+      :autocomplete=autocomplete
       @blur="$emit('on-blur')"
       @focus="$emit('on-focus')"
       @keyup.enter="$emit('on-enter')"    
@@ -94,6 +100,17 @@ export default {
       type: [Boolean, Object],
       default: false,
     },
+    maxlength:{
+      type: Number
+    },
+    autofocus:{
+      type: Boolean,
+      default: false
+    },
+    autocomplete:{
+      type: String,
+      default: 'off'
+    },
   },
   computed: {
     showClearable() {
@@ -135,6 +152,7 @@ export default {
     },
   },
   mounted() {
+    console.log(this.$listeners);
     this.resizeTextarea();
     this.focus = ()=>{
       this.type === 'textarea' ? this.$refs.textarea.focus() : this.$refs.input.focus()
