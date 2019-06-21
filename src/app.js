@@ -13,6 +13,7 @@ import TabsPane from './tabs-pane'
 import Popover from './popover'
 import Collapse from './collapse'
 import CollapseItem from './collapse-item'
+import Sticky from './sticky'
 
 Vue.component('b-icon', Icon);
 Vue.component('b-button', Button);
@@ -28,6 +29,7 @@ Vue.component('b-tabs-pane', TabsPane)
 Vue.component('b-popover', Popover)
 Vue.component('b-collapse', Collapse)
 Vue.component('b-collapse-item', CollapseItem)
+Vue.component('b-sticky', Sticky)
 
 import plugins from '../plugins'
 // import iView from 'iview';
