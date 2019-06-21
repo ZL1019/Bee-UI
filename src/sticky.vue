@@ -1,6 +1,6 @@
 <template>
-  <div class="b-sticky-wrapper" ref="wrapper" :style="{height,width,left}">
-    <div :class="{'b-sticky':sticky}" ref="content">
+  <div class="b-sticky-wrapper" ref="wrapper" :style="{height}">
+    <div :class="{'b-sticky':sticky}" :style="{width}">
       <slot></slot>
     </div>
   </div>
@@ -12,21 +12,23 @@ export default {
   data() {
     return {
       sticky: false,
-      left:undefined,
-      width:undefined,
-      height:undefined,
+      width: undefined,
+      height: undefined,
     };
   },
-  mounted() {
+
+  mounted() { 
     window.addEventListener('scroll', () => {
       if (window.scrollY > this.getTop()) {
-        let { left, width, height } = this.$refs.wrapper.getBoundingClientRect();
-        [this.height, this.width, this.left] = [height+'px', width+'px', left+'px']
-
+        console.log(123);
+        this.setWidthHeight()
+        window.addEventListener('resize',() => {
+          this.setWidthHeight()
+        })
         this.sticky = true;
       } else {
         this.sticky = false;
-        [this.height, this.width, this.left] = ['auto', 'auto', 'auto']
+        [this.height, this.width] = [undefined, undefined]
       }
     });
   },
@@ -35,17 +37,24 @@ export default {
       let { top } = this.$refs.wrapper.getBoundingClientRect();
       return top + window.scrollY;
     },
+    setWidthHeight(){
+      let {width, height } = this.$refs.wrapper.getBoundingClientRect();
+      [this.height, this.width] = [height+'px', width+'px']
+    }
   },
 };
 </script>
 
 <style lang="scss">
 .b-sticky-wrapper {
+  width:50%;
+  margin: 0 auto;
+  border:1px blue solid;
+  padding:20px;
   .b-sticky {
     top: 0;
-    left: 0;
     position: fixed;
-    background: red;   
+    border:1px red solid;
   }
 }
 </style>
