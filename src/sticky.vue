@@ -1,6 +1,6 @@
 <template>
   <div class="b-sticky-wrapper" ref="wrapper" :style="{height}">
-    <div :class="{'b-sticky':sticky}" :style="{width}">
+    <div :class=classes :style="{width, top:`${top}px`}">
       <slot></slot>
     </div>
   </div>
@@ -16,45 +16,64 @@ export default {
       height: undefined,
     };
   },
-
-  mounted() { 
-    window.addEventListener('scroll', () => {
+  props: {
+    top: {
+      type: [Number, String],
+      default: 0,
+    },
+  },
+  computed: {
+    classes() {
+      return {
+        'b-sticky-content': true,
+        'b-sticky-active': this.sticky,
+      };
+    },
+  },
+  mounted() {
+    this.windowScrollHandler();
+    window.addEventListener('scroll', this.windowScrollHandler);
+  },
+  methods: {
+    windowScrollHandler() {
       if (window.scrollY > this.getTop()) {
-        console.log(123);
-        this.setWidthHeight()
-        window.addEventListener('resize',() => {
-          this.setWidthHeight()
-        })
+        this.setWidthHeight();
+        window.addEventListener('resize', this.setWidthHeight);
         this.sticky = true;
       } else {
         this.sticky = false;
-        [this.height, this.width] = [undefined, undefined]
+        [this.height, this.width] = [undefined, undefined];
       }
-    });
-  },
-  methods: {
+    },
     getTop() {
       let { top } = this.$refs.wrapper.getBoundingClientRect();
-      return top + window.scrollY;
+      return top + window.scrollY - this.top;
     },
-    setWidthHeight(){
-      let {width, height } = this.$refs.wrapper.getBoundingClientRect();
-      [this.height, this.width] = [height+'px', width+'px']
-    }
+    setWidthHeight() {
+      let { width, height } = this.$refs.wrapper.getBoundingClientRect();
+      [this.height, this.width] = [height + 'px', width + 'px'];
+    },
+    destroy() {
+      this.$el.remove();
+      this.$destroy();
+    },
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.setWidthHeight);
+    window.removeEventListener('scroll', this.windowScrollHandler);
   },
 };
 </script>
 
 <style lang="scss">
 .b-sticky-wrapper {
-  width:50%;
-  margin: 0 auto;
-  border:1px blue solid;
-  padding:20px;
-  .b-sticky {
-    top: 0;
+  border: 1px red solid;
+  .b-sticky-active {
     position: fixed;
-    border:1px red solid;
+  }
+  .b-sticky-content {
+    border: 1px blue solid;
+    width: 100%;
   }
 }
 </style>
