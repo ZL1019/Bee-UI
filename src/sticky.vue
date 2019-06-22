@@ -34,6 +34,10 @@ export default {
     this.windowScrollHandler();
     window.addEventListener('scroll', this.windowScrollHandler);
   },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.setWidthHeight);
+    window.removeEventListener('scroll', this.windowScrollHandler);
+  },
   methods: {
     windowScrollHandler() {
       if (window.scrollY > this.getTop()) {
@@ -58,21 +62,15 @@ export default {
       this.$destroy();
     },
   },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.setWidthHeight);
-    window.removeEventListener('scroll', this.windowScrollHandler);
-  },
 };
 </script>
 
 <style lang="scss">
 .b-sticky-wrapper {
-  border: 1px red solid;
   .b-sticky-active {
     position: fixed;
   }
   .b-sticky-content {
-    border: 1px blue solid;
     width: 100%;
   }
 }
