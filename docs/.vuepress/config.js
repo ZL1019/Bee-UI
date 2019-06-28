@@ -8,16 +8,28 @@ module.exports = {
       { 
         text: '组件',
         items: [
-          { text: 'Button', link: '/button' },
-          { text: 'Input', link: '/input' }
+          { text: 'Icon', link: '/components/Icon' },
+          { text: 'Button', link: '/components/Button' },
         ]
       },
       { text: 'GitHub', link: 'https://github.com/NO2046' },
     ],
     sidebar: [
       '/',
-      '/install/',
-      '/get-start/'
+      {
+        title: '开发指南',
+        children:[
+          '/install/',
+          '/get-start/',
+        ]
+      },
+      {
+        title: '组件',
+        children:[
+          '/components/icon',
+          '/components/button'
+        ]      
+      }     
     ]
   }
 

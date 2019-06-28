@@ -75,6 +75,61 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$btn-radius: 4px;
+$btn-font-size: 12px;
+$btn-line-height: 1.5;
+/*bg*/
+/*default*/
+$btn-bg: #fff;
+
+/*primary*/
+$btn-bg-primary: #2d8cf0;
+$btn-bg-primary-hover: #57a3f3;
+$btn-bg-primary-active: #2b85e4;
+/*info*/
+$btn-bg-info: #2db7f5;
+$btn-bg-info-hover: #57c5f7;
+$btn-bg-info-active: #2baee9;
+/*success*/
+$btn-bg-success: #19be6b;
+$btn-bg-success-hover: #47cb89;
+$btn-bg-success-active: #18b566;
+/*color*/
+/*default*/
+$btn-color: #515a6e;
+$btn-color-hover: #57a3f3;
+$btn-color-active: #2b85e4;
+/*primary*/
+$btn-color-primary: #fff;
+$btn-color-primary-active: #f2f2f2;
+/*info*/
+$btn-color-info: #fff;
+$btn-color-info-active: #f2f2f2;
+/*success*/
+$btn-color-success: #fff;
+$btn-color-success-active: #f2f2f2;
+/*border*/
+/*default*/
+$btn-border-color: #dcdee2;
+$btn-border-color-hover: #57a3f3;
+$btn-border-color-active: #2b85e4;
+/*primary*/
+$btn-border-color-primary: #2d8cf0;
+$btn-border-color-primary-hover: #57a3f3;
+$btn-border-color-primary-active: #2b85e4;
+/*info*/
+$btn-border-color-info: #2db7f5;
+$btn-border-color-info-hover: #57c5f7;
+$btn-border-color-info-active: #2baee9;
+/*success*/
+$btn-border-color-success: #19be6b;
+$btn-border-color-success-hover: #47cb89;
+$btn-border-color-success-active: #18b566;
+/*padding*/
+$btn-padding-vertial: 5px;
+$btn-padding-horizontal: 15px;
+$btn-padding-vertial-icon: 8px;
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -103,24 +158,24 @@ export default {
   white-space: nowrap;
   transition: color 0.2s linear, border-color 0.2s linear,
     background-color 0.2s linear;
-  color: var(--btn-color);
-  font-size: var(--btn-font-size);
-  background-color: var(--btn-bg);
-  border: 1px solid var(--btn-border-color);
-  line-height: var(--btn-line-height);
-  padding: var(--btn-padding-vertial) var(--btn-padding-horizontal);
-  border-radius: var(--btn-radius);
+  color: $btn-color;
+  font-size: $btn-font-size;
+  background-color: $btn-bg;
+  border: 1px solid $btn-border-color;
+  line-height: $btn-line-height;
+  padding: $btn-padding-vertial $btn-padding-horizontal;
+  border-radius: $btn-radius;
 
   .icon {
     transition: fill 0.2s linear;
   }
 
   &:hover {
-    color: var(--btn-color-hover);
-    border-color: var(--btn-border-color-hover);
+    color: $btn-color-hover;
+    border-color: $btn-border-color-hover;
 
     .icon {
-      fill: var(--btn-border-color-hover);
+      fill: $btn-border-color-hover;
     }
   }
 
@@ -129,8 +184,8 @@ export default {
   }
 
   &:active {
-    color: var(--btn-color-active);
-    border-color: var(--btn-border-color-active);
+    color: $btn-color-active;
+    border-color: $btn-border-color-active;
   }
 }
 
@@ -151,12 +206,12 @@ export default {
 }
 
 .b-btn-onlyIcon.b-btn {
-  padding: var(--btn-padding-vertial-icon) var(--btn-padding-horizontal);
+  padding: $btn-padding-vertial-icon $btn-padding-horizontal;
 }
 
 .b-btn-onlyIcon.b-btn.b-btn-circle {
   border-radius: 50%;
-  padding: var(--btn-padding-vertial-icon) var(--btn-padding-vertial-icon);
+  padding: $btn-padding-vertial-icon $btn-padding-vertial-icon;
 }
 
 .icon-left.b-btn-haveSlot {
@@ -179,57 +234,57 @@ export default {
 }
 
 .b-btn-primary {
-  color: var(--btn-color-primary);
-  background-color: var(--btn-bg-primary);
-  border-color: var(--btn-border-color-primary);
+  color: $btn-color-primary;
+  background-color: $btn-bg-primary;
+  border-color: $btn-border-color-primary;
 }
 
 .b-btn-primary:hover {
-  color: var(--btn-color-primary);
-  background-color: var(--btn-bg-primary-hover);
-  border-color: var(--btn-border-color-primary-hover);
+  color: $btn-color-primary;
+  background-color: $btn-bg-primary-hover;
+  border-color: $btn-border-color-primary-hover;
 }
 
 .b-btn-primary:active {
-  color: var(--btn-color-primary-active);
-  background-color: var(--btn-bg-primary-active);
-  border-color: var(--btn-border-color-primary-active);
+  color: $btn-color-primary-active;
+  background-color: $btn-bg-primary-active;
+  border-color: $btn-border-color-primary-active;
 }
 
 .b-btn-info {
-  color: var(--btn-color-info);
-  background-color: var(--btn-bg-info);
-  border-color: var(--btn-border-color-info);
+  color: $btn-color-info;
+  background-color: $btn-bg-info;
+  border-color: $btn-border-color-info;
 }
 
 .b-btn-info:hover {
-  color: var(--btn-color-info);
-  background-color: var(--btn-bg-info-hover);
-  border-color: var(--btn-border-color-info-hover);
+  color: $btn-color-info;
+  background-color: $btn-bg-info-hover;
+  border-color: $btn-border-color-info-hover;
 }
 
 .b-btn-info:active {
-  color: var(--btn-color-info-active);
-  background-color: var(--btn-bg-info-active);
-  border-color: var(--btn-border-color-info-active);
+  color: $btn-color-info-active;
+  background-color: $btn-bg-info-active;
+  border-color: $btn-border-color-info-active;
 }
 
 .b-btn-success {
-  color: var(--btn-color-success);
-  background-color: var(--btn-bg-success);
-  border-color: var(--btn-border-color-success);
+  color: $btn-color-success;
+  background-color: $btn-bg-success;
+  border-color: $btn-border-color-success;
 }
 
 .b-btn-success:hover {
-  color: var(--btn-color-success);
-  background-color: var(--btn-bg-success-hover);
-  border-color: var(--btn-border-color-success-hover);
+  color: $btn-color-success;
+  background-color: $btn-bg-success-hover;
+  border-color: $btn-border-color-success-hover;
 }
 
 .b-btn-success:active {
-  color: var(--btn-color-success-active);
-  background-color: var(--btn-bg-success-active);
-  border-color: var(--btn-border-color-success-active);
+  color: $btn-color-success-active;
+  background-color: $btn-bg-success-active;
+  border-color: $btn-border-color-success-active;
 }
 
 .b-btn-success:focus {
