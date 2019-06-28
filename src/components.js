@@ -1,0 +1,33 @@
+import Vue from "vue";
+
+import Icon from "./components/icon";
+import Button from "./components/button";
+import ButtonGroup from "./components/button-group";
+import Input from "./components/input";
+import Row from "./components/row";
+import Col from "./components/col";
+import Tabs from "./components/tabs";
+import TabsHead from "./components/tabs-head";
+import TabsBody from "./components/tabs-body";
+import TabsItem from "./components/tabs-item";
+import TabsPane from "./components/tabs-pane";
+import Popover from "./components/popover";
+import Collapse from "./components/collapse";
+import CollapseItem from "./components/collapse-item";
+import Sticky from "./components/sticky";
+
+Vue.component("b-icon", Icon);
+Vue.component("b-button", Button);
+Vue.component("b-button-group", ButtonGroup);
+Vue.component("b-input", Input);
+Vue.component("b-row", Row);
+Vue.component("b-col", Col);
+Vue.component("b-tabs", Tabs);
+Vue.component("b-tabs-head", TabsHead);
+Vue.component("b-tabs-body", TabsBody);
+Vue.component("b-tabs-item", TabsItem);
+Vue.component("b-tabs-pane", TabsPane);
+Vue.component("b-popover", Popover);
+Vue.component("b-collapse", Collapse);
+Vue.component("b-collapse-item", CollapseItem);
+Vue.component("b-sticky", Sticky);

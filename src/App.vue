@@ -1,0 +1,281 @@
+<template>
+  <div id="app">
+    <b-button icon-name="set">Button</b-button>
+        <!-- <b-button @click="selected='c'">change</b-button>
+    {{selected}}
+    <b-collapse :selected.sync="selected">
+      <b-collapse-item name='a' title="标题一">内容 1</b-collapse-item>
+      <b-collapse-item name='b' title="标题二">内容 2</b-collapse-item>
+      <b-collapse-item name='c' title="标题三">内容 3</b-collapse-item>
+    </b-collapse> -->
+
+    <!-- <b-popover>
+      <template slot="content" slot-scope={close}>
+        内容文字一
+        <b-button @click="close">close</b-button>
+      </template>
+      <b-button>上方</b-button>
+    </b-popover>
+    <b-popover position="bottom" trigger="hover">
+      <template slot="content">
+        Easily sync your GitHub projects with Travis CI and you’ll be testing your code in minutes! Sign Up The home of
+        open source testing Over 900k open... </template>
+      <b-button>下方</b-button>
+    </b-popover>
+    <br>
+    <b-popover position="left" trigger="hover" style="margin-top:200px;">
+      <template slot="content">
+        内容文字三
+      </template>
+      <b-button>左方</b-button>
+    </b-popover>
+    <b-popover position="right" trigger="hover">
+      <template slot="content">
+        内容文字四
+      </template>
+      <b-button>右方</b-button>
+    </b-popover> -->
+
+
+    <!-- <div>
+      <b-tabs v-model="selectedTab" type='card' @tab-click='tabClick'>
+        <b-tabs-head>
+          <b-tabs-item name="item1">
+            标签一</b-tabs-item>
+          <b-tabs-item :name="2">标签二</b-tabs-item>
+          <b-tabs-item name="item3">标签三</b-tabs-item>
+        </b-tabs-head>
+        <b-tabs-body>
+          <b-tabs-pane name="item1">内容一</b-tabs-pane>
+          <b-tabs-pane :name="2">内容二</b-tabs-pane>
+          <b-tabs-pane name="item3">内容三</b-tabs-pane>
+        </b-tabs-body>
+      </b-tabs>
+    </div> -->
+
+    <!-- <div class="grid" style="margin:30px; vertical-align: middle; border:1px solid #eee;">
+      <div style="margin-bottom:20px;">Grid: </div>
+      <b-row tag='div' style='margin-bottom: 20px;'>
+        <b-col :xs={span:24} :md={span:8} :lg={span:4}>
+          <div style='background-color:#2db7f5;'>col 1</div>
+        </b-col>
+        <b-col :xs={span:24} :md={span:8} :lg={span:4}>
+          <div style='background-color:#2db7f5;'>col 1</div>
+        </b-col>
+        <b-col :xs={span:24} :md={span:8} :lg={span:4}>
+          <div style='background-color:#2db7f5;'>col 1</div>
+        </b-col>
+        <b-col :xs={span:24} :md={span:8} :lg={span:4}>
+          <div style='background-color:#2db7f5;'>col 1</div>
+        </b-col>
+        <b-col :xs={span:24} :md={span:8} :lg={span:4}>
+          <div style='background-color:#2db7f5;'>col 1</div>
+        </b-col>
+        <b-col :xs={span:24} :md={span:8} :lg={span:4}>
+          <div style='background-color:#2db7f5;'>col 1</div>
+        </b-col>
+      </b-row>
+      <b-row gutter=20 style='margin-bottom: 20px;'>
+        <b-col span="2">
+          <div style='background-color:#2db7f5;'>col 1</div>
+        </b-col>
+        <b-col span="4">
+          <div style='background-color:#2db7f5;'>col 2</div>
+        </b-col>
+        <b-col span="6">
+          <div style='background-color:#2db7f5;'>col 3</div>
+        </b-col>
+      </b-row>
+      <b-row justify="around" style='margin-bottom: 20px;'>
+        <b-col span="4">
+          <div style='background-color:#2db7f5;'>col 1</div>
+        </b-col>
+        <b-col span="4">
+          <div style='background-color:#2db7f5;'>col 2</div>
+        </b-col>
+        <b-col span="4">
+          <div style='background-color:#2db7f5;'>col 3</div>
+        </b-col>
+      
+      </b-row>
+      <b-row style='margin-bottom: 20px;'>
+        <b-col span="4" offset=2>
+          <div style='background-color:#2db7f5;'>col 1</div>
+        </b-col>
+        <b-col span="2" offset=2>
+          <div style='background-color:#2db7f5;'>col 2</div>
+        </b-col>
+        <b-col span="2" offset=2>
+          <div style='background-color:#2db7f5;'>col 3</div>
+        </b-col>
+        <b-col span="2" offset=1>
+          <div style='background-color:#2db7f5;'>col 4</div>
+        </b-col>
+        <b-col span="4" offset=3>
+          <div style='background-color:#2db7f5;'>col 5</div>
+        </b-col>
+      </b-row>
+    </div>
+-->
+
+
+    <!-- <div class="buttons">
+      <span style="margin-right:20px;">Button: </span>
+      <b-button>Default</b-button>
+      <b-button disabled>Disabled</b-button>
+      <b-button type="primary" icon-name="set" icon-position="right">Primary</b-button>
+      <b-button type="info" icon-name="search">Information</b-button>
+      <b-button type="success" icon-name="download">Success</b-button>
+      <b-button type="info" icon-name="download" @click="download" :loading="isLoading" circle></b-button>
+      <b-button-group>
+        <b-button icon-name="left">上一页</b-button>
+        <b-button>当前页</b-button>
+        <b-button icon-name="right" icon-position="right">下一页</b-button>
+      </b-button-group>
+    </div>
+    <div class="inputs" style="margin:30px 0; vertical-align: middle;">
+      <span style="margin-right:20px;" @click="focus">Input: </span>
+      <b-input xx="qq" autocomplete="on" autofocus ref="input" clearable v-model="value1" @on-enter="inputEnter" @on-focus="inputFocus" @on-blur="inputBlur"></b-input>
+      <b-input clearable v-model="value2" @on-change="inputChange" type="password"></b-input>
+      <b-input value="disabled" disabled></b-input>
+      <b-input value="readonly" readonly></b-input>
+      <b-input value="error" error @on-keypress="inputKeyup"></b-input>
+      <b-input clearable v-model="value3" type="textarea" :rows="5" :autosize="{minRows:2,maxRows:8}" ></b-input>
+    </div> -->
+
+    <p>段落1</p>
+    <p>段落2</p>
+    <p>段落3</p>
+    <p>段落4</p>
+    <p>段落5</p>
+    <p>段落6</p>
+    <p>段落7</p>
+    <p>段落8</p>
+    <p>段落9</p>
+    <p>段落10</p>
+    <b-sticky>
+      <b-button>STICKY</b-button>
+    </b-sticky>
+
+    <p>段落1</p>
+    <p>段落2</p>
+    <p>段落3</p>
+    <p>段落4</p>
+    <p>段落5</p>
+    <p>段落6</p>
+    <p>段落7</p>
+    <p>段落8</p>
+    <p>段落9</p>
+    <p>段落10</p>
+    <p>段落11</p>
+    <p>段落12</p>
+    <p>段落13</p>
+    <p>段落14</p>
+    <p>段落15</p>
+    <p>段落16</p>
+    <p>段落17</p>
+    <p>段落18</p>
+    <p>段落19</p>
+    <p>段落20</p>
+    <p>段落21</p>
+    <p>段落22</p>
+    <p>段落23</p>
+    <p>段落24</p>
+    <p>段落25</p>
+    <p>段落26</p>
+    <p>段落10</p>
+    <p>段落11</p>
+    <p>段落12</p>
+    <p>段落13</p>
+    <p>段落14</p>
+    <p>段落15</p>
+    <p>段落16</p>
+    <p>段落17</p>
+    <p>段落18</p>
+    <p>段落19</p>
+    <p>段落20</p>
+    <p>段落21</p>
+    <p>段落22</p>
+    <p>段落23</p>
+    <p>段落24</p>
+    <p>段落25</p>
+    <p>段落26</p>
+  </div>
+</template>
+
+<script>
+
+export default {
+  name: "app",
+  components: {},
+    data() {
+    return {
+      isLoading: false,
+      isDisabled: true,
+      value1: "",
+      value2: "",
+      value3: "",
+      selectedTab: "item3",
+      selected: ["a", "b"]
+    };
+  },
+  watch: {
+    selectedTab(newValue, oldValue) {
+      // console.log('oldValue: ', oldValue);
+      // console.log('newValue: ', newValue);
+    }
+  },
+  methods: {
+    focus() {
+      this.$refs.input.focus();
+    },
+    inputKeyup(value) {
+      console.log("keyup: ", value);
+    },
+    inputBlur(value) {
+      console.log("blur: ", value);
+    },
+    inputFocus(value) {
+      console.log("focus: ", value);
+    },
+    inputEnter(value) {
+      console.log("enter: ", value);
+    },
+    inputChange(value) {
+      console.log("change: ", value);
+    },
+    tabClick(a, b) {
+      // console.log('b: ', b);
+      // console.log('a: ', a);
+    },
+    changeSelected(name) {
+      this.selectedTab = name;
+    },
+    xxx() {
+      console.log("xxx");
+      console.log(this.selectedTab);
+    },
+    openMsg() {
+      this.$message(`网络错误!!! ${(Math.random() * 100).toFixed(2)}`, {
+        top: 24,
+        enableHtml: true,
+        duration: 100,
+        showClose: true,
+        onClose: () => {
+          console.log("用户关闭 message 之后的回调");
+        }
+      });
+    },
+    download() {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 2000);
+    }
+  }
+};
+</script>
+
+<style lang="scss">
+#app {}
+</style>
