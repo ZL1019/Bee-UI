@@ -1,8 +1,9 @@
 <template>
-  <div id="app">
-
-    <b-cascader :options=options>
-      <b-button>Trigger</b-button>
+  <div id="app" style="margin-left:16px;">
+<br>
+<br>
+    <b-cascader :options=options popover-height="180px">
+      <b-button type="primary">Trigger</b-button>
     </b-cascader>
 
     <!-- 
@@ -164,9 +165,14 @@ export default {
           value: '',
           children: [
             {
-              label: '连云港',
+              label: '苏州',
               value: '',
-              children: [{ label: '赣榆', value: '' }],
+              children: [{ label: '相城区', value: '' }],
+            },
+            {
+              label: '南京',
+              value: '',
+              children: [{ label: '鼓楼区', value: '' }],
             },
           ],
         },
