@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <b-button icon-name="set">Button</b-button>
-        <!-- <b-button @click="selected='c'">change</b-button>
+
+    <b-cascader :options=options></b-cascader>
+
+    <b-button @click="selected='c'">change</b-button>
+    <!-- 
     {{selected}}
     <b-collapse :selected.sync="selected">
       <b-collapse-item name='a' title="标题一">内容 1</b-collapse-item>
@@ -35,7 +38,6 @@
       </template>
       <b-button>右方</b-button>
     </b-popover> -->
-
 
     <!-- <div>
       <b-tabs v-model="selectedTab" type='card' @tab-click='tabClick'>
@@ -118,7 +120,6 @@
     </div>
 -->
 
-
     <!-- <div class="buttons">
       <span style="margin-right:20px;">Button: </span>
       <b-button>Default</b-button>
@@ -143,106 +144,76 @@
       <b-input clearable v-model="value3" type="textarea" :rows="5" :autosize="{minRows:2,maxRows:8}" ></b-input>
     </div> -->
 
-    <p>段落1</p>
-    <p>段落2</p>
-    <p>段落3</p>
-    <p>段落4</p>
-    <p>段落5</p>
-    <p>段落6</p>
-    <p>段落7</p>
-    <p>段落8</p>
-    <p>段落9</p>
-    <p>段落10</p>
-    <b-sticky>
+    <!-- <b-sticky>
       <b-button>STICKY</b-button>
-    </b-sticky>
+    </b-sticky> -->
 
-    <p>段落1</p>
-    <p>段落2</p>
-    <p>段落3</p>
-    <p>段落4</p>
-    <p>段落5</p>
-    <p>段落6</p>
-    <p>段落7</p>
-    <p>段落8</p>
-    <p>段落9</p>
-    <p>段落10</p>
-    <p>段落11</p>
-    <p>段落12</p>
-    <p>段落13</p>
-    <p>段落14</p>
-    <p>段落15</p>
-    <p>段落16</p>
-    <p>段落17</p>
-    <p>段落18</p>
-    <p>段落19</p>
-    <p>段落20</p>
-    <p>段落21</p>
-    <p>段落22</p>
-    <p>段落23</p>
-    <p>段落24</p>
-    <p>段落25</p>
-    <p>段落26</p>
-    <p>段落10</p>
-    <p>段落11</p>
-    <p>段落12</p>
-    <p>段落13</p>
-    <p>段落14</p>
-    <p>段落15</p>
-    <p>段落16</p>
-    <p>段落17</p>
-    <p>段落18</p>
-    <p>段落19</p>
-    <p>段落20</p>
-    <p>段落21</p>
-    <p>段落22</p>
-    <p>段落23</p>
-    <p>段落24</p>
-    <p>段落25</p>
-    <p>段落26</p>
   </div>
 </template>
 
 <script>
-
 export default {
-  name: "app",
+  name: 'app',
   components: {},
-    data() {
+  data() {
     return {
+      options: [
+        {
+          label: '江苏',
+          value: '',
+          children: [
+            {
+              label: '连云港',
+              value: '',
+              children: [{ label: '赣榆', value: '' }],
+            },
+          ],
+        },
+        {
+          label: '浙江',
+          value: '',
+          children: [
+            {
+              label: '温州',
+              value: '',
+              children: [{ label: '平阳', value: '' }],
+            },
+          ],
+        },
+      ],
       isLoading: false,
       isDisabled: true,
-      value1: "",
-      value2: "",
-      value3: "",
-      selectedTab: "item3",
-      selected: ["a", "b"]
+      value1: '',
+      value2: '',
+      value3: '',
+      selectedTab: 'item3',
+      selected: ['a', 'b'],
     };
   },
   watch: {
     selectedTab(newValue, oldValue) {
       // console.log('oldValue: ', oldValue);
       // console.log('newValue: ', newValue);
-    }
+    },
   },
   methods: {
     focus() {
       this.$refs.input.focus();
     },
     inputKeyup(value) {
-      console.log("keyup: ", value);
+      console.log('keyup: ', value);
     },
     inputBlur(value) {
-      console.log("blur: ", value);
+      console.log('blur: ', value);
     },
     inputFocus(value) {
-      console.log("focus: ", value);
+      console.log('focus: ', value);
     },
     inputEnter(value) {
-      console.log("enter: ", value);
+      console.log('enter: ', value);
     },
     inputChange(value) {
-      console.log("change: ", value);
+      console.log('change: ', value);
     },
     tabClick(a, b) {
       // console.log('b: ', b);
@@ -252,7 +223,7 @@ export default {
       this.selectedTab = name;
     },
     xxx() {
-      console.log("xxx");
+      console.log('xxx');
       console.log(this.selectedTab);
     },
     openMsg() {
@@ -262,8 +233,8 @@ export default {
         duration: 100,
         showClose: true,
         onClose: () => {
-          console.log("用户关闭 message 之后的回调");
-        }
+          console.log('用户关闭 message 之后的回调');
+        },
       });
     },
     download() {
@@ -271,11 +242,12 @@ export default {
       setTimeout(() => {
         this.isLoading = false;
       }, 2000);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss">
-#app {}
+#app {
+}
 </style>

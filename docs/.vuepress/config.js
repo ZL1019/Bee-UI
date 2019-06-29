@@ -1,4 +1,5 @@
 module.exports = {
+  base:'test',
   title: 'Bear UI',
   description: 'A Vue.js 2.0 UI Toolkit for Web.',
   themeConfig: {
