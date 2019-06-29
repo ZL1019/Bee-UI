@@ -1,9 +1,10 @@
 <template>
   <div id="app">
 
-    <b-cascader :options=options></b-cascader>
+    <b-cascader :options=options>
+      <b-button>Trigger</b-button>
+    </b-cascader>
 
-    <b-button @click="selected='c'">change</b-button>
     <!-- 
     {{selected}}
     <b-collapse :selected.sync="selected">

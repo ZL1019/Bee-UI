@@ -1,28 +1,31 @@
 <template>
   <div class="b-cascader">
-    <div class="cascader-trigger">
+    <div class="cascader-trigger" @click="popVisiable = !popVisiable">
       <slot></slot>
     </div>
-    <div class="cascader-pop">
-      <div v-for="(item,index) in options" :key="index">
-        <cascader-item :option-item="item"></cascader-item>
-      </div>
+    <div class="cascader-pop" v-if="popVisiable">
+      <cascader-items :options="options"></cascader-items>
     </div>
   </div>
 </template>
 
 <script>
-import CascaderItem from './cascader-item';
+import CascaderItems from './cascader-items';
 export default {
   name: 'bear-cascader',
   components: {
-    CascaderItem,
+    CascaderItems,
   },
   props: {
     options: {
       type: Array,
       default: [],
     },
+  },
+  data() {
+    return {
+      popVisiable: false,
+    };
   },
 };
 </script>
