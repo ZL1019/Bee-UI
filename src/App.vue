@@ -2,7 +2,8 @@
   <div id="app" style="margin-left:16px;">
 <br>
 <br>
-    <b-cascader :options=options popover-height="180px">
+    {{selectedCascader}}
+    <b-cascader :options=options :selected=selectedCascader @updateSelected="selectedCascader = $event" popover-height="180px">
       <b-button type="primary">Trigger</b-button>
     </b-cascader>
 
@@ -159,6 +160,7 @@ export default {
   components: {},
   data() {
     return {
+      selectedCascader:[],
       options: [
         {
           label: '江苏',
