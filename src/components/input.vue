@@ -29,14 +29,15 @@
       :placeholder=placeholder 
       :autocomplete=autocomplete
       @blur="$emit('on-blur')"
-      @focus="$emit('on-focus')"
+      @click="$emit('on-click')"
+      @focus="$emit('on-focus')"  
       @keyup.enter="$emit('on-enter')"    
       @keyup="$emit('on-keyup',$event)"  
       @change="$emit('on-change',$event)"
       @keydown="$emit('on-keydown',$event)"
       @keypress="$emit('on-keypress',$event)"
       @input="$emit('input', $event.target.value)">
-    <icon @click="clearValue" class="b-input-icon" name="close" />
+    <icon @click="clearValue" style="z-index:99;" class="b-input-icon" name="close" />
   </div>
 </template>
 
@@ -152,7 +153,7 @@ export default {
     },
   },
   mounted() {
-    console.log(this.$listeners);
+    // console.log(this.$listeners);
     this.resizeTextarea();
     this.focus = ()=>{
       this.type === 'textarea' ? this.$refs.textarea.focus() : this.$refs.input.focus()

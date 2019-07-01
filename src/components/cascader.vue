@@ -1,20 +1,27 @@
 <template>
   <div class="b-cascader">
-    <div class="b-cascader-trigger" @click="popVisiable = !popVisiable" >
-      <slot></slot>
+    <div class="b-cascader-trigger" >
+      <div v-if="$slots.default" @click="popVisiable = !popVisiable">
+        <slot></slot>
+      </div>
+      <div v-else>
+        <Bear-Input @on-click="popVisiable = !popVisiable" :value="result" clearable></Bear-Input>
+      </div>
     </div>
     <div class="b-cascader-popover" v-if="popVisiable">
-      <cascader-items :options="options" :selected="selected" @updateSelected="updateSelected" :popover-height="popoverHeight"></cascader-items>
+      <cascader-items :options="options" :selected="selected" @update:selected="updateSelected" :popover-height="popoverHeight"></cascader-items>
     </div>
   </div>
 </template>
 
 <script>
 import CascaderItems from './cascader-items';
+import Input from './input';
 export default {
   name: 'bear-cascader',
   components: {
     CascaderItems,
+    BearInput: Input,
   },
   props: {
     options: {
@@ -36,7 +43,13 @@ export default {
   },
   methods: {
     updateSelected(item) {
-      this.$emit('updateSelected', item);
+      this.$emit('update:selected', item);
+    },
+  },
+
+  computed: {
+    result() {
+      return this.selected.map(item => item.label).join('/');
     },
   },
 };
@@ -50,6 +63,7 @@ export default {
     position: absolute;
     top: 100%;
     left: 0;
+    margin-top:2px;
     background: #fff;
     border-radius: 4px;
     @extend .box-shadow;

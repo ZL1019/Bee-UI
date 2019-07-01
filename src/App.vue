@@ -1,10 +1,9 @@
 <template>
   <div id="app" style="margin-left:16px;">
-<br>
-<br>
-    {{selectedCascader}}
-    <b-cascader :options=options :selected=selectedCascader @updateSelected="selectedCascader = $event" popover-height="180px">
-      <b-button type="primary">Trigger</b-button>
+    <br>
+    <br>
+    <b-cascader :options=options :selected.sync=selectedCascader @update:selected="requestCity" popover-height="180px">
+      <!-- <b-button type="primary">Trigger</b-button> -->
     </b-cascader>
 
     <!-- 
@@ -155,41 +154,23 @@
 </template>
 
 <script>
+import cityies from './assets/city_data';
+import { setTimeout } from 'timers';
+function ajax(parentId = 0) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      let result = cityies.filter(item => item.parent_id === parentId);
+      resolve(result);
+    }, 200);
+  });
+}
 export default {
   name: 'app',
   components: {},
   data() {
     return {
-      selectedCascader:[],
-      options: [
-        {
-          label: '江苏',
-          value: '',
-          children: [
-            {
-              label: '苏州',
-              value: '',
-              children: [{ label: '相城区', value: '' }],
-            },
-            {
-              label: '南京',
-              value: '',
-              children: [{ label: '鼓楼区', value: '' }],
-            },
-          ],
-        },
-        {
-          label: '浙江',
-          value: '',
-          children: [
-            {
-              label: '温州',
-              value: '',
-              children: [{ label: '平阳', value: '' }],
-            },
-          ],
-        },
-      ],
+      selectedCascader: [],
+      options: [],
       isLoading: false,
       isDisabled: true,
       value1: '',
@@ -205,7 +186,22 @@ export default {
       // console.log('newValue: ', newValue);
     },
   },
+  mounted() {
+    ajax().then(res => {
+      this.options = [...res];
+    });
+  },
   methods: {
+    requestCity(data) {
+      let id = data[0].id;
+      ajax(id).then(res => {
+        this.options.forEach(item => {
+          if(item.id === id){
+            this.$set(item,'children',res)
+          }
+        })
+      });
+    },
     focus() {
       this.$refs.input.focus();
     },

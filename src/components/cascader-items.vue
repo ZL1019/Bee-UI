@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="b-cascader-items-right" v-if="rightItem">
-      <bear-cascader-items :options="rightItem" :level="level+1" :selected="selected" @updateSelected="onUpdateSelected"></bear-cascader-items>
+      <bear-cascader-items :options="rightItem" :level="level+1" :selected="selected" @update:selected="updateSelected"></bear-cascader-items>
     </div>
   </div>
 </template>
@@ -56,10 +56,10 @@ export default {
       let copy = JSON.parse(JSON.stringify(this.selected));
       copy[this.level] = item;
       copy.splice(this.level+1)
-      this.$emit('updateSelected', copy);
+      this.$emit('update:selected', copy);
     },
-    onUpdateSelected(newSelected) {
-      this.$emit('updateSelected', newSelected);
+    updateSelected(newSelected) {
+      this.$emit('update:selected', newSelected);
     },
   },
 };
@@ -70,6 +70,7 @@ export default {
   height: 100%;
   display: flex;
   .b-cascader-items-left {
+    overflow: auto;
     height: 100%;
     padding: 8px 0px;
     cursor: pointer;
