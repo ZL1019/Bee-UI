@@ -2,7 +2,7 @@
   <div id="app" style="margin-left:16px;">
     <br>
     <br>
-    <b-cascader :options=options :selected.sync=selectedCascader @update:selected="requestCity" popover-height="180px">
+    <b-cascader :options=options :selected.sync=selectedCascader :load-data="loadData" popover-height="180px">
       <!-- <b-button type="primary">Trigger</b-button> -->
     </b-cascader>
 
@@ -192,14 +192,19 @@ export default {
     });
   },
   methods: {
+    loadData({ id }, callback) {
+      ajax(id).then(res => {
+        callback(res);
+      });
+    },
     requestCity(data) {
       let id = data[0].id;
       ajax(id).then(res => {
         this.options.forEach(item => {
-          if(item.id === id){
-            this.$set(item,'children',res)
+          if (item.id === id) {
+            this.$set(item, 'children', res);
           }
-        })
+        });
       });
     },
     focus() {

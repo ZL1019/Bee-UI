@@ -1,6 +1,6 @@
 <template>
   <div class="b-cascader">
-    <div class="b-cascader-trigger" >
+    <div class="b-cascader-trigger">
       <div v-if="$slots.default" @click="popVisiable = !popVisiable">
         <slot></slot>
       </div>
@@ -35,6 +35,9 @@ export default {
       type: Array,
       default: () => [],
     },
+    loadData: {
+      type: Function,
+    },
   },
   data() {
     return {
@@ -44,6 +47,14 @@ export default {
   methods: {
     updateSelected(item) {
       this.$emit('update:selected', item);
+      let targetItem = item[0];
+      this.loadData(targetItem, res => {
+        this.options.forEach(item => {
+          if (item.id === targetItem.id) {
+            this.$set(item, 'children', res);
+          }
+        });
+      });
     },
   },
 
@@ -63,7 +74,7 @@ export default {
     position: absolute;
     top: 100%;
     left: 0;
-    margin-top:2px;
+    margin-top: 2px;
     background: #fff;
     border-radius: 4px;
     @extend .box-shadow;
