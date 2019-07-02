@@ -47,13 +47,47 @@ export default {
   methods: {
     updateSelected(item) {
       this.$emit('update:selected', item);
-      let targetItem = item[0];
-      this.loadData(targetItem, res => {
-        this.options.forEach(item => {
-          if (item.id === targetItem.id) {
-            this.$set(item, 'children', res);
+      let clickedItem = item[item.length - 1];
+
+      let simplest = (children, id) => {
+        return children.filter(item => item.id === id)[0];
+      };
+
+      let complex = (children, id) => {
+        let noChildren = [];
+        let haveChildren = [];
+        children.forEach(item => {
+          if (item.children) {
+            haveChildren.push(item);
+          } else {
+            noChildren.push(item);
           }
         });
+
+        let found = simplest(noChildren, id);
+        if (found) {
+          return found;
+        } else {
+          found = simplest(haveChildren, id);
+          if (found) {
+            return found;
+          } else {
+            for (let i = 0; i < haveChildren.length; i++) {
+              found = complex(haveChildren[i].children, id);
+              if (found) {
+                return found;
+              }
+            }
+            return undefined;
+          }
+        }
+      };
+
+      this.loadData(clickedItem, res => {
+        let copy = JSON.parse(JSON.stringify(this.options))
+        let targetItem = complex(copy, clickedItem.id);
+        targetItem.children = res
+        this.$emit('update:options', copy)
       });
     },
   },

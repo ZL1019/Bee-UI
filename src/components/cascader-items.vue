@@ -3,11 +3,17 @@
     <div class="b-cascader-items-left">
       <div v-for="(item,index) in options" :key="index" @click="onClick(item)" class="b-cascader-label">
         {{item.label}}
-        <Icon v-if="item.children" style="margin-left:8px;" name="right" />
+        <Icon v-if="item.children && item.children.length>0" style="margin-left:8px;" name="right" />
       </div>
     </div>
     <div class="b-cascader-items-right" v-if="rightItem">
-      <bear-cascader-items :options="rightItem" :level="level+1" :selected="selected" @update:selected="updateSelected"></bear-cascader-items>
+      <bear-cascader-items 
+        :level="level+1" 
+        :options="rightItem"   
+        :selected="selected" 
+        @update:options="updateOptions"
+        @update:selected="updateSelected">
+      </bear-cascader-items>
     </div>
   </div>
 </template>
@@ -43,24 +49,33 @@ export default {
   },
   computed: {
     rightItem() {
-      let currentSelected = this.selected[this.level]
-      if (currentSelected && currentSelected.children) {
-        return currentSelected.children;
-      } else {
-        return null;
+      if(this.selected[this.level]){
+        let selected = this.options.filter(item => item.id === this.selected[this.level].id )
+        if(selected && selected[0].children && selected[0].children.length >0){
+          return selected[0].children
+        }
       }
+      // let currentSelected = this.selected[this.level];
+      // if (currentSelected && currentSelected.children) {
+      //   return currentSelected.children;
+      // } else {
+      //   return null;
+      // }
     },
   },
   methods: {
     onClick(item) {
       let copy = JSON.parse(JSON.stringify(this.selected));
       copy[this.level] = item;
-      copy.splice(this.level+1)
+      copy.splice(this.level + 1);
       this.$emit('update:selected', copy);
     },
     updateSelected(newSelected) {
       this.$emit('update:selected', newSelected);
     },
+    updateOptions(){
+
+    }
   },
 };
 </script>
