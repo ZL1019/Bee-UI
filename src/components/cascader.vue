@@ -1,15 +1,21 @@
 <template>
   <div class="b-cascader">
     <div class="b-cascader-trigger">
-      <div v-if="$slots.default" @click="popVisiable = !popVisiable">
+      <div v-if="$slots.default" @click="popVisible = !popVisible">
         <slot></slot>
       </div>
       <div v-else>
-        <Bear-Input @on-click="popVisiable = !popVisiable" :value="result" clearable></Bear-Input>
+        <Bear-Input @on-click="popVisible = !popVisible" :value="result" clearable></Bear-Input>
       </div>
     </div>
-    <div class="b-cascader-popover" v-if="popVisiable">
-      <cascader-items :options="options" :selected="selected" @update:selected="updateSelected" :popover-height="popoverHeight"></cascader-items>
+    <div class="b-cascader-popover" v-if="popVisible">
+      <cascader-items 
+        :options="options" 
+        :selected="selected" 
+        :load-data="loadData"
+        @update:selected="updateSelected" 
+        :popover-height="popoverHeight">
+      </cascader-items>
     </div>
   </div>
 </template>
@@ -41,7 +47,7 @@ export default {
   },
   data() {
     return {
-      popVisiable: false,
+      popVisible: false,
     };
   },
   methods: {
@@ -83,12 +89,15 @@ export default {
         }
       };
 
-      this.loadData(clickedItem, res => {
-        let copy = JSON.parse(JSON.stringify(this.options))
-        let targetItem = complex(copy, clickedItem.id);
-        targetItem.children = res
-        this.$emit('update:options', copy)
-      });
+      if (!clickedItem.isLeaf) {
+        this.loadData &&
+          this.loadData(clickedItem, res => {
+            let copy = JSON.parse(JSON.stringify(this.options));
+            let targetItem = complex(copy, clickedItem.id);
+            targetItem.children = res;
+            this.$emit('update:options', copy);
+          });
+      }
     },
   },
 

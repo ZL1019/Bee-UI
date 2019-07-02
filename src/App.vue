@@ -2,17 +2,11 @@
   <div id="app" style="margin-left:16px;">
     <br>
     <br>
-    <b-cascader 
-      :options.sync=options
-      :load-data="loadData" 
-      popover-height="180px"
-      :selected.sync=selectedCascader 
-      @update:options="updateOptions" 
-      @update:selected="updateSelected"   
-     >
+    <!-- :load-data="loadData"  -->
+
+    <b-cascader :options.sync=options :load-data="loadData" popover-height="180px" :selected.sync=selectedCascader>
       <!-- <b-button type="primary">Trigger</b-button> -->
     </b-cascader>
-
     <!-- 
     {{selected}}
     <b-collapse :selected.sync="selected">
@@ -167,6 +161,13 @@ function ajax(parentId = 0) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       let result = cityies.filter(item => item.parent_id === parentId);
+      // result.forEach( node => {
+      //   if(cityies.filter(item => item.parent_id === node.id).length >0 ){
+      //     node.isLeaf = false
+      //   }else{
+      //     node.isLeaf = true
+      //   }
+      // })
       resolve(result);
     }, 200);
   });
@@ -185,6 +186,28 @@ export default {
       value3: '',
       selectedTab: 'item3',
       selected: ['a', 'b'],
+      qqq: cityies,
+      testData: [
+        {
+          id: 1,
+          label: '江苏',
+          parent_id: 0,
+          children: [
+            {
+              id: 2,
+              label: '苏州',
+              parent_id: 1,
+              children: [
+                {
+                  id: 3,
+                  label: '姑苏',
+                  parent_id: 2,
+                },
+              ],
+            },
+          ],
+        },
+      ],
     };
   },
   watch: {
@@ -194,30 +217,16 @@ export default {
     },
   },
   mounted() {
+    // this.options = cityies;
     ajax().then(res => {
       this.options = [...res];
     });
   },
   methods: {
     loadData({ id }, callback) {
+      console.log('~~加载数据');
       ajax(id).then(res => {
         callback(res);
-      });
-    },
-    updateOptions(){
-
-    },
-    updateSelected(){
-
-    },
-    requestCity(data) {
-      let id = data[0].id;
-      ajax(id).then(res => {
-        this.options.forEach(item => {
-          if (item.id === id) {
-            this.$set(item, 'children', res);
-          }
-        });
       });
     },
     focus() {

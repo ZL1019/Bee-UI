@@ -2,8 +2,8 @@
   <div class="b-cascader-items" :style="{height:popoverHeight}">
     <div class="b-cascader-items-left">
       <div v-for="(item,index) in options" :key="index" @click="onClick(item)" class="b-cascader-label">
-        {{item.label}}
-        <Icon v-if="item.children && item.children.length>0" style="margin-left:8px;" name="right" />
+        <span class="b-cascader-label-text">{{item.label}}</span>
+        <bear-icon v-if="loadData ? !item.isLeaf : item.children" name="right" class="b-cascader-label-icon" />
       </div>
     </div>
     <div class="b-cascader-items-right" v-if="rightItem">
@@ -11,8 +11,9 @@
         :level="level+1" 
         :options="rightItem"   
         :selected="selected" 
-        @update:options="updateOptions"
-        @update:selected="updateSelected">
+        :load-data="loadData"
+        @update:selected="updateSelected"
+        >
       </bear-cascader-items>
     </div>
   </div>
@@ -38,9 +39,12 @@ export default {
       type: Number,
       default: 0,
     },
+    loadData:{
+      type: Function,
+    }
   },
   components: {
-    Icon,
+    'bear-icon':Icon,
   },
   data() {
     return {
@@ -93,6 +97,12 @@ export default {
       padding: 4px 16px;
       display: flex;
       align-items: center;
+      .b-cascader-label-text{
+        margin-right:1em;
+      }
+      .b-cascader-label-icon{
+        margin-left: auto;
+      }
     }
     .b-cascader-label:hover {
       background: #f3f3f3;
