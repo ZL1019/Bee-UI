@@ -7,13 +7,7 @@
       </div>
     </div>
     <div class="b-cascader-items-right" v-if="rightItem">
-      <bear-cascader-items 
-        :level="level+1" 
-        :options="rightItem"   
-        :selected="selected" 
-        :load-data="loadData"
-        @update:selected="updateSelected"
-        >
+      <bear-cascader-items :level="level+1" :options="rightItem" :selected="selected" :load-data="loadData" @update:selected="updateSelected">
       </bear-cascader-items>
     </div>
   </div>
@@ -39,12 +33,12 @@ export default {
       type: Number,
       default: 0,
     },
-    loadData:{
+    loadData: {
       type: Function,
-    }
+    },
   },
   components: {
-    'bear-icon':Icon,
+    'bear-icon': Icon,
   },
   data() {
     return {
@@ -53,10 +47,16 @@ export default {
   },
   computed: {
     rightItem() {
-      if(this.selected[this.level]){
-        let selected = this.options.filter(item => item.id === this.selected[this.level].id )
-        if(selected && selected[0].children && selected[0].children.length >0){
-          return selected[0].children
+      if (this.selected[this.level]) {
+        let selected = this.options.filter(
+          item => item.id === this.selected[this.level].id,
+        );
+        if (
+          selected &&
+          selected[0].children &&
+          selected[0].children.length > 0
+        ) {
+          return selected[0].children;
         }
       }
       // let currentSelected = this.selected[this.level];
@@ -77,9 +77,7 @@ export default {
     updateSelected(newSelected) {
       this.$emit('update:selected', newSelected);
     },
-    updateOptions(){
-
-    }
+    updateOptions() {},
   },
 };
 </script>
@@ -97,10 +95,10 @@ export default {
       padding: 4px 16px;
       display: flex;
       align-items: center;
-      .b-cascader-label-text{
-        margin-right:1em;
+      .b-cascader-label-text {
+        margin-right: 1em;
       }
-      .b-cascader-label-icon{
+      .b-cascader-label-icon {
         margin-left: auto;
       }
     }

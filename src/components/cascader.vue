@@ -1,33 +1,36 @@
 <template>
   <div class="b-cascader">
-    <div class="b-cascader-trigger">
-      <div v-if="$slots.default" @click="popVisible = !popVisible">
-        <slot></slot>
+    <bear-popover position="bottom" :trigger="trigger">
+      <template slot="content">
+        <div class="b-cascader-popover">
+          <cascader-items :options="options" :selected="selected" :load-data="loadData" @update:selected="updateSelected" :popover-height="popoverHeight">
+          </cascader-items>
+        </div>
+      </template>
+      <div class="b-cascader-trigger">
+        <div v-if="$slots.default" @click="toggle">
+          <slot></slot>
+        </div>
+        <div v-else>
+          <Bear-Input :value="result" clearable></Bear-Input>
+        </div>
       </div>
-      <div v-else>
-        <Bear-Input @on-click="popVisible = !popVisible" :value="result" clearable></Bear-Input>
-      </div>
-    </div>
-    <div class="b-cascader-popover" v-if="popVisible">
-      <cascader-items 
-        :options="options" 
-        :selected="selected" 
-        :load-data="loadData"
-        @update:selected="updateSelected" 
-        :popover-height="popoverHeight">
-      </cascader-items>
-    </div>
+    </bear-popover>
+
   </div>
 </template>
 
 <script>
+import BearInput from './input';
+import BearPopover from './popover';
 import CascaderItems from './cascader-items';
-import Input from './input';
+
 export default {
   name: 'bear-cascader',
   components: {
+    BearInput,
+    BearPopover,
     CascaderItems,
-    BearInput: Input,
   },
   props: {
     options: {
@@ -44,6 +47,13 @@ export default {
     loadData: {
       type: Function,
     },
+    trigger:{
+      type: String,
+      default: 'click',
+      validator(value){
+        return ['click','hover'].indexOf(value) > -1
+      }
+    }
   },
   data() {
     return {
@@ -51,6 +61,19 @@ export default {
     };
   },
   methods: {
+    open() {
+      this.popVisible = true;
+    },
+    close() {
+      this.popVisible = false;
+    },
+    toggle() {
+      if (this.popVisible) {
+        this.close();
+      } else {
+        this.open();
+      }
+    },
     updateSelected(item) {
       this.$emit('update:selected', item);
       let clickedItem = item[item.length - 1];
@@ -111,12 +134,16 @@ export default {
 
 <style lang="scss">
 @import '../style/var.scss';
+.b-popover-content {
+  width: auto !important;
+}
 .b-cascader {
-  position: relative;
+  // position: relative;
+
   .b-cascader-popover {
-    position: absolute;
-    top: 100%;
-    left: 0;
+    // position: absolute;
+    // top: 100%;
+    // left: 0;
     margin-top: 2px;
     background: #fff;
     border-radius: 4px;

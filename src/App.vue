@@ -15,7 +15,7 @@
       <b-collapse-item name='c' title="标题三">内容 3</b-collapse-item>
     </b-collapse> -->
 
-    <!-- <b-popover>
+    <b-popover>
       <template slot="content" slot-scope={close}>
         内容文字一
         <b-button @click="close">close</b-button>
@@ -40,7 +40,7 @@
         内容文字四
       </template>
       <b-button>右方</b-button>
-    </b-popover> -->
+    </b-popover>
 
     <!-- <div>
       <b-tabs v-model="selectedTab" type='card' @tab-click='tabClick'>
