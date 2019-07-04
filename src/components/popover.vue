@@ -147,7 +147,6 @@ export default {
 <style lang="scss">
 .b-popover {
   position: relative;
-  top: 50px;
   display: inline-block;
 }
 .b-popover-content {

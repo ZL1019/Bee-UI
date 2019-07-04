@@ -139,13 +139,13 @@ export default {
 }
 .b-cascader {
   // position: relative;
-
+  background: #fff;
   .b-cascader-popover {
     // position: absolute;
     // top: 100%;
     // left: 0;
     margin-top: 2px;
-    background: #fff;
+    
     border-radius: 4px;
     @extend .box-shadow;
   }
