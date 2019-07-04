@@ -5,11 +5,11 @@
     <!-- :load-data="loadData"  -->
     <b-card shadow='hover' :body-style="bodyStyle">
        <div slot="header">
-         卡片名称
+         卡片名称23
        </div>
        <p>内容一</p>
        <p>内容二</p>
-      <b-cascader :options.sync=options :load-data="loadData" popover-height="180px" :selected.sync=selectedCascader>
+      <b-cascader :options.sync=options :load-data="loadData" trigger="hover" popover-height="180px" :selected.sync=selectedCascader>
           <!-- <b-button type="primary">Trigger</b-button> -->
       </b-cascader>
     </b-card>
@@ -22,7 +22,8 @@
       <b-collapse-item name='c' title="标题三">内容 3</b-collapse-item>
     </b-collapse> -->
 
-    <!-- <b-popover>
+<div style="margin-left:50px;">
+    <b-popover>
       <template slot="content" slot-scope={close}>
         内容文字一
         <b-button @click="close">close</b-button>
@@ -47,7 +48,9 @@
         内容文字四
       </template>
       <b-button>右方</b-button>
-    </b-popover> -->
+    </b-popover>
+</div>
+
 
     <!-- <div>
       <b-tabs v-model="selectedTab" type='card' @tab-click='tabClick'>
