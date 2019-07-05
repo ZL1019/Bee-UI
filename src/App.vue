@@ -5,11 +5,11 @@
     <!-- :load-data="loadData"  -->
     <b-card shadow='hover' :body-style="bodyStyle">
        <div slot="header">
-         卡片名称23
+         卡片名称
        </div>
        <p>内容一</p>
        <p>内容二</p>
-      <b-cascader :options.sync=options :load-data="loadData" trigger="hover" popover-height="180px" :selected.sync=selectedCascader>
+      <b-cascader :options.sync=options :load-data="loadData" trigger="click" popover-height="180px" :selected.sync=selectedCascader>
           <!-- <b-button type="primary">Trigger</b-button> -->
       </b-cascader>
     </b-card>

@@ -1,51 +1,55 @@
 <template>
-  <div class="b-cascader">
-    <bear-popover position="bottom" :trigger="trigger">
-      <template slot="content">
-        <div class="b-cascader-popover">
-          <cascader-items :options="options" :selected="selected" :load-data="loadData" @update:selected="updateSelected" :popover-height="popoverHeight">
-          </cascader-items>
-        </div>
+  <div :class="classes">
+    <b-popover position="bottom" :trigger="trigger" :content-style="contentStyle">
+      <template slot="content" slot-scope={close}>
+        <cascader-items @close="close" :options="options" :selected="selected" :load-data="loadData" @update:selected="updateSelected" :popover-height="popoverHeight">
+        </cascader-items>
       </template>
       <div class="b-cascader-trigger">
-        <div v-if="$slots.default" @click="toggle">
+        <div v-if="$slots.default">
           <slot></slot>
         </div>
         <div v-else>
-          <Bear-Input :value="result" clearable></Bear-Input>
+          <b-input :value="result" readonly style="pointer-events:none;" placeholder="请选择"></b-input>
+          <b-icon @click.stop="clear" name="close" class="b-cascader-icon-close"/>
         </div>
       </div>
-    </bear-popover>
-
+    </b-popover>
   </div>
 </template>
 
 <script>
-import BearInput from './input';
-import BearPopover from './popover';
+
+import BIcon from './icon';
+import BInput from './input';
+import BPopover from './popover';
 import CascaderItems from './cascader-items';
 
 export default {
   name: 'bear-cascader',
   components: {
-    BearInput,
-    BearPopover,
+    BInput,
+    BPopover,
     CascaderItems,
   },
   props: {
+    loadData: {
+      type: Function,
+    },  
+    clearable:{
+      type: Boolean,
+      default: true
+    },  
     options: {
       type: Array,
       default: () => [],
-    },
-    popoverHeight: {
-      type: [String, Number],
     },
     selected: {
       type: Array,
       default: () => [],
     },
-    loadData: {
-      type: Function,
+    popoverHeight: {
+      type: [String, Number],
     },
     trigger:{
       type: String,
@@ -57,22 +61,16 @@ export default {
   },
   data() {
     return {
-      popVisible: false,
+      contentStyle:{
+        width: 'auto',
+        padding: '0px'
+      }
     };
   },
+  mounted(){},
   methods: {
-    open() {
-      this.popVisible = true;
-    },
-    close() {
-      this.popVisible = false;
-    },
-    toggle() {
-      if (this.popVisible) {
-        this.close();
-      } else {
-        this.open();
-      }
+    clear(){
+      this.$emit('update:selected', []);
     },
     updateSelected(item) {
       this.$emit('update:selected', item);
@@ -126,28 +124,38 @@ export default {
 
   computed: {
     result() {
-      return this.selected.map(item => item.label).join('/');
+      return this.selected.map(item => item.label).join(' / ');
     },
+    classes() {
+      return {
+        'b-cascader': true,
+        'b-cascader-show-close': this.clearable && !!(this.result + '')
+      }
+    }
   },
 };
 </script>
 
 <style lang="scss">
-@import '../style/var.scss';
-.b-popover-content {
-  width: auto !important;
-}
 .b-cascader {
-  // position: relative;
+  color: #515a6e;
   background: #fff;
-  .b-cascader-popover {
-    // position: absolute;
-    // top: 100%;
-    // left: 0;
-    margin-top: 2px;
-    
-    border-radius: 4px;
-    @extend .box-shadow;
+  .b-cascader-trigger{
+    cursor: pointer;
+  }
+  .b-cascader-icon-close {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    fill:rgba(0,0,0,0.45);
+  }
+  &.b-cascader-show-close:hover,&.b-cascader-show-close:focus{
+    .b-cascader-icon-close {
+      display: block;
+    }
   }
 }
 </style>

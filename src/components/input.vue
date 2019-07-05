@@ -37,7 +37,7 @@
       @keydown="$emit('on-keydown',$event)"
       @keypress="$emit('on-keypress',$event)"
       @input="$emit('input', $event.target.value)">
-    <icon @click="clearValue" style="z-index:99;" class="b-input-icon" name="close" />
+    <icon @click="clearValue" class="b-input-icon" name="close" />
   </div>
 </template>
 
@@ -132,6 +132,7 @@ export default {
   },
   methods: {
     clearValue() {
+      console.log(this.value);
       this.$emit('input', '');
     },
     resizeTextarea() {
@@ -168,6 +169,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+::placeholder {
+  color: #dcdfe6;
+}
 .b-input-icon {
   display: none;
   position: absolute;
@@ -177,7 +181,6 @@ export default {
   cursor: pointer;
   fill:rgba(0,0,0,0.45);
 }
-
 .b-input-clearable:hover,
 .b-input-clearable:focus {
   .b-input-icon {

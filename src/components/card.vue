@@ -12,38 +12,33 @@
 <script>
 export default {
   name: 'bear-card',
-  data(){
-    return {
-      headerVisible: false
-    }
+  data() {
+    return {};
   },
-  props:{
-    shadow:{
+  props: {
+    bodyStyle: {
+      type: Object,
+    },
+    headerStyle: {
+      type: Object,
+    },
+    shadow: {
       type: String,
-      default:'always',
-      validator(value){
-        return ['always','hover','never'].indexOf(value) > -1
-      }
-    },
-    bodyStyle:{
-      type: Object,
-    },
-    headerStyle:{
-      type: Object,
+      default: 'always',
+      validator(value) {
+        return ['always', 'hover', 'never'].indexOf(value) > -1;
+      },
     },
   },
-  mounted(){
-    console.log(this.$slots.header);
-  },
-  computed:{
-    classes(){
+  computed: {
+    classes() {
       return {
         'b-card': true,
         'is-hover-shadow': this.shadow === 'hover',
-        'is-always-shadow': this.shadow === 'always'
-      }
-    }
-  }
+        'is-always-shadow': this.shadow === 'always',
+      };
+    },
+  },
 };
 </script>
 
@@ -54,17 +49,17 @@ export default {
   border: 1px solid #ebeef5;
   background-color: #fff;
   transition: box-shadow 0.2s;
-  &.is-always-shadow{
+  &.is-always-shadow {
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   }
-  &.is-hover-shadow:hover{
+  &.is-hover-shadow:hover {
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   }
-  .b-card-header{
-    padding:18px 20px;
+  .b-card-header {
+    padding: 18px 20px;
     border-bottom: 1px solid #ebeef5;
   }
-  .b-card-body{
+  .b-card-body {
     font-size: 14px;
     padding: 20px;
   }

@@ -1,6 +1,6 @@
 <template>
   <div ref="popover" class="b-popover">
-    <div v-if="show" ref="contentWrapper" :class="classes">
+    <div v-if="visible" ref="contentWrapper" :class="classes" :style="contentStyle">
       <slot name="content" :close="close"></slot>
     </div>
     <div ref="triggerWrapper" class="b-popover-trigger">
@@ -19,6 +19,12 @@ export default {
     content: {
       type: [Number, String],
     },
+    contentStyle: {
+      type: Object,
+      default: () => {
+        return { width: '200px' };
+      },
+    },
     position: {
       type: String,
       default: 'top',
@@ -36,7 +42,7 @@ export default {
   },
   data() {
     return {
-      show: false,
+      visible: false,
     };
   },
   computed: {
@@ -109,19 +115,20 @@ export default {
       this.close();
     },
     open() {
-      this.show = true;
+      console.log('open');
+      this.visible = true;
       this.$nextTick(() => {
         this.locateContent();
         this.listenDocument();
       });
     },
     close() {
-      this.show = false;
+      this.visible = false;
       document.removeEventListener('click', this.onClickDocument);
     },
     onClick(event) {
       if (this.$refs.triggerWrapper.contains(event.target)) {
-        if (this.show) {
+        if (this.visible) {
           this.close();
         } else {
           this.open();
@@ -138,13 +145,13 @@ export default {
   display: inline-block;
 }
 .b-popover-content {
-  width: 200px;
   position: absolute;
   border-radius: 4px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
   padding: 8px 16px;
   word-break: break-all;
   color: #515a6e;
+  background: #fff;
   &:before {
     content: '';
     display: block;

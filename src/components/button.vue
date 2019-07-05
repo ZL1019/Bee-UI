@@ -148,7 +148,7 @@ export default {
   bottom: -1px;
   background: #fff;
   border-radius: inherit;
-  pointer-events: none;
+  pointer-events:none;
   opacity: 0.3;
   transition: opacity 0.2s;
 }

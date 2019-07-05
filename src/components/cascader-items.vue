@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="b-cascader-items-right" v-if="rightItem">
-      <bear-cascader-items :level="level+1" :options="rightItem" :selected="selected" :load-data="loadData" @update:selected="updateSelected">
+      <bear-cascader-items @close="$emit('close')" :level="level+1" :options="rightItem" :selected="selected" :load-data="loadData" @update:selected="updateSelected">
       </bear-cascader-items>
     </div>
   </div>
@@ -59,12 +59,6 @@ export default {
           return selected[0].children;
         }
       }
-      // let currentSelected = this.selected[this.level];
-      // if (currentSelected && currentSelected.children) {
-      //   return currentSelected.children;
-      // } else {
-      //   return null;
-      // }
     },
   },
   methods: {
@@ -73,6 +67,9 @@ export default {
       copy[this.level] = item;
       copy.splice(this.level + 1);
       this.$emit('update:selected', copy);
+      if(item.isLeaf){
+        this.$emit('close')
+      }    
     },
     updateSelected(newSelected) {
       this.$emit('update:selected', newSelected);
@@ -92,11 +89,12 @@ export default {
     padding: 8px 0px;
     cursor: pointer;
     .b-cascader-label {
-      padding: 4px 16px;
+      padding: 4px 16px 4px 24px;
       display: flex;
       align-items: center;
       .b-cascader-label-text {
-        margin-right: 1em;
+        margin-right: 2em;
+        line-height: 1.5;
       }
       .b-cascader-label-icon {
         margin-left: auto;
