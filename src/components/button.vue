@@ -78,14 +78,7 @@ export default {
 
 @import '../style/var.scss';
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
+
 
 .b-btn.b-btn-loading {
   pointer-events: none;

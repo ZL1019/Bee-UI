@@ -2,7 +2,7 @@
   <div :class="classes">
     <b-popover position="bottom" :trigger="trigger" :content-style="contentStyle">
       <template slot="content" slot-scope={close}>
-        <cascader-items @close="close" :options="options" :selected="selected" :load-data="loadData" @update:selected="updateSelected" :popover-height="popoverHeight">
+        <cascader-items @close="close" :options="options" :selected="selected" :load-data="loadData" :load-item="loadItem" @update:selected="updateSelected" :popover-height="popoverHeight">
         </cascader-items>
       </template>
       <div class="b-cascader-trigger">
@@ -64,7 +64,8 @@ export default {
       contentStyle:{
         width: 'auto',
         padding: '0px'
-      }
+      },
+      loadItem:{}
     };
   },
   mounted(){},
@@ -110,14 +111,17 @@ export default {
         }
       };
 
-      if (!clickedItem.isLeaf) {
-        this.loadData &&
-          this.loadData(clickedItem, res => {
-            let copy = JSON.parse(JSON.stringify(this.options));
-            let targetItem = complex(copy, clickedItem.id);
-            targetItem.children = res;
-            this.$emit('update:options', copy);
-          });
+      let updateOptions = (res) => {    
+        this.loadItem = {};
+        console.log('clickedItem: ', clickedItem);
+        let copy = JSON.parse(JSON.stringify(this.options));
+        let targetItem = complex(copy, clickedItem.id);
+        targetItem.children = res;
+        this.$emit('update:options', copy);
+      }
+      if (!clickedItem.isLeaf && this.loadData) {
+          this.loadData(clickedItem, updateOptions);
+          this.loadItem = clickedItem;
       }
     },
   },
@@ -139,6 +143,7 @@ export default {
 <style lang="scss">
 .b-cascader {
   color: #515a6e;
+  display: inline-block;
   background: #fff;
   .b-cascader-trigger{
     cursor: pointer;

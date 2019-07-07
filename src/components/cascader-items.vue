@@ -3,11 +3,14 @@
     <div class="b-cascader-items-left">
       <div v-for="(item,index) in options" :key="index" @click="onClick(item)" class="b-cascader-label">
         <span class="b-cascader-label-text">{{item.label}}</span>
-        <bear-icon v-if="loadData ? !item.isLeaf : item.children" name="right" class="b-cascader-label-icon" />
+        <bear-icon v-if="loadData ? loadItem.id === item.id : null" name="loading" class="b-cascader-loading-icon" />
+        <template v-else>
+          <bear-icon v-if="loadData ? !item.isLeaf : item.children" name="right" class="b-cascader-arrow-icon" />
+        </template>
       </div>
     </div>
     <div class="b-cascader-items-right" v-if="rightItem">
-      <bear-cascader-items @close="$emit('close')" :level="level+1" :options="rightItem" :selected="selected" :load-data="loadData" @update:selected="updateSelected">
+      <bear-cascader-items @close="$emit('close')" :level="level+1" :options="rightItem" :selected="selected" :load-data="loadData" :load-item="loadItem" @update:selected="updateSelected">
       </bear-cascader-items>
     </div>
   </div>
@@ -36,6 +39,10 @@ export default {
     loadData: {
       type: Function,
     },
+    loadItem:{
+      type: Object,
+      default: () => {{}}
+    }
   },
   components: {
     'bear-icon': Icon,
@@ -80,6 +87,9 @@ export default {
 </script>
 
 <style lang="scss">
+
+@import '../style/var.scss';
+
 .b-cascader-items {
   height: 100%;
   display: flex;
@@ -96,8 +106,12 @@ export default {
         margin-right: 2em;
         line-height: 1.5;
       }
-      .b-cascader-label-icon {
+      .b-cascader-arrow-icon {
         margin-left: auto;
+      }
+      .b-cascader-loading-icon{
+        margin-left: auto;
+        animation: spin 1.5s linear infinite;
       }
     }
     .b-cascader-label:hover {
