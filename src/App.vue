@@ -1,22 +1,29 @@
 <template>
   <div id="app" style="padding:16px;">
-    <br>
-    <br>
-    <!-- :load-data="loadData"  -->
-    <b-card shadow='hover' :body-style="bodyStyle">
+    <b-button @click="slidesSelected = '3'">{{slidesSelected}}</b-button>
+    <b-slides style="width:50%;" :selected.sync='slidesSelected'>
+      <b-slides-item name='1'>
+        <img width="100%" style="display:block;" src="./assets/1.png" alt="">
+      </b-slides-item>
+      <b-slides-item name='2'>
+        <img width="100%" style="display:block;" src="./assets/2.png" alt="">
+      </b-slides-item>
+      <b-slides-item name='3'>
+        <img width="100%" style="display:block;" src="./assets/3.png" alt="">
+      </b-slides-item>
+    </b-slides>
+
+
+    <!-- <b-card shadow='hover' :body-style="bodyStyle">
        <div slot="header">
          卡片名称
        </div>
        <p>内容一</p>
        <p>内容二</p>
       <b-cascader :options.sync=options :load-data="loadData" trigger="click" popover-height="180px" :selected.sync=selectedCascader>
-          <!-- <b-button type="primary">Trigger</b-button> -->
       </b-cascader>
       <br>
-      <b-cascader :options.sync=options :load-data="loadData" trigger="click" popover-height="180px" :selected.sync=selectedCascader>
-          <!-- <b-button type="primary">Trigger</b-button> -->
-      </b-cascader>
-    </b-card>
+    </b-card> -->
 
     <!-- 
     {{selected}}
@@ -191,6 +198,7 @@ export default {
   components: {},
   data() {
     return {
+      slidesSelected:'1',
       bodyStyle:{
         // padding:"10px",
       },

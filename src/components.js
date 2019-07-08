@@ -17,6 +17,8 @@ import CollapseItem from "./components/collapse-item";
 import Sticky from "./components/sticky";
 import Cascader from "./components/cascader";
 import Card from "./components/card";
+import Slides from "./components/slides";
+import SlidesItem from "./components/slides-item";
 
 // import CascaderItem from "./components/cascader-item";
 
@@ -37,4 +39,6 @@ Vue.component("b-collapse-item", CollapseItem);
 Vue.component("b-sticky", Sticky);
 Vue.component("b-cascader", Cascader);
 Vue.component("b-card", Card);
+Vue.component("b-slides", Slides);
+Vue.component("b-slides-item", SlidesItem);
 // Vue.component("b-cascader-item", CascaderItem);
