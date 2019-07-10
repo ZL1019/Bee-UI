@@ -52,15 +52,6 @@ export default {
         }, this.time);
       };
       fn();
-      // setInterval(()=>{
-      //   if(index === names.length-1){
-      //     index = 0
-      //   }else{
-      //     index = index + 1
-      //   }
-      //   this.$emit('update:selected',names[index])
-
-      // },this.time)
     },
     updateSelected() {
       this.$children.forEach(child => {
