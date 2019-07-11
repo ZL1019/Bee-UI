@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="slides-item" v-show="visible">
+    <div :class="classes" v-show="visible">
       <slot></slot>
     </div>
   </transition>
@@ -11,7 +11,8 @@ export default {
   name: 'bear-slides-item',
   data(){
     return {
-      visible: false
+      visible: false,
+      reverse: false,
     }
   },
   props:{
@@ -19,7 +20,12 @@ export default {
     required: true
   },
   computed:{
-    
+    classes(){
+      return {
+        'slides-item': true,
+        'slides-item-reverse': this.reverse
+      }
+    }
   }
 }
 </script>
@@ -35,12 +41,18 @@ export default {
     left:0;
   }
   .slide-enter-active,.slide-leave-active{
-    transition: all .5s;
+    transition: all .5s ease-in-out;
   }
   .slide-enter{
     transform: translateX(100%);
   }
+  .slide-enter.slides-item-reverse{
+    transform: translateX(-100%);
+  }
   .slide-leave-to{
     transform: translateX(-100%);
+  }
+  .slide-leave-to.slides-item-reverse{
+    transform: translateX(100%);
   }
 </style>

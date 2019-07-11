@@ -55,7 +55,12 @@ export default {
     },
     updateSelected() {
       this.$children.forEach(child => {
+        let names = this.$children.map(child => child.name);
+
         child.visible = this.selected === child.name;
+        let oldIndex = names.indexOf(child.name)
+        let newIndex = names.indexOf(this.selected)
+        child.reverse =  newIndex > oldIndex
       });
     },
   },
