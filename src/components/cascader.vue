@@ -11,7 +11,7 @@
         </div>
         <div v-else>
           <b-input :value="result" readonly style="pointer-events:none;" placeholder="请选择"></b-input>
-          <b-icon @click.stop="clear" name="close" class="b-cascader-icon-close"/>
+          <b-icon @click.stop="clear" name="close" class="b-cascader-icon-close" />
         </div>
       </div>
     </b-popover>
@@ -19,7 +19,6 @@
 </template>
 
 <script>
-
 import BIcon from './icon';
 import BInput from './input';
 import BPopover from './popover';
@@ -35,11 +34,11 @@ export default {
   props: {
     loadData: {
       type: Function,
-    },  
-    clearable:{
+    },
+    clearable: {
       type: Boolean,
-      default: true
-    },  
+      default: true,
+    },
     options: {
       type: Array,
       default: () => [],
@@ -51,26 +50,26 @@ export default {
     popoverHeight: {
       type: [String, Number],
     },
-    trigger:{
+    trigger: {
       type: String,
       default: 'click',
-      validator(value){
-        return ['click','hover'].indexOf(value) > -1
-      }
-    }
+      validator(value) {
+        return ['click', 'hover'].indexOf(value) > -1;
+      },
+    },
   },
   data() {
     return {
-      contentStyle:{
+      loadItem: {},
+      contentStyle: {
         width: 'auto',
-        padding: '0px'
-      },
-      loadItem:{}
+        padding: '0px',
+      }  
     };
   },
-  mounted(){},
+  mounted() {},
   methods: {
-    clear(){
+    clear() {
       this.$emit('update:selected', []);
     },
     updateSelected(item) {
@@ -84,22 +83,16 @@ export default {
       let complex = (children, id) => {
         let noChildren = [];
         let haveChildren = [];
+
         children.forEach(item => {
-          if (item.children) {
-            haveChildren.push(item);
-          } else {
-            noChildren.push(item);
-          }
+          item.children ? haveChildren.push(item) : noChildren.push(item);
         });
 
         let found = simplest(noChildren, id);
-        if (found) {
-          return found;
-        } else {
+
+        if (!found) {
           found = simplest(haveChildren, id);
-          if (found) {
-            return found;
-          } else {
+          if (!found) {
             for (let i = 0; i < haveChildren.length; i++) {
               found = complex(haveChildren[i].children, id);
               if (found) {
@@ -107,21 +100,24 @@ export default {
               }
             }
             return undefined;
+          } else {
+            return found;
           }
+        } else {
+          return found;
         }
       };
 
-      let updateOptions = (res) => {    
+      let updateOptions = res => {
         this.loadItem = {};
-        console.log('clickedItem: ', clickedItem);
         let copy = JSON.parse(JSON.stringify(this.options));
         let targetItem = complex(copy, clickedItem.id);
         targetItem.children = res;
         this.$emit('update:options', copy);
-      }
+      };
       if (!clickedItem.isLeaf && this.loadData) {
-          this.loadData(clickedItem, updateOptions);
-          this.loadItem = clickedItem;
+        this.loadData(clickedItem, updateOptions);
+        this.loadItem = clickedItem;
       }
     },
   },
@@ -133,9 +129,9 @@ export default {
     classes() {
       return {
         'b-cascader': true,
-        'b-cascader-show-close': this.clearable && !!(this.result + '')
-      }
-    }
+        'b-cascader-show-close': this.clearable && !!(this.result + ''),
+      };
+    },
   },
 };
 </script>
@@ -145,7 +141,7 @@ export default {
   color: #515a6e;
   display: inline-block;
   background: #fff;
-  .b-cascader-trigger{
+  .b-cascader-trigger {
     cursor: pointer;
   }
   .b-cascader-icon-close {
@@ -155,9 +151,10 @@ export default {
     right: 8px;
     transform: translateY(-50%);
     cursor: pointer;
-    fill:rgba(0,0,0,0.45);
+    fill: rgba(0, 0, 0, 0.45);
   }
-  &.b-cascader-show-close:hover,&.b-cascader-show-close:focus{
+  &.b-cascader-show-close:hover,
+  &.b-cascader-show-close:focus {
     .b-cascader-icon-close {
       display: block;
     }

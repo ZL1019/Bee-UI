@@ -14,7 +14,7 @@
     </b-slides>
 
 
-    <!-- <b-card shadow='hover' :body-style="bodyStyle">
+    <b-card shadow='hover' :body-style="bodyStyle">
        <div slot="header">
          卡片名称
        </div>
@@ -23,7 +23,7 @@
       <b-cascader :options.sync=options :load-data="loadData" trigger="click" popover-height="180px" :selected.sync=selectedCascader>
       </b-cascader>
       <br>
-    </b-card> -->
+    </b-card>
 
     <!-- 
     {{selected}}
