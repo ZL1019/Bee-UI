@@ -1,5 +1,8 @@
 module.exports = {
-  base:'test',
+  // base:'/Bear-UI/',
+  head:[
+		['link',{rel:'icon',href:'/favicon.ico'}]
+	],
   title: 'Bear UI',
   description: 'A Vue.js 2.0 UI Toolkit for Web.',
   themeConfig: {
@@ -16,7 +19,6 @@ module.exports = {
       { text: 'GitHub', link: 'https://github.com/NO2046' },
     ],
     sidebar: [
-      '/',
       {
         title: '开发指南',
         children:[

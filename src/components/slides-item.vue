@@ -9,50 +9,52 @@
 <script>
 export default {
   name: 'bear-slides-item',
-  data(){
+  data() {
     return {
       visible: false,
       reverse: false,
-    }
+    };
   },
-  props:{
-    name: String,
-    required: true
+  props: {
+    name: { type: String, required: true },
+    transitionName: { type: String, default: '' },  
   },
-  computed:{
-    classes(){
+
+  computed: {
+    classes() {
       return {
         'slides-item': true,
-        'slides-item-reverse': this.reverse
-      }
-    }
-  }
-}
+        'slides-item-reverse': this.reverse,
+      };
+    },
+  },
+};
 </script>
 
 <style lang="scss">
-  .slides-item{
-    width:100%; 
-    border:1px blue solid;
-  }
-  .slide-leave-active{
-    position: absolute;
-    top:0;
-    left:0;
-  }
-  .slide-enter-active,.slide-leave-active{
-    transition: all .5s ease-in-out;
-  }
-  .slide-enter{
-    transform: translateX(100%);
-  }
-  .slide-enter.slides-item-reverse{
-    transform: translateX(-100%);
-  }
-  .slide-leave-to{
-    transform: translateX(-100%);
-  }
-  .slide-leave-to.slides-item-reverse{
-    transform: translateX(100%);
-  }
+.slides-item {
+  width: 100%;
+  border: 1px blue solid;
+}
+.slide-leave-active {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.5s ease-in-out;
+}
+.slide-enter {
+  transform: translateX(100%);
+}
+.slide-enter.slides-item-reverse {
+  transform: translateX(-100%);
+}
+.slide-leave-to {
+  transform: translateX(-100%);
+}
+.slide-leave-to.slides-item-reverse {
+  transform: translateX(100%);
+}
 </style>

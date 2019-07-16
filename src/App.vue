@@ -1,20 +1,21 @@
 <template>
   <div id="app" style="padding:16px;">
     <b-button @click="slidesSelected = '3'">{{slidesSelected}}</b-button>
+    <br>
     <b-slides style="width:50%;" :selected.sync='slidesSelected'>
       <b-slides-item name='1'>
-        <img width="100%" style="display:block;" src="./assets/1.png" alt="">
+        <img width="100%" style="display:block;" src="./assets/1.jpg" alt="">
       </b-slides-item>
       <b-slides-item name='2'>
-        <img width="100%" style="display:block;" src="./assets/2.png" alt="">
+        <img width="100%" style="display:block;" src="./assets/2.jpg" alt="">
       </b-slides-item>
       <b-slides-item name='3'>
-        <img width="100%" style="display:block;" src="./assets/3.png" alt="">
+        <img width="100%" style="display:block;" src="./assets/3.jpg" alt="">
       </b-slides-item>
     </b-slides>
 
 
-    <b-card shadow='hover' :body-style="bodyStyle">
+    <!-- <b-card shadow='hover' :body-style="bodyStyle">
        <div slot="header">
          卡片名称
        </div>
@@ -23,7 +24,7 @@
       <b-cascader :options.sync=options :load-data="loadData" trigger="click" popover-height="180px" :selected.sync=selectedCascader>
       </b-cascader>
       <br>
-    </b-card>
+    </b-card> -->
 
     <!-- 
     {{selected}}
