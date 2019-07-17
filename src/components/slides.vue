@@ -7,7 +7,7 @@
       <div v-for="(n,index) in childrenLength" :class="{
           'b-slides-bullet':true, 
           'b-slides-bullet-active': index === currentIndex,
-        }" :key="index" @click="emitUpdateSelected(index)"></div>
+        }" :key="index" @click="emitUpdateSelected(index, true)"></div>
     </div>
   </div>
 </template>
@@ -20,6 +20,7 @@ export default {
       childrenLength: 0,
       timerId: undefined,
       oldIndex: '',
+      isClick: false,
     };
   },
   props: {
@@ -29,7 +30,7 @@ export default {
     },
     interval: {
       type: Number,
-      default: 3000,
+      default: 1000,
     },
     isAutoPlay: {
       type: Boolean,
@@ -82,20 +83,18 @@ export default {
       window.clearTimeout(this.timerId);
       this.timerId = undefined;
     },
-    emitUpdateSelected(nameIndex) {
+    emitUpdateSelected(nameIndex, isClick) {
       this.pause();
+      this.isClick = isClick;
+      console.log(123);
       this.$emit('update:selected', this.childNames[nameIndex]);
     },
-    setReverse(newIndex) {
+    setReverse(newIndex){
       this.$children.forEach((child, index) => {
-        if (this.oldIndex > newIndex) {
-          child.reverse = this.oldIndex === index || newIndex === index;
-        } else {
-          child.reverse = false;
-        }
+        child.reverse = (this.oldIndex > newIndex && this.isClick ) ? this.oldIndex === index || newIndex === index : false
       });
       this.oldIndex = newIndex;
-      return true;
+      return true
     },
     updateSelected() {
       this.$children.forEach((child, newIndex) => {
