@@ -2,7 +2,7 @@
   <div id="app" style="padding:16px;">
     <b-button @click="slidesSelected = '3'">{{slidesSelected}}</b-button>
     <br>
-    <b-slides style="width:50%;" :selected.sync='slidesSelected'>
+    <b-slides style="width:100%;" :selected.sync='slidesSelected'>
       <b-slides-item name='1'>
         <img width="100%" style="display:block;" src="./assets/1.jpg" alt="">
       </b-slides-item>
@@ -34,7 +34,7 @@
       <b-collapse-item name='c' title="标题三">内容 3</b-collapse-item>
     </b-collapse> -->
 
-<div style="margin-left:50px;">
+<!-- <div style="margin-left:50px;">
     <b-popover>
       <template slot="content" slot-scope={close}>
         内容文字一
@@ -61,7 +61,7 @@
       </template>
       <b-button>右方</b-button>
     </b-popover>
-</div>
+</div> -->
 
 
     <!-- <div>
