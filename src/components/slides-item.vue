@@ -17,7 +17,6 @@ export default {
   },
   props: {
     name: { type: String, required: true },
-    transitionName: { type: String, default: '' },  
   },
 
   computed: {
