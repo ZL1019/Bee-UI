@@ -19,6 +19,9 @@ import Cascader from "./components/cascader";
 import Card from "./components/card";
 import Slides from "./components/slides";
 import SlidesItem from "./components/slides-item";
+import Nav from "./components/nav";
+import SubNav from "./components/sub-nav";
+import NavItem from "./components/nav-item";
 
 // import CascaderItem from "./components/cascader-item";
 
@@ -41,4 +44,7 @@ Vue.component("b-cascader", Cascader);
 Vue.component("b-card", Card);
 Vue.component("b-slides", Slides);
 Vue.component("b-slides-item", SlidesItem);
+Vue.component("b-nav-item", NavItem);
+Vue.component("b-nav", Nav);
+Vue.component("b-sub-nav", SubNav);
 // Vue.component("b-cascader-item", CascaderItem);

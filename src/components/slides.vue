@@ -9,6 +9,12 @@
     <div class="b-slides-items-container">
       <slot></slot>
     </div>
+    <div class="b-slides-pre-btn">
+      
+    </div>
+    <div class="b-slides-next-btn">
+
+    </div>
     <div class="b-slides-pagination">
       <div v-for="(n,index) in childrenLength" :class="{
           'b-slides-bullet':true, 
@@ -114,7 +120,7 @@ export default {
       this.timerId = undefined;
     },
     emitUpdateSelected(nameIndex, isReverse) {
-      this.pause();
+      this.pause()
       this.isReverse = isReverse;
       this.$emit('update:selected', this.childNames[nameIndex]);
     },
@@ -124,6 +130,7 @@ export default {
         if(window.ontouchstart !== undefined && this.oldIndex === 0 && newIndex === this.childrenLength-1 ){
           child.reverse = true
         }else{  
+          // 当目标索引小于初始索引，并且是 bullet点击 或者滑动 触发 则切换子组件的 reverse
           child.reverse = this.oldIndex > newIndex && this.isReverse ? this.oldIndex === index || newIndex === index : false; 
         }
       });

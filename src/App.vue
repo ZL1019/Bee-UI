@@ -1,6 +1,34 @@
 <template>
   <div id="app" style="padding:16px;">
-    <b-button @click="slidesSelected = '3'">{{slidesSelected}}</b-button>
+    {{yyy}}
+    <b-nav :selected.sync="yyy">
+      <b-nav-item name="1">
+        火锅 🍲
+      </b-nav-item>
+      <b-sub-nav>
+        <template slot="title">水果</template>
+        <b-nav-item name="3">
+          西瓜 🍉
+        </b-nav-item>
+        <b-nav-item name="4">
+          橘子 🍊
+        </b-nav-item>
+        <b-sub-nav>
+          <template slot="title">苹果 🍎</template>
+          <b-nav-item name="6">
+            红富士
+          </b-nav-item>
+          <b-nav-item name="7">
+            嘎了蜜
+          </b-nav-item>
+        </b-sub-nav>
+      </b-sub-nav>
+      <b-nav-item name="11">
+        烧烤 🐷
+      </b-nav-item>
+    </b-nav>
+
+    <!-- <b-button @click="slidesSelected = '3'">{{slidesSelected}}</b-button>
     <br>
     <b-slides style="width:100%;" :selected.sync='slidesSelected'>
       <b-slides-item name='1'>
@@ -12,8 +40,7 @@
       <b-slides-item name='3'>
         <img width="100%" style="display:block;" src="./assets/3.jpg" alt="">
       </b-slides-item>
-    </b-slides>
-
+    </b-slides> -->
 
     <!-- <b-card shadow='hover' :body-style="bodyStyle">
        <div slot="header">
@@ -34,7 +61,7 @@
       <b-collapse-item name='c' title="标题三">内容 3</b-collapse-item>
     </b-collapse> -->
 
-<!-- <div style="margin-left:50px;">
+    <!-- <div style="margin-left:50px;">
     <b-popover>
       <template slot="content" slot-scope={close}>
         内容文字一
@@ -62,7 +89,6 @@
       <b-button>右方</b-button>
     </b-popover>
 </div> -->
-
 
     <!-- <div>
       <b-tabs v-model="selectedTab" type='card' @tab-click='tabClick'>
@@ -199,8 +225,9 @@ export default {
   components: {},
   data() {
     return {
-      slidesSelected:'1',
-      bodyStyle:{
+      yyy: ['3'],
+      slidesSelected: '1',
+      bodyStyle: {
         // padding:"10px",
       },
       selectedCascader: [],
