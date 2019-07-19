@@ -21,9 +21,18 @@ export default {
   },
   methods: {
     onClick() {
+      this.root.namePath = [];
+      this.$parent.updateNamePath && this.$parent.updateNamePath()
       this.$emit('changeSelected', this.name);
     },
+    onClickOnce() {
+      this.onClick();
+      this.onClickOnce = null
+    },
   },
+  updated(){
+    this.active && this.onClickOnce && this.onClickOnce()
+  }
 };
 </script>
 
@@ -33,7 +42,7 @@ export default {
   cursor: pointer;
   border-bottom: 2px transparent solid;
   transition: all 0.2s ease-in-out;
-  z-index: 99;
+  z-index: 2;
   white-space: nowrap;
   line-height:2;
   &.active, &:hover {

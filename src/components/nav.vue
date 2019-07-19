@@ -14,7 +14,8 @@ export default {
   },
   data() {
     return {
-      items:[]
+      items:[],
+      namePath:[]
     };
   },
   props: {
@@ -53,13 +54,6 @@ export default {
         });
       });
     },
-  },
-  computed: {
-    // items() {
-    //   return this.$children.filter(
-    //     child => child.$options.name === 'bear-nav-item',
-    //   );
-    // },
   },
 };
 </script>

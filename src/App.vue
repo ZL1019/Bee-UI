@@ -2,28 +2,28 @@
   <div id="app" style="padding:16px;">
     {{yyy}}
     <b-nav :selected.sync="yyy">
-      <b-nav-item name="1">
+      <b-nav-item name="hotpot">
         火锅 🍲
       </b-nav-item>
-      <b-sub-nav>
-        <template slot="title">水果</template>
-        <b-nav-item name="3">
+      <b-sub-nav name='fruit'>
+        <template slot="title">水果 🍌</template>
+        <b-nav-item name="xigua">
           西瓜 🍉
         </b-nav-item>
-        <b-nav-item name="4">
+        <b-nav-item name="orange">
           橘子 🍊
         </b-nav-item>
-        <b-sub-nav>
+        <b-sub-nav name='apple'>
           <template slot="title">苹果 🍎</template>
-          <b-nav-item name="6">
-            红富士
+          <b-nav-item name="redApple">
+            红苹果 🍎
           </b-nav-item>
-          <b-nav-item name="7">
-            嘎了蜜
+          <b-nav-item name="greenApple">
+            青苹果 🍏
           </b-nav-item>
         </b-sub-nav>
       </b-sub-nav>
-      <b-nav-item name="11">
+      <b-nav-item name="barbecu">
         烧烤 🐷
       </b-nav-item>
     </b-nav>
@@ -225,7 +225,7 @@ export default {
   components: {},
   data() {
     return {
-      yyy: ['3'],
+      yyy: ['redApple'],
       slidesSelected: '1',
       bodyStyle: {
         // padding:"10px",
