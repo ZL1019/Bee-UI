@@ -1,5 +1,6 @@
 <template>
   <div class="b-nav">
+    {{namePath}}
     <slot></slot>
   </div>
 </template>

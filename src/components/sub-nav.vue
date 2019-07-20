@@ -1,7 +1,13 @@
 <template>
   <div class="b-sub-nav" v-click-outside="close">
     <div @click="visible = !visible" :class="classes">
-      <slot name="title"></slot>
+      <div>
+        <slot name="title"></slot>
+      </div>
+      <div class="b-sub-nav-icon">
+        <icon v-if="visible" name="left"></icon>
+        <icon v-else name="right"></icon>
+      </div>
     </div>
     <div v-show="visible" class="b-sub-nav-horizontal">
       <slot></slot>
@@ -9,12 +15,16 @@
   </div>
 </template>
 
-<script>
+<script> 
+import icon from './icon'
 import ClickOutside from './click-outside.js'
 export default {
   inject: ['root'],
   directives:{ClickOutside},
   name: 'bear-sub-nav',
+  components: {
+    icon,
+  },
   data() {
     return {
       visible: false,
@@ -41,6 +51,9 @@ export default {
     },
     updateNamePath() {
       this.root.namePath.unshift(this.name);
+      if(this.root.namePath.indexOf(this.name)===this.root.namePath.length-1){
+        this.visible = false
+      }
       this.$parent.updateNamePath && this.$parent.updateNamePath();
     },
   },
@@ -53,12 +66,20 @@ export default {
   cursor: pointer;
   z-index: 2;
   .b-sub-nav-title{
+    display:flex;
     border-bottom: 2px transparent solid;
     padding: 0 20px;
     transition: all 0.2s;
+    align-items:center;
+    div{
+      flex-shrink: 0;
+    }
     &:hover {
       color: #2d8cf0;
       border-bottom: 2px #2d8cf0 solid; 
+    }
+    .b-sub-nav-icon{
+      display:none;
     }
   }
   .b-sub-nav-active {
@@ -79,6 +100,14 @@ export default {
     top: 0;
     left: 100%;
     margin-left: 2px;
+  }
+  .b-sub-nav{
+    .b-sub-nav-icon{
+      display:flex;
+    }
+    .b-sub-nav-title:hover{
+      border-bottom: 2px transparent solid;
+    }
   }
   .b-nav-item {
     transition: all 0.2s ease-in-out;
