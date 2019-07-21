@@ -162,7 +162,7 @@ export default {
   }
 }
 
-.icon-right.b-btn-haveSlot {
+.icon-right {
   .icon {
     order: 1;
     margin-left: 5px;
