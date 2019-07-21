@@ -4,14 +4,25 @@
       <div>
         <slot name="title"></slot>
       </div>
-      <div class="b-sub-nav-icon">
-        <icon v-if="visible" name="left"></icon>
-        <icon v-else name="right"></icon>
+      <div v-if="vertical" class="b-sub-nav-icon-vertical ">
+        <icon name="down" :class="{'b-sub-nav-down-icon-active':visible}"></icon>
+      </div>
+      <div v-else class="b-sub-nav-icon">
+        <icon name="right" :class="{'b-sub-nav-icon-active':visible}"></icon>
       </div>
     </div>
-    <div v-show="visible" class="b-sub-nav-horizontal">
-      <slot></slot>
-    </div>
+    <template v-if="vertical">
+      <transition @enter="enter" @leave="leave" @after-leave="afterLeave" @after-enter="afterEnter">
+        <div v-show="visible" :class="{'b-sub-nav-horizontal':true, vertical}">
+          <slot></slot>
+        </div>
+      </transition>
+    </template>
+    <template v-else>
+      <div v-show="visible" class="b-sub-nav-horizontal">
+        <slot></slot>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -19,7 +30,7 @@
 import icon from './icon';
 import ClickOutside from './click-outside.js';
 export default {
-  inject: ['root'],
+  inject: ['root', 'vertical'],
   directives: { ClickOutside },
   name: 'bear-sub-nav',
   components: {
@@ -33,9 +44,10 @@ export default {
   computed: {
     classes() {
       return {
+        'vertical':this.vertical,
         'b-sub-nav-title': true,
         'b-sub-nav-active': this.root.namePath.indexOf(this.name) > -1,
-        'b-sub-nav-top-active': this.root.namePath.indexOf(this.name) === 0,
+        'b-sub-nav-top-active': this.root.namePath.indexOf(this.name) === 0 && !this.vertical,
       };
     },
   },
@@ -46,14 +58,38 @@ export default {
     this.names = this.$children.map(item => item.name);
   },
   methods: {
+    enter(el, done) {
+      let { height } = el.getBoundingClientRect();
+      el.style.height = 0;
+      el.getBoundingClientRect();
+      el.style.height = `${height}px`;
+      el.addEventListener('transitionend', () => {
+        done();
+      });
+    },
+    leave(el, done) {
+      let { height } = el.getBoundingClientRect();
+      el.style.height = `${height}px`;
+      el.getBoundingClientRect();
+      el.style.height = 0;
+      el.addEventListener('transitionend', () => {
+        done();
+      });
+    },
+    afterEnter(el) {
+      el.style.height = 'auto';
+    },
+    afterLeave(el) {
+      el.style.height = 'auto';
+    },
     close() {
       this.visible = false;
     },
     updateNamePath() {
       this.root.namePath.unshift(this.name);
-
-      this.closeSelf();
-
+      if (!this.vertical) {
+        this.closeSelf();
+      }
       this.$parent.updateNamePath && this.$parent.updateNamePath();
     },
     closeSelf() {
@@ -86,14 +122,16 @@ export default {
     align-items: center;
     div {
       flex-shrink: 0;
+      display: flex;
     }
-    &:hover {
+    &:not(.vertical):hover {
       color: #2d8cf0;
       border-bottom: 2px #2d8cf0 solid;
     }
     .b-sub-nav-icon {
       display: none;
     }
+
   }
   .b-sub-nav-active {
     color: #2d8cf0;
@@ -108,15 +146,37 @@ export default {
     margin-top: 2px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     border-radius: 4px;
+    
+    transition: height 0.3s ease-in-out;
+    
+    &.vertical {
+      margin-left: 1em;
+      position: static;
+      box-shadow: none;
+      border-radius: none;
+      overflow: hidden;
+    }
   }
   .b-sub-nav-horizontal .b-sub-nav-horizontal {
     top: 0;
     left: 100%;
     margin-left: 2px;
+    &.vertical{
+      margin-left: 1em;
+    }
+    
   }
   .b-sub-nav {
-    .b-sub-nav-icon {
+    .b-sub-nav-icon,.b-sub-nav-icon-vertical {
       display: flex;
+      .b-sub-nav-icon-active {
+        transition: all 0.1s ease-in-out;
+        transform: rotate(-180deg);
+      }
+      .b-sub-nav-down-icon-active {
+        transition: all 0.1s ease-in-out;
+        transform: rotate(-180deg);
+      }
     }
     .b-sub-nav-title:hover {
       border-bottom: 2px transparent solid;

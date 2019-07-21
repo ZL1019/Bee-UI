@@ -1,5 +1,5 @@
 <template>
-  <div class="b-nav-item" :class={active} @click="onClick">
+  <div class="b-nav-item" :class={active,vertical} @click="onClick">
     <slot></slot>
   </div>
 </template>
@@ -7,7 +7,7 @@
 <script>
 export default {
   name: 'bear-nav-item',
-  inject: ['root'],
+  inject: ['root','vertical'],
   data() {
     return {
       active: false,
@@ -45,6 +45,10 @@ export default {
   z-index: 2;
   white-space: nowrap;
   line-height:2;
+  &.active.vertical, &.vertical:hover {
+    color: #2d8cf0;
+    border-bottom: 2px transparent solid;
+  }
   &.active, &:hover {
     color: #2d8cf0;
     border-bottom: 2px #2d8cf0 solid;

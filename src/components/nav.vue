@@ -1,6 +1,5 @@
 <template>
-  <div class="b-nav">
-    {{namePath}}
+  <div :class="{'b-nav':true, vertical}">
     <slot></slot>
   </div>
 </template>
@@ -10,7 +9,8 @@ export default {
   name: 'bear-nav',
   provide(){
     return {
-      root: this
+      root: this,
+      vertical: this.vertical
     }
   },
   data() {
@@ -25,6 +25,10 @@ export default {
       default: () => [],
     },
     multiple: {
+      type: Boolean,
+      default: false,
+    },
+    vertical: {
       type: Boolean,
       default: false,
     },
@@ -75,5 +79,8 @@ export default {
     height:1px;
     display: block;
   }
+}
+.vertical{
+  flex-direction: column;
 }
 </style>
