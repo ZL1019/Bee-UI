@@ -15,12 +15,12 @@
   </div>
 </template>
 
-<script> 
-import icon from './icon'
-import ClickOutside from './click-outside.js'
+<script>
+import icon from './icon';
+import ClickOutside from './click-outside.js';
 export default {
   inject: ['root'],
-  directives:{ClickOutside},
+  directives: { ClickOutside },
   name: 'bear-sub-nav',
   components: {
     icon,
@@ -42,19 +42,32 @@ export default {
   props: {
     name: { type: String, required: true },
   },
-  mounted(){
-    this.names = this.$children.map(item => item.name)
+  mounted() {
+    this.names = this.$children.map(item => item.name);
   },
   methods: {
-    close(){
-      this.visible = false
+    close() {
+      this.visible = false;
     },
     updateNamePath() {
       this.root.namePath.unshift(this.name);
-      if(this.root.namePath.indexOf(this.name)===this.root.namePath.length-1){
-        this.visible = false
-      }
+
+      this.closeSelf();
+
       this.$parent.updateNamePath && this.$parent.updateNamePath();
+    },
+    closeSelf() {
+      let index = this.root.namePath.indexOf(this.name);
+      if (index === this.root.namePath.length - 1) {
+        this.close();
+        this.closeParent();
+      }
+    },
+    closeParent() {
+      if (this.$parent.$options.name === 'bear-sub-nav') {
+        this.$parent.visible = false;
+        this.$parent.closeParent();
+      }
     },
   },
 };
@@ -65,21 +78,21 @@ export default {
   position: relative;
   cursor: pointer;
   z-index: 2;
-  .b-sub-nav-title{
-    display:flex;
+  .b-sub-nav-title {
+    display: flex;
     border-bottom: 2px transparent solid;
     padding: 0 20px;
     transition: all 0.2s;
-    align-items:center;
-    div{
+    align-items: center;
+    div {
       flex-shrink: 0;
     }
     &:hover {
       color: #2d8cf0;
-      border-bottom: 2px #2d8cf0 solid; 
+      border-bottom: 2px #2d8cf0 solid;
     }
-    .b-sub-nav-icon{
-      display:none;
+    .b-sub-nav-icon {
+      display: none;
     }
   }
   .b-sub-nav-active {
@@ -101,11 +114,11 @@ export default {
     left: 100%;
     margin-left: 2px;
   }
-  .b-sub-nav{
-    .b-sub-nav-icon{
-      display:flex;
+  .b-sub-nav {
+    .b-sub-nav-icon {
+      display: flex;
     }
-    .b-sub-nav-title:hover{
+    .b-sub-nav-title:hover {
       border-bottom: 2px transparent solid;
     }
   }

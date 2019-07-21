@@ -21,11 +21,29 @@
           <b-nav-item name="greenApple">
             青苹果 🍏
           </b-nav-item>
+          <b-sub-nav name='badApple'>
+            <template slot="title">坏苹果 🍎</template>
+            <b-nav-item name="duApple">
+              毒苹果 🍏
+            </b-nav-item>
+            <b-nav-item name="dirtyApple">
+              脏苹果 🍏
+            </b-nav-item>
+          </b-sub-nav>
         </b-sub-nav>
       </b-sub-nav>
-      <b-nav-item name="barbecu">
+      <b-nav-item name="barbecue">
         烧烤 🐷
       </b-nav-item>
+      <b-sub-nav name='hanbao'>
+        <template slot="title">汉堡 🍔</template>
+        <b-nav-item name="kfc">
+          KFC 🍔
+        </b-nav-item>
+        <b-nav-item name="fanzai">
+          凡仔汉堡 🍔
+        </b-nav-item>
+      </b-sub-nav>
     </b-nav>
 
     <!-- <b-button @click="slidesSelected = '3'">{{slidesSelected}}</b-button>
