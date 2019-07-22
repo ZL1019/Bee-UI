@@ -32,7 +32,9 @@ module.exports = {
           '/components/icon',
           '/components/button',
           '/components/input',
-          '/components/grid'
+          '/components/grid',
+          '/components/card',
+          '/components/collapse'
         ]      
       }     
     ]

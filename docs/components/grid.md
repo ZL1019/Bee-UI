@@ -105,35 +105,24 @@ title: 栅格
 ```
 
 #### API
-#### Input props
+#### Row props
 属性| 说明 | 类型 | 默认值
 ---|---|---|---
-type | 类型：textarea、text、password、email、url、date| String | text
-value | 绑定的值，可使用 v-model 双向绑定 | String / Number | 空
-placeholder | 占位文本	 | String | -
-clearable | 是否显示清空按钮	 | Boolean | false
-readonly | 设置输入框为只读 | Boolean | false
-disabled | 设置输入框为禁用状态	 | Boolean | false
-error | 设置输入框为错误状态	 | Boolean | false
-maxlength | 最大输入长度	 | Number | -
-autofocus | 自动获取焦点	 | Boolean | false
-autocomplete | 原生的自动完成功能		 | String | 'off'
-rows | 文本域默认行数，仅在 textarea 类型下有效	 | Number | 2
-autosize | 自适应内容高度，仅在 textarea 类型下有效，可传入对象，如 { minRows: 2, maxRows: 6 } | Boolean / Object	 | false
+tag | 自定义元素标签 | String | 'div'
+gutter | 栅格间距，单位 px，左右平分 | String / Number | -
+align | flex 布局下的垂直对齐方式，可选值为top、middle、bottom | String | -
+justify | flex 布局下的水平排列方式，可选值为	start、around、center、between、end | String | -
 
-#### Input events
-属性| 说明 | 返回值 
+#### Col props
+属性| 说明 | 类型 | 默认值
 ---|---|---|---
-on-enter |按下回车键时触发|	无
-on-focus	|输入框聚焦时触发	|无
-on-blur	|输入框失去焦点时触发|	无
-on-change	|数据改变时触发|	event
-on-keyup	|原生的 keyup 事件|	event
-on-keydown	|原生的 keydown 事件|	event
-on-keypress	|原生的 keypress 事件|	event
-
-
-
+tag | 自定义元素标签 | String | 'div'
+span | 栅格的占位格数，可选值为0~24的整数| String / Number | -
+offset | 栅格左侧的间隔格数，间隔内不可以有栅格 | String / Number | -
+xs | <768px 响应式栅格 (:xs={span:24}) | Object | -
+sm | 768px=< sm <992px 响应式栅格 | Object | -
+md | 992px=< md <1200px 响应式栅格 | Object | -
+lg | >=1200px 响应式栅格 | Object | -
 
 
 

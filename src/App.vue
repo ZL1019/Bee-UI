@@ -115,13 +115,13 @@
       <br>
     </b-card> -->
 
-    <!-- 
+    
     {{selected}}
     <b-collapse :selected.sync="selected">
       <b-collapse-item name='a' title="标题一">内容 1</b-collapse-item>
       <b-collapse-item name='b' title="标题二">内容 2</b-collapse-item>
       <b-collapse-item name='c' title="标题三">内容 3</b-collapse-item>
-    </b-collapse> -->
+    </b-collapse>
 
     <!-- <div style="margin-left:50px;">
     <b-popover>
