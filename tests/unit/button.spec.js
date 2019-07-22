@@ -82,7 +82,7 @@ describe("Button", () => {
       },
     })
     vm.$slots.default = [{
-      'text': 'test'
+      'text': 'TestText'
     }];
     vm.$mount(div)
     const icon = vm.$el.querySelector('svg')
