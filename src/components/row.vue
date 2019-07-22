@@ -1,6 +1,11 @@
 <script>
 export default {
   name: "bear-row",
+  data(){
+    return { 
+      responsive:false
+    }
+  },
   props: {
     tag: {
       type: String,
@@ -31,14 +36,16 @@ export default {
   mounted () {
     this.$children.forEach(vm => {
       vm.gutter = this.gutter
+      this.responsive = vm.xs || vm.sm || vm.md || vm.lg ? true : false
     })
   },
   computed: {
     rowStyle () {
-      let { gutter } = this
+      let { gutter, responsive } = this
       return {
         marginLeft: -gutter / 2 + 'px',
-        marginRight: -gutter / 2 + 'px'
+        marginRight: -gutter / 2 + 'px',
+        flexWrap: responsive ? 'wrap' : 'no-warp'
       }
     },
     rowClasses () {
@@ -61,7 +68,6 @@ export default {
 <style  lang="scss">
 .b-row {
   display: flex;
-  flex-wrap: wrap;
 }
 .b-align-top {
   align-items: flex-start;

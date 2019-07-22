@@ -30,7 +30,9 @@ module.exports = {
         title: '组件',
         children:[
           '/components/icon',
-          '/components/button'
+          '/components/button',
+          '/components/input',
+          '/components/grid'
         ]      
       }     
     ]

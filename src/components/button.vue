@@ -77,9 +77,6 @@ export default {
 <style scoped lang="scss">
 
 @import '../style/var.scss';
-
-
-
 .b-btn.b-btn-loading {
   pointer-events: none;
   position: relative;

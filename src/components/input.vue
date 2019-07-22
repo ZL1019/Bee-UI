@@ -132,7 +132,6 @@ export default {
   },
   methods: {
     clearValue() {
-      console.log(this.value);
       this.$emit('input', '');
     },
     resizeTextarea() {
@@ -212,7 +211,6 @@ export default {
   vertical-align: top;
   input {
     height: 32px;
-    width: 100%;
     background-color: #fff;
     border-radius: 4px;
     border: 1px solid #dcdfe6;

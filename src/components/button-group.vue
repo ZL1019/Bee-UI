@@ -11,6 +11,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '../style/var.scss';
 .button-group {
   display: inline-flex;
   & > .b-btn {
@@ -19,12 +20,12 @@ export default {
       margin-left: -1px;
     }
     &:first-child {
-      border-top-left-radius: var(--btn-radius);
-      border-bottom-left-radius: var(--btn-radius);
+      border-top-left-radius: $btn-radius;
+      border-bottom-left-radius: $btn-radius;
     }
     &:last-child {
-      border-top-right-radius: var(--btn-radius);
-      border-bottom-right-radius: var(--btn-radius);
+      border-top-right-radius: $btn-radius;
+      border-bottom-right-radius: $btn-radius;
     }
   }
   > .b-btn:hover {

@@ -168,7 +168,7 @@
       </b-tabs>
     </div> -->
 
-    <!-- <div class="grid" style="margin:30px; vertical-align: middle; border:1px solid #eee;">
+    <div class="grid" style="margin:30px; vertical-align: middle; border:1px solid #eee;">
       <div style="margin-bottom:20px;">Grid: </div>
       <b-row tag='div' style='margin-bottom: 20px;'>
         <b-col :xs={span:24} :md={span:8} :lg={span:4}>
@@ -191,14 +191,14 @@
         </b-col>
       </b-row>
       <b-row gutter=20 style='margin-bottom: 20px;'>
-        <b-col span="2">
-          <div style='background-color:#2db7f5;'>col 1</div>
+        <b-col span="8">
+          <div style='background-color:#2db7f5;'>col 8</div>
         </b-col>
-        <b-col span="4">
-          <div style='background-color:#2db7f5;'>col 2</div>
+        <b-col span="8">
+          <div style='background-color:#2db7f5;'>col 8</div>
         </b-col>
-        <b-col span="6">
-          <div style='background-color:#2db7f5;'>col 3</div>
+        <b-col span="8">
+          <div style='background-color:#2db7f5;'>col 8</div>
         </b-col>
       </b-row>
       <b-row justify="around" style='margin-bottom: 20px;'>
@@ -231,14 +231,14 @@
         </b-col>
       </b-row>
     </div>
--->
 
-    <!-- <div class="buttons">
+
+    <div class="buttons">
       <span style="margin-right:20px;">Button: </span>
       <b-button>Default</b-button>
       <b-button disabled>Disabled</b-button>
       <b-button type="primary" icon-name="set" icon-position="right">Primary</b-button>
-      <b-button type="info" icon-name="search">Information</b-button>
+      <b-button type="info" icon-name="like">Information</b-button>
       <b-button type="success" icon-name="download">Success</b-button>
       <b-button type="info" icon-name="download" @click="download" :loading="isLoading" circle></b-button>
       <b-button-group>
@@ -255,7 +255,7 @@
       <b-input value="readonly" readonly></b-input>
       <b-input value="error" error @on-keypress="inputKeyup"></b-input>
       <b-input clearable v-model="value3" type="textarea" :rows="5" :autosize="{minRows:2,maxRows:8}" ></b-input>
-    </div> -->
+    </div>
 
     <!-- <b-sticky>
       <b-button>STICKY</b-button>
