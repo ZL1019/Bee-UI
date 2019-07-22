@@ -1,4 +1,6 @@
-# ui
+[![Build Status](https://i.loli.net/2019/07/22/5d353f425340877599.png)](https://bear-ui.top)
+# Bear-UI
+#### A Vue.js 2.0 UI Toolkit for Web.
 
 ## Project setup
 ```
