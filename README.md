@@ -3,7 +3,7 @@
   <img src="https://i.loli.net/2019/07/22/5d353f425340877599.png"/>
  </a>
 </div>
-<div style="align: center">
+<div align="center">
  <a href="https://travis-ci.org/NO2046/Bear-UI" target="_blank">
   <img src="https://travis-ci.org/NO2046/Bear-UI.svg?branch=master"/>
  </a>
