@@ -1,5 +1,13 @@
-[![Build Status](https://i.loli.net/2019/07/22/5d353f425340877599.png)](https://bear-ui.top)
-[![Build Status](https://travis-ci.org/NO2046/Bear-UI.svg?branch=master)](https://travis-ci.org/NO2046/Bear-UI)
+<div align="center">
+ <a href="https://bear-ui.top" target="_blank">
+  <img src="https://i.loli.net/2019/07/22/5d353f425340877599.png"/>
+ </a>
+</div>
+<div align="center">
+ <a href="https://travis-ci.org/NO2046/Bear-UI" target="_blank">
+  <img src="https://travis-ci.org/NO2046/Bear-UI.svg?branch=master"/>
+ </a>
+</div>
 
 # Bear-UI
 #### A Vue.js 2.0 UI Toolkit for Web.
