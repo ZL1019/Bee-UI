@@ -35,7 +35,8 @@ module.exports = {
           '/components/grid',
           '/components/card',
           '/components/collapse',
-          '/components/message'
+          '/components/message',
+          '/components/popover'
         ]      
       }     
     ]
