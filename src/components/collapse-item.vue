@@ -2,21 +2,24 @@
   <div class="b-collapse-item">
     <div @click="onClick" :class="classes">
       <icon name="right" :class="iconClasses"></icon>
-      <span>{{title}}</span>  
+      <span>{{title}}</span>
     </div>
-    <div v-show="open" class="b-collapse-item-content">
-      <slot></slot>
-    </div>
+    <transition @enter="enter" @leave="leave" @after-leave="afterLeave" @after-enter="afterEnter">
+
+      <div v-show="open" class="b-collapse-item-content">
+        <slot></slot>
+      </div>
+    </transition>
+
   </div>
 </template>
 
 <script>
-
-import icon from './icon'
+import icon from './icon';
 
 export default {
   name: 'bear-collapse-item',
-  components:{ icon },
+  components: { icon },
   inject: ['eventBus'],
   props: {
     name: {
@@ -40,12 +43,12 @@ export default {
         'b-collapse-item-title-last': !this.open,
       };
     },
-    iconClasses(){
+    iconClasses() {
       return {
         'b-collapse-icon': true,
-        'b-collapse-icon-open': this.open
-      }
-    }
+        'b-collapse-icon-open': this.open,
+      };
+    },
   },
   mounted() {
     this.eventBus.$on('updateSelected', names => {
@@ -64,12 +67,38 @@ export default {
         this.eventBus.$emit('addSelected', this.name);
       }
     },
+    enter(el, done) {
+      console.log('el: ', el);
+      let { height } = el.getBoundingClientRect();
+      el.style.height = 0;
+      el.getBoundingClientRect();
+      el.style.height = `${height}px`;
+      el.addEventListener('transitionend', () => {
+        done();
+      });
+    },
+    leave(el, done) {
+      let { height } = el.getBoundingClientRect();
+      el.style.height = `${height}px`;
+      el.getBoundingClientRect();
+      el.style.height = 0;
+      el.addEventListener('transitionend', () => {
+        done();
+      });
+    },
+    afterEnter(el) {
+      el.style.height = 'auto';
+    },
+    afterLeave(el) {
+      el.style.height = 'auto';
+    },
   },
 };
 </script>
 
 <style lang="scss">
 .b-collapse-item {
+  position:relative;
   > .b-collapse-item-title {
     cursor: pointer;
     padding: 8px 16px;
@@ -80,14 +109,15 @@ export default {
     line-height: 1.5;
     display: flex;
     align-items: center;
-    .b-collapse-icon{
+    
+    .b-collapse-icon {
       transition: transform 0.1s ease-in-out;
     }
-    .b-collapse-icon-open{
+    .b-collapse-icon-open {
       transform: rotate(90deg);
     }
-    span{
-      margin-left:8px;
+    span {
+      margin-left: 8px;
     }
   }
   &:first-child {
@@ -104,9 +134,11 @@ export default {
     }
   }
   > .b-collapse-item-content {
+    transition: height 0.15s linear;
     color: #515a6e;
     font-size: 12px;
     padding: 8px 16px;
+    overflow: hidden;
   }
 }
 </style>

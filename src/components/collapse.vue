@@ -1,6 +1,6 @@
 <template>
   <div class="b-collapse">
-    <slot></slot>
+      <slot></slot>
   </div>
 </template>
 
@@ -51,8 +51,9 @@ export default {
     },
     emitUpdateSelected(selectedCopy) {
       this.$emit('update:selected', selectedCopy);
-      this.eventBus.$emit('updateSelected', selectedCopy);     
+      this.eventBus.$emit('updateSelected', selectedCopy);
     },
+
   },
 };
 </script>
@@ -61,5 +62,6 @@ export default {
 .b-collapse {
   border-radius: 4px;
   border: 1px solid #dcdee2;
+  
 }
 </style>
