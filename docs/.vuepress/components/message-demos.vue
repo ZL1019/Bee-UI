@@ -1,7 +1,7 @@
 <template>
   <div class="msgs">
     <div class="box">
-      <span>基础用法：</span>
+      <span>用法：</span>
       <b-button @click="open1">点击打开消息提示</b-button>
     </div>
     <div class="box">
@@ -9,7 +9,7 @@
       <b-button @click="open2">点击打开消息提示</b-button>
     </div>
     <div class="box">
-      <span>使用 HTML 片段：</span>
+      <span>HTML片段：</span>
       <b-button @click="open3">点击打开消息提示</b-button>
     </div>
   </div>

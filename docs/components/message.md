@@ -19,6 +19,28 @@ title: 消息提示
 
       <!-- 使用 HTML 片段： -->
       <b-button @click="open3">点击打开消息提示</b-button>
+
+      <script>
+
+        export default {
+          methods: {
+            open1() {
+              this.$message('这是一条消息提示！');
+            },
+            open2() {
+              this.$message('这是一条消息提示！', {
+                duration: 3,
+                showClose: true,
+              });
+            },
+            open3() {
+              this.$message('<strong>这是 strong 标签里面的内容</strong>', {
+                enableHtml: true,
+              });
+            },
+          },
+        };
+      </script>
 ```
 
 #### API
