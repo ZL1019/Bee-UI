@@ -68,7 +68,6 @@ export default {
       }
     },
     enter(el, done) {
-      console.log('el: ', el);
       let { height } = el.getBoundingClientRect();
       el.style.height = 0;
       el.getBoundingClientRect();
@@ -111,7 +110,7 @@ export default {
     align-items: center;
     
     .b-collapse-icon {
-      transition: transform 0.1s ease-in-out;
+      transition: transform 0.2s linear;
     }
     .b-collapse-icon-open {
       transform: rotate(90deg);
@@ -134,11 +133,13 @@ export default {
     }
   }
   > .b-collapse-item-content {
-    transition: height 0.15s linear;
+    box-sizing:border-box;
+    transition: height 0.2s linear;
     color: #515a6e;
     font-size: 12px;
     padding: 8px 16px;
     overflow: hidden;
+
   }
 }
 </style>

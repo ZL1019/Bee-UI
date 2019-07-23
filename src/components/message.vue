@@ -87,8 +87,10 @@ export default {
   font-size: 14px;
   display: flex;
   align-items: center;
+  z-index: 99;
   .b-message-content{
     padding:4px 8px;
+    
   }
   .b-message-close {
     cursor: pointer;

@@ -235,7 +235,7 @@
 
     <div class="buttons">
       <span style="margin-right:20px;">Button: </span>
-      <b-button>Default</b-button>
+      <b-button @click="openMsg">Default</b-button>
       <b-button disabled>Disabled</b-button>
       <b-button type="primary" icon-name="set" icon-position="right">Primary</b-button>
       <b-button type="info" icon-name="like">Information</b-button>
