@@ -1,14 +1,19 @@
 <template>
   <div class="cascaders">
-    <b-cascader trigger="click" :options.sync=options1 :selected.sync=selectedCascader1>
-    </b-cascader>
-    <b-cascader trigger="click" :options.sync=options2 :selected.sync=selectedCascader2 :load-data="loadData">
-    </b-cascader>
+    <div>
+      <span>基础用法：</span>
+      <b-cascader trigger="click" :options.sync=options1 :selected.sync=selectedCascader1 placeholder="请选择相应城市">
+      </b-cascader>
+    </div>
+    <div style="margin-top:30px;">
+      <span>动态加载：</span>
+      <b-cascader trigger="click" :options.sync=options2 :selected.sync=selectedCascader2 placeholder="请选择相应城市" :load-data="loadData">
+      </b-cascader>
+    </div>
   </div>
 </template>
 
 <script>
-
 import Cascader from '../../../src/components/cascader';
 import cityies from './city_data';
 

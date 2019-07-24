@@ -1,5 +1,5 @@
 <template>
-  <div class="b-cascader-items" :style="{height:popoverHeight}">
+  <div class="b-cascader-items" :style="{height:popoverHeight+'px'}">
     <div class="b-cascader-items-left">
       <div v-for="(item,index) in options" :key="index" @click="onClick(item)" class="b-cascader-label">
         <span 
@@ -107,10 +107,10 @@ export default {
   height: 100%;
   display: flex;
   overflow: hidden;
+  padding:8px 0;
   .b-cascader-items-left {
     overflow: auto;
     height: 100%;
-    padding: 8px 0px;
     cursor: pointer;
     .b-cascader-label {
       padding: 4px 16px 4px 24px;

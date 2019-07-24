@@ -17,7 +17,7 @@
           <slot></slot>
         </div>
         <div v-else>
-          <b-input :value="result" readonly style="pointer-events:none;" placeholder="请选择"></b-input>
+          <b-input :value="result" readonly style="pointer-events:none;" :placeholder="placeholder"></b-input>
           <b-icon @click.stop="clear" name="close" class="b-cascader-icon-close" />
         </div>
       </div>
@@ -45,6 +45,9 @@ export default {
     }
   },
   props: {
+    placeholder: {
+      type: String
+    },
     loadData: {
       type: Function,
     },
@@ -62,7 +65,7 @@ export default {
     },
     popoverHeight: {
       type: [String, Number],
-      default: '180px'
+      default: 180
     },
     trigger: {
       type: String,
@@ -81,7 +84,6 @@ export default {
       }  
     };
   },
-  mounted() {},
   methods: {
     clear() {
       this.$emit('update:selected', []);
