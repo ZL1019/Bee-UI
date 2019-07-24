@@ -27,6 +27,7 @@ import CascaderItems from './cascader-items';
 export default {
   name: 'bear-cascader',
   components: {
+    BIcon,
     BInput,
     BPopover,
     CascaderItems,

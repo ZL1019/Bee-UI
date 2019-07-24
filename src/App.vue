@@ -104,7 +104,7 @@
       </b-slides-item>
     </b-slides> -->
 
-    <!-- <b-card shadow='hover' :body-style="bodyStyle">
+    <b-card shadow='hover' :body-style="bodyStyle">
        <div slot="header">
          卡片名称
        </div>
@@ -113,7 +113,7 @@
       <b-cascader :options.sync=options :load-data="loadData" trigger="click" popover-height="180px" :selected.sync=selectedCascader>
       </b-cascader>
       <br>
-    </b-card> -->
+    </b-card>
 
     
     {{selected}}
@@ -266,7 +266,6 @@
 
 <script>
 import cityies from './assets/city_data';
-import { setTimeout } from 'timers';
 function ajax(parentId = 0) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {

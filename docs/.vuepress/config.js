@@ -38,7 +38,8 @@ module.exports = {
           '/components/message',
           '/components/popover',
           '/components/sticky',
-          '/components/tabs'
+          '/components/tabs',
+          '/components/cascader',
         ]      
       }     
     ]

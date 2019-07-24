@@ -23,6 +23,16 @@ title: 标签页
         <b-tabs-pane name="3">内容三</b-tabs-pane>
       </b-tabs-body>
     </b-tabs>
+
+    <script>
+      export default {
+        data() {
+          return {
+            selectedTab: '1'
+          };
+        }
+      }
+    </script>
 ```
 
 #### API
