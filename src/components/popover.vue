@@ -13,12 +13,6 @@
 export default {
   name: 'bear-popover',
   props: {
-    title: {
-      type: [Number, String],
-    },
-    content: {
-      type: [Number, String],
-    },
     contentStyle: {
       type: Object,
       default: () => {
@@ -59,6 +53,7 @@ export default {
       triggerWrapper.addEventListener('click', this.onClick);
     } else {
       triggerWrapper.addEventListener('mouseenter', this.open);
+      triggerWrapper.addEventListener('mouseleave', this.close);
     }
   },
   beforeDestroy() {
@@ -67,6 +62,7 @@ export default {
       triggerWrapper.removeEventListener('click', this.onClick);
     } else {
       triggerWrapper.removeEventListener('mouseenter', this.open);
+      triggerWrapper.removeEventListener('mouseleave', this.close);
     }
     document.removeEventListener('click', this.onClickDocument);
   },
@@ -115,7 +111,6 @@ export default {
       this.close();
     },
     open() {
-      console.log('open');
       this.visible = true;
       this.$nextTick(() => {
         this.locateContent();
@@ -152,6 +147,7 @@ export default {
   word-break: break-all;
   color: #515a6e;
   background: #fff;
+  z-index:99;
   &:before {
     content: '';
     display: block;
