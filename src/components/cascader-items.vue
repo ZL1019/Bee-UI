@@ -2,10 +2,18 @@
   <div class="b-cascader-items" :style="{height:popoverHeight}">
     <div class="b-cascader-items-left">
       <div v-for="(item,index) in options" :key="index" @click="onClick(item)" class="b-cascader-label">
-        <span class="b-cascader-label-text">{{item.label}}</span>
+        <span 
+          class="b-cascader-label-text" 
+          :class="{'label-active': labels.indexOf(item.label) > -1}"
+          >
+          {{item.label}}
+        </span>
         <bear-icon v-if="loadData ? loadItem.id === item.id : null" name="loading" class="b-cascader-loading-icon" />
         <template v-else>
-          <bear-icon v-if="loadData ? !item.isLeaf : item.children" name="right" class="b-cascader-arrow-icon" />
+          <bear-icon v-if="loadData ? !item.isLeaf : item.children" name="right" 
+          class="b-cascader-arrow-icon" 
+          :class="{'icon-active': labels.indexOf(item.label) > -1}"
+          />
         </template>
       </div>
     </div>
@@ -21,6 +29,7 @@ import Icon from './icon';
 
 export default {
   name: 'bear-cascader-items',
+  inject: ['root'],
   props: {
     options: {
       type: Array,
@@ -53,6 +62,10 @@ export default {
     };
   },
   computed: {
+    labels(){
+      return this.root.selected.map(item => item.label)
+    },
+
     rightItem() {
       if (this.selected[this.level]) {
         let selected = this.options.filter(
@@ -74,7 +87,7 @@ export default {
       copy[this.level] = item;
       copy.splice(this.level + 1);
       this.$emit('update:selected', copy);
-      if(item.isLeaf){
+      if((this.loadData && item.isLeaf) || (!this.loadData && !item.children)){
         this.$emit('close')
       }    
     },
@@ -93,6 +106,7 @@ export default {
 .b-cascader-items {
   height: 100%;
   display: flex;
+  overflow: hidden;
   .b-cascader-items-left {
     overflow: auto;
     height: 100%;
@@ -106,8 +120,14 @@ export default {
         margin-right: 2em;
         line-height: 1.5;
       }
+      .label-active{
+        color: #2d8cf0;
+      }
       .b-cascader-arrow-icon {
         margin-left: auto;
+      }
+      .icon-active{
+        fill: #2d8cf0;
       }
       .b-cascader-loading-icon{
         margin-left: auto;

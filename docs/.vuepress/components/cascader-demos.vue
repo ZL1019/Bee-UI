@@ -1,12 +1,8 @@
 <template>
   <div class="cascaders">
-    <b-cascader   
-      trigger="click" 
-      :load-data="loadData" 
-      :options.sync=options 
-      popover-height="180px" 
-      :selected.sync=selectedCascader
-    >
+    <b-cascader trigger="click" :options.sync=options1 :selected.sync=selectedCascader1>
+    </b-cascader>
+    <b-cascader trigger="click" :options.sync=options2 :selected.sync=selectedCascader2 :load-data="loadData">
     </b-cascader>
   </div>
 </template>
@@ -17,7 +13,6 @@ import Cascader from '../../../src/components/cascader';
 import cityies from './city_data';
 
 function ajax(parentId = 0) {
-  console.log(123);
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       let result = cityies.filter(item => item.parent_id === parentId);
@@ -32,13 +27,48 @@ export default {
   },
   data() {
     return {
-      options: [],
-      selectedCascader: [],
+      options2: [],
+      selectedCascader1: [],
+      selectedCascader2: [],
+      options1: [
+        {
+          id: 1,
+          label: '江苏',
+          children: [
+            {
+              id: 2,
+              label: '苏州',
+              children: [
+                {
+                  id: 3,
+                  label: '姑苏',
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: 4,
+          label: '浙江',
+          children: [
+            {
+              id: 5,
+              label: '杭州',
+              children: [
+                {
+                  id: 6,
+                  label: '西湖',
+                },
+              ],
+            },
+          ],
+        },
+      ],
     };
   },
   mounted() {
     ajax().then(res => {
-      this.options = [...res];
+      this.options2 = [...res];
     });
   },
   methods: {

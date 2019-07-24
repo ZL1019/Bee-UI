@@ -161,6 +161,7 @@ export default {
       top: 100%;
       border-bottom: none;
       border-top-color: white;
+      
     }
   }
   &.position-bottom {
@@ -169,6 +170,7 @@ export default {
       bottom: 100%;
       border-top: none;
       border-bottom-color: white;
+      left:8px;
     }
   }
   &.position-left {

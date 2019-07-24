@@ -2,7 +2,14 @@
   <div :class="classes">
     <b-popover position="bottom" :trigger="trigger" :content-style="contentStyle">
       <template slot="content" slot-scope={close}>
-        <cascader-items @close="close" :options="options" :selected="selected" :load-data="loadData" :load-item="loadItem" @update:selected="updateSelected" :popover-height="popoverHeight">
+        <cascader-items 
+          @close="close" 
+          :options="options" 
+          :selected="selected" 
+          :load-data="loadData" 
+          :load-item="loadItem" 
+          @update:selected="updateSelected" 
+          :popover-height="popoverHeight">
         </cascader-items>
       </template>
       <div class="b-cascader-trigger">
@@ -32,6 +39,11 @@ export default {
     BPopover,
     CascaderItems,
   },
+  provide(){
+    return {
+      root: this
+    }
+  },
   props: {
     loadData: {
       type: Function,
@@ -50,6 +62,7 @@ export default {
     },
     popoverHeight: {
       type: [String, Number],
+      default: '180px'
     },
     trigger: {
       type: String,
@@ -76,7 +89,6 @@ export default {
     updateSelected(item) {
       this.$emit('update:selected', item);
       let clickedItem = item[item.length - 1];
-
       let simplest = (children, id) => {
         return children.filter(item => item.id === id)[0];
       };
