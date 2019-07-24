@@ -36,7 +36,9 @@ module.exports = {
           '/components/card',
           '/components/collapse',
           '/components/message',
-          '/components/popover'
+          '/components/popover',
+          '/components/sticky',
+          '/components/tabs'
         ]      
       }     
     ]

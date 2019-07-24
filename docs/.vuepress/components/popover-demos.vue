@@ -1,5 +1,5 @@
 <template>
-  <div class="msgs">
+  <div class="popovers">
     <div class="box1">
       <span>基础用法：</span>
       <b-popover>
@@ -85,7 +85,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.msgs {
+.popovers {
   margin-left: 16px;
   .box1 {
   }
