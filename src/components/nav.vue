@@ -69,7 +69,7 @@ export default {
   line-height: 2;
   font-size: 14px;
   position: relative;
-  &::after{
+  &:not(.vertical)::after{
     content:'';
     position: absolute;
     bottom:0;

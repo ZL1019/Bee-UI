@@ -40,6 +40,7 @@ module.exports = {
           '/components/sticky',
           '/components/tabs',
           '/components/cascader',
+          '/components/nav',
         ]      
       }     
     ]

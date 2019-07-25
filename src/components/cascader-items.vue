@@ -107,11 +107,12 @@ export default {
   height: 100%;
   display: flex;
   overflow: hidden;
-  padding:8px 0;
   .b-cascader-items-left {
     overflow: auto;
     height: 100%;
     cursor: pointer;
+    padding: 8px 0;
+    box-sizing: border-box;
     .b-cascader-label {
       padding: 4px 16px 4px 24px;
       display: flex;
