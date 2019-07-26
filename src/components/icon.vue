@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import './svg3.js';
+import './svg.js';
 export default {
   name: 'bear-icon',
   props: {
