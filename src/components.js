@@ -22,6 +22,7 @@ import SlidesItem from "./components/slides-item";
 import Nav from "./components/nav";
 import SubNav from "./components/sub-nav";
 import NavItem from "./components/nav-item";
+import ToTop from "./components/totop";
 
 // import CascaderItem from "./components/cascader-item";
 
@@ -47,4 +48,5 @@ Vue.component("b-slides-item", SlidesItem);
 Vue.component("b-nav-item", NavItem);
 Vue.component("b-nav", Nav);
 Vue.component("b-sub-nav", SubNav);
+Vue.component("b-totop", ToTop);
 // Vue.component("b-cascader-item", CascaderItem);
