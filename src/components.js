@@ -23,6 +23,7 @@ import Nav from "./components/nav";
 import SubNav from "./components/sub-nav";
 import NavItem from "./components/nav-item";
 import BackTop from "./components/backtop";
+import Pager from "./components/pager";
 
 // import CascaderItem from "./components/cascader-item";
 
@@ -49,4 +50,5 @@ Vue.component("b-nav-item", NavItem);
 Vue.component("b-nav", Nav);
 Vue.component("b-sub-nav", SubNav);
 Vue.component("b-backtop", BackTop);
+Vue.component("b-pager", Pager);
 // Vue.component("b-cascader-item", CascaderItem);

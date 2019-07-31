@@ -1,5 +1,8 @@
 <template>
   <div id="app" style="padding:16px;">
+
+    <b-pager :totalPage="20" :currentPage="20" hide-if-only-one></b-pager>
+
     <p>1</p>
     <p>2</p>
     <p>3</p>
@@ -11,6 +14,56 @@
     <p>9</p>
     <p>10</p>
 
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
+<p>8</p>
     {{yyy}}
     <b-nav :selected.sync="yyy">
       <b-nav-item name="hotpot">
