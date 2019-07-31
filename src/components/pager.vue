@@ -1,33 +1,32 @@
 <template>
   <div class="b-pager">
-    <span class="b-pager-item icon" :class="{'disabled':currentPage === 1}">
+    <span class="b-pager-item icon" :class="{'disabled':currentPage === 1}" @click="onClick(currentPage - 1)">
       <b-icon name="left"></b-icon>
     </span>
     <template v-for="(page,index) in pages">
       <template v-if="page === currentPage">
         <span :key="index" class="b-pager-item active">{{page}}</span>
       </template>
-      <template v-else-if="page === '...'" >
+      <template v-else-if="page === '...'">
         <span :key="index" class="b-pager-item ellipsis">...</span>
       </template>
       <template v-else>
-        <span :key="index" class="b-pager-item">{{page}}</span>
+        <span :key="index" class="b-pager-item" @click="onClick(page)">{{page}}</span>
       </template>
     </template>
-    <span class="b-pager-item icon" :class="{'disabled':currentPage === totalPage}">
+    <span class="b-pager-item icon" :class="{'disabled':currentPage === totalPage}" @click="onClick(currentPage + 1)">
       <b-icon name="right"></b-icon>
     </span>
   </div>
 </template>
 
 <script>
-
-import Icon from './icon'
+import Icon from './icon';
 
 export default {
   name: 'bear-pager',
-  components:{ 
-    'b-icon':Icon
+  components: {
+    'b-icon': Icon,
   },
   props: {
     totalPage: {
@@ -39,36 +38,40 @@ export default {
       required: true,
     },
   },
-  data() {
-    let unUniquePages = [   
-      1,
-      this.currentPage - 2,
-      this.currentPage - 1,
-      this.currentPage,
-      this.currentPage + 1,
-      this.currentPage + 2,
-      this.totalPage,
-    ];
-    let unique = (arr) => {
-      return [...new Set(arr)].filter(item => item >= 1 && item <= this.totalPage);
-    }
-    let pagesNoEllipsis = unique(unUniquePages);
-    let pages = pagesNoEllipsis.reduce((old, current, index) => {
-      old.push(current);
-      if (
-        pagesNoEllipsis[index + 1] &&
-        pagesNoEllipsis[index + 1] - pagesNoEllipsis[index] > 1
-      ) {
-        old.push('...');
-      }
-      return old;
-    }, []);
-    return {
-      pages,
-    };
+  methods: {
+    onClick(page) {
+      this.$emit('update:currentPage', page);
+    },
   },
-  methods: {},
-  mounted() {},
+  computed: {
+    pages() {
+      let originalPages= [
+        1,
+        this.currentPage - 2,
+        this.currentPage - 1,
+        this.currentPage,
+        this.currentPage + 1,
+        this.currentPage + 2,
+        this.totalPage,
+      ];
+      let pages =  [...new Set(originalPages)].filter( n => n >= 1 && n <= this.totalPage);
+    
+      return pages.reduce((preArr, current, index) => {
+        preArr.push(current);
+        if (
+          pages[index + 1] &&
+          pages[index + 1] - pages[index] > 1
+        ) {
+          if (pages[index + 1] - pages[index] === 2) {
+            preArr.push(pages[index] + 1);
+          } else {
+            preArr.push('...');
+          }
+        }
+        return preArr;
+      }, []);
+    },
+  },
 };
 </script>
 
@@ -76,7 +79,7 @@ export default {
 .b-pager {
   display: flex;
   span.b-pager-item {
-    display:inline-flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     border: 1px #dcdee2 solid;
@@ -88,28 +91,28 @@ export default {
     // text-align: center;
     color: #515a6e;
     font-size: 12px;
-    transition: all 0.2s ease-in-out;;
-    &.active{
+    transition: all 0.2s ease-in-out;
+    &.active {
       color: #2d8cf0;
       border-color: #2d8cf0;
     }
-    &:hover{
+    &:hover {
       color: #2d8cf0;
       border-color: #2d8cf0;
     }
-    &.ellipsis{
-      border:none;
+    &.ellipsis {
+      border: none;
     }
-    &.icon:hover{
+    &.icon:hover {
       fill: #2d8cf0;
     }
-    &.disabled{
+    &.disabled {
       cursor: not-allowed;
-      fill:#dcdee2;
+      fill: #dcdee2;
     }
-    &.disabled:hover{
+    &.disabled:hover {
       border-color: #dcdee2;
-      fill:#dcdee2;
+      fill: #dcdee2;
     }
   }
   span:not(:first-child) {

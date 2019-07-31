@@ -1,7 +1,7 @@
 <template>
   <div id="app" style="padding:16px;">
 
-    <b-pager :totalPage="20" :currentPage="20" hide-if-only-one></b-pager>
+    <b-pager :totalPage="10" :currentPage.sync="currentPage" hide-if-only-one></b-pager>
 
     <p>1</p>
     <p>2</p>
@@ -355,6 +355,7 @@ export default {
   components: {},
   data() {
     return {
+      currentPage:1,
       yyy: ['redApple'],
       slidesSelected: '1',
       bodyStyle: {
