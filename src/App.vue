@@ -1,5 +1,16 @@
 <template>
   <div id="app" style="padding:16px;">
+    <p>1</p>
+    <p>2</p>
+    <p>3</p>
+    <p>4</p>
+    <p>5</p>
+    <p>6</p>
+    <p>7</p>
+    <p>8</p>
+    <p>9</p>
+    <p>10</p>
+
     {{yyy}}
     <b-nav :selected.sync="yyy">
       <b-nav-item name="hotpot">
@@ -249,7 +260,7 @@
     </div>
     <div class="inputs" style="margin:30px 0; vertical-align: middle;">
       <span style="margin-right:20px;" @click="focus">Input: </span>
-      <b-input xx="qq" autocomplete="on" autofocus ref="input" clearable v-model="value1" @on-enter="inputEnter" @on-focus="inputFocus" @on-blur="inputBlur"></b-input>
+      <!-- <b-input xx="qq" autocomplete="on" autofocus ref="input" clearable v-model="value1" @on-enter="inputEnter" @on-focus="inputFocus" @on-blur="inputBlur"></b-input> -->
       <b-input clearable v-model="value2" @on-change="inputChange" type="password"></b-input>
       <b-input value="disabled" disabled></b-input>
       <b-input value="readonly" readonly></b-input>
@@ -261,9 +272,8 @@
       <b-button>STICKY</b-button>
     </b-sticky> -->
 
-    <b-totop>
-      
-    </b-totop>
+      <b-backtop></b-backtop>
+
 
   </div>
 </template>

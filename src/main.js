@@ -6,6 +6,7 @@ Vue.config.productionTip = false;
 import plugins from "./plugins";
 import components from "./components";
 
+
 Vue.use(plugins);
 
 new Vue({
