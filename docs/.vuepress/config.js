@@ -24,6 +24,7 @@ module.exports = {
           { text: '标签页', link: '/components/Tabs' },
           { text: '级联选择器', link: '/components/Cascader' },
           { text: '导航菜单', link: '/components/Nav' },
+          { text: '回到顶部', link: '/components/Backtop' },
         ]
       },
       { text: 'GitHub', link: 'https://github.com/NO2046/Bear-UI' },
@@ -53,6 +54,7 @@ module.exports = {
           '/components/tabs',
           '/components/cascader',
           '/components/nav',
+          '/components/backtop',
         ]      
       }     
     ]

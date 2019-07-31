@@ -272,7 +272,9 @@
       <b-button>STICKY</b-button>
     </b-sticky> -->
 
-      <b-backtop></b-backtop>
+      <b-backtop>
+        UP
+      </b-backtop>
 
 
   </div>

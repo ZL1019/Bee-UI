@@ -2,23 +2,28 @@
   <transition name="fade-in">
     <div 
       v-if="visible" 
-      @click.stop="onClick"
       class="b-backtop" 
+      @click.stop="onClick" 
       :style="{
         right:`${this.right}px`,
         bottom:`${this.bottom}px`}"
       >
-      <b-icon 
-        name="down" 
-        color="#409eff" 
-        style="transform: rotate(180deg)"></b-icon>
+      <slot>
+        <b-icon 
+          name="down" 
+          color="#409eff" 
+          style="transform: rotate(180deg)">
+        </b-icon>
+      </slot>
     </div>
   </transition>
 </template>
 
 <script>
+
 import Icon from './icon'
 import { throttle } from 'throttle-debounce';
+
 export default {
   name: 'bear-backtop',
   components:{ 
@@ -27,9 +32,9 @@ export default {
   data() {
     return {
       el: null,
-      container: null,
       visible: false,
-    };
+      container: null   
+    }
   },
   mounted() {
     this.init();
@@ -40,18 +45,18 @@ export default {
     target: {
       type: String,
     },
+    right: {
+      type:Number,
+      default:40
+    },
+    bottom: {
+      type:Number,
+      default:40
+    },
     visibilityHeight: {
       type: Number,
       default: 200,
     },
-    right:{
-      type:Number,
-      default:40
-    },
-    bottom:{
-      type:Number,
-      default:40
-    }
   },
   methods: {
     init() {
@@ -84,7 +89,10 @@ export default {
         step += 10
         el.scrollTop -= step
       }, 20);
-    }
+    },
+    beforeDestroy() {
+      this.container.removeEventListener('scroll',this.throttledScrollHandler)
+    },
   },
 };
 </script>
