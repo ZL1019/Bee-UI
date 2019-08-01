@@ -1,7 +1,7 @@
 <template>
   <div id="app" style="padding:16px;">
 
-    <b-pager :totalPage="10" :currentPage.sync="currentPage" hide-if-only-one></b-pager>
+    <b-pager :totalPage="20" :currentPage.sync="currentPage" hide-if-only-one></b-pager>
 
     <p>1</p>
     <p>2</p>

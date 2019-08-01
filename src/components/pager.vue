@@ -88,7 +88,7 @@ export default {
     min-width: 34px;
     line-height: 32px;
     background-color: #fff;
-    // text-align: center;
+    user-select: none;
     color: #515a6e;
     font-size: 12px;
     transition: all 0.2s ease-in-out;
@@ -102,6 +102,10 @@ export default {
     }
     &.ellipsis {
       border: none;
+    }
+    &.ellipsis:hover {
+      color: #515a6e;
+      cursor: default;
     }
     &.icon:hover {
       fill: #2d8cf0;
