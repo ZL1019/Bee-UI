@@ -1,6 +1,10 @@
 <template>
   <div id="app" style="padding:16px;">
-
+    {{selectedRows}}
+    <b-table :data="tableData" :columns="tableColumns" border striped align="center" :selectedRows.sync="selectedRows"></b-table>
+    <br>
+    <br>
+    <b-table :data="tableData" :columns="tableColumns" ></b-table>
     <b-pager :totalPage="20" :currentPage.sync="currentPage" hide-if-only-one></b-pager>
 
     <p>1</p>
@@ -355,6 +359,18 @@ export default {
   components: {},
   data() {
     return {
+      selectedRows:[],
+      tableData:[
+        {id:1,name:'木木',score:100},
+        {id:2,name:'小小',score:99},
+        {id:3,name:'冰冰',score:98},
+        {id:4,name:'薯片',score:97},
+        {id:5,name:'小龙',score:96},
+      ],
+      tableColumns:[
+        {label:'姓名',filed:'name'},
+        {label:'成绩',filed:'score'},
+      ],
       currentPage:1,
       yyy: ['redApple'],
       slidesSelected: '1',
@@ -407,6 +423,12 @@ export default {
     });
   },
   methods: {
+    changeItem({item,index,checked}){
+      console.log('checked: ', checked);
+      console.log('index: ', index);
+      console.log('item: ', item);
+
+    },
     loadData({ id }, callback) {
       console.log('~~加载数据');
       ajax(id).then(res => {
