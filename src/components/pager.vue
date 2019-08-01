@@ -111,6 +111,8 @@ export default {
       fill: #2d8cf0;
     }
     &.disabled {
+      
+      pointer-events: none;
       cursor: not-allowed;
       fill: #dcdee2;
     }
