@@ -4,7 +4,7 @@
     <b-table :loading="loading" @sortChange="sortChange" :data="tableData" :columns="tableColumns" border striped align="center" :selectedRows.sync="selectedRows"></b-table>
     <br>
     <br>
-    <b-table :data="tableData" :columns="tableColumns" ></b-table>
+    <!-- <b-table :data="tableData" :columns="tableColumns" ></b-table> -->
     <b-pager :totalPage="20" :currentPage.sync="currentPage" hide-if-only-one></b-pager>
 
     <p>1</p>
