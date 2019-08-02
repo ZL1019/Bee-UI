@@ -65,3 +65,7 @@ $btn-padding-vertial-icon: 8px;
     transform: rotate(360deg);
   }
 }
+
+@mixin spin {
+  animation: spin 1.5s linear infinite;
+}

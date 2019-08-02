@@ -1,7 +1,7 @@
 <template>
   <div id="app" style="padding:16px;">
     {{selectedRows}}
-    <b-table @sortChange="sortChange" :data="tableData" :columns="tableColumns" border striped align="center" :selectedRows.sync="selectedRows"></b-table>
+    <b-table :loading="loading" @sortChange="sortChange" :data="tableData" :columns="tableColumns" border striped align="center" :selectedRows.sync="selectedRows"></b-table>
     <br>
     <br>
     <b-table :data="tableData" :columns="tableColumns" ></b-table>
@@ -359,6 +359,7 @@ export default {
   components: {},
   data() {
     return {
+      loading: false,
       selectedRows:[],
       tableData:[
         {id:1,name:'木木',score:70,ranking:3},

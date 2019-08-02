@@ -9,15 +9,9 @@
             <div class="thInnerWrapper">
               <span>{{column.label}}</span>
               <span v-if="column.sortable" class="b-sort-icons">
-                <b-icon 
-                  name="sort-up" 
-                  @click="emitSort(column,'asc')" 
-                  :class="{'active':sortOrder === 'asc' && sortField === column.field}">
+                <b-icon name="triangle-up" @click="emitSort(column,'asc')" :class="{'active':sortOrder === 'asc' && sortField === column.field}">
                 </b-icon>
-                <b-icon 
-                  name="sort-down" 
-                  @click="emitSort(column,'desc')" 
-                  :class="{'active':sortOrder === 'desc' && sortField === column.field}">
+                <b-icon name="triangle-down" @click="emitSort(column,'desc')" :class="{'active':sortOrder === 'desc' && sortField === column.field}">
                 </b-icon>
               </span>
             </div>
@@ -36,6 +30,9 @@
         </tr>
       </tbody>
     </table>
+    <div v-if="loading" class="b-table-loading">
+      <b-icon name="loading"></b-icon>
+    </div>  
   </div>
 </template>
 
@@ -54,6 +51,10 @@ export default {
     columns: {
       type: Array,
       required: true,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
     border: {
       type: Boolean,
@@ -76,12 +77,12 @@ export default {
       default: () => [],
     },
   },
-  data(){
-    return { 
-      sortOrder:'',
-      sortField:'',
-      activeField:''
-    }
+  data() {
+    return {
+      sortOrder: '',
+      sortField: '',
+      activeField: '',
+    };
   },
   mounted() {},
   computed: {
@@ -104,10 +105,10 @@ export default {
     },
   },
   methods: {
-    emitSort(column, order){
-      this.sortOrder = order
-      this.sortField = column.field
-      this.$emit('sortChange', {column,field:column.field,order})
+    emitSort(column, order) {
+      this.sortOrder = order;
+      this.sortField = column.field;
+      this.$emit('sortChange', { column, field: column.field, order });
     },
     onChangeRowCheckbox(item, event) {
       let checked = event.target.checked;
@@ -128,88 +129,110 @@ export default {
 </script>
 
 <style lang="scss">
-.b-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-spacing: 0;
-  border-radius: 2px;
-  line-height: 1.5;
-  tr {
-    border-bottom: 1px #ebebeb solid;
-  }
-  td,
-  th {
-    padding: 12px 10px;
-  }
-  th > .thInnerWrapper {
-    display: inline-flex;
-    align-items: center;
-  }
-  tbody {
+@import '../style/var.scss';
+
+.b-table-container {
+  position: relative;
+  .b-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-radius: 2px;
+    line-height: 1.5;
+    tr {
+      border-bottom: 1px #ebebeb solid;
+    }
+    td,
     th {
-      //text-align: center;
+      padding: 12px 10px;
     }
-    tr:hover {
-      background: #f4f6f9;
+    th > .thInnerWrapper {
+      display: inline-flex;
+      align-items: center;
     }
-  }
-  .b-sort-icons {
-    display: inline-flex;
-    flex-direction: column;
-    margin-left:8px;
-    .icon {
-      width: 0.5em;
-      height: 0.5em;
-      cursor:pointer;
-    }
-    .icon.active{
-      fill: red;
-    }
-  }
-  &.striped {
     tbody {
-      tr:nth-child(even) {
-        background: #fff;
-      }
-      tr:nth-child(odd) {
-        background: #f9f9f9;
+      th {
+        //text-align: center;
       }
       tr:hover {
         background: #f4f6f9;
       }
     }
-  }
-  &.border {
-    border: 1px solid #ebebeb;
-    td,
-    th {
-      border: 1px #ebebeb solid;
+    .b-sort-icons {
+      display: inline-flex;
+      flex-direction: column;
+      margin-left: 8px;
+      .icon {
+        width: 0.5em;
+        height: 0.5em;
+        cursor: pointer;
+        fill: #c5c8ce;
+      }
+      .icon.active {
+        fill: #2d8cf0;
+      }
     }
-  }
-  &.left {
-    thead {
+    &.striped {
+      tbody {
+        tr:nth-child(even) {
+          background: #fff;
+        }
+        tr:nth-child(odd) {
+          background: #f9f9f9;
+        }
+        tr:hover {
+          background: #f4f6f9;
+        }
+      }
+    }
+    &.border {
+      border: 1px solid #ebebeb;
+      td,
       th {
-        text-align: left;
+        border: 1px #ebebeb solid;
+      }
+    }
+    &.left {
+      thead {
+        th {
+          text-align: left;
+        }
+      }
+    }
+    &.center {
+      tbody {
+        td {
+          text-align: center;
+        }
+      }
+    }
+    &.right {
+      thead {
+        th {
+          text-align: right;
+        }
+      }
+      tbody {
+        td {
+          text-align: right;
+        }
       }
     }
   }
-  &.center {
-    tbody {
-      td {
-        text-align: center;
-      }
-    }
-  }
-  &.right {
-    thead {
-      th {
-        text-align: right;
-      }
-    }
-    tbody {
-      td {
-        text-align: right;
-      }
+  .b-table-loading{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    display:flex;
+    align-items: center;
+    justify-content:center;
+    background-color: hsla(0,0%,100%,.8);
+    border: 1px #ebebeb solid;
+    border-radius: 2px;
+    .icon{
+      @include spin;
     }
   }
 }
