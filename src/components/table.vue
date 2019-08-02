@@ -6,7 +6,21 @@
           <th><input type="checkbox" @change="onChangeAllCheckbox" ref="checkboxForAll"></th>
           <th v-if="showIndex">#</th>
           <th v-for="(column,index) in columns" :key="index">
-            {{column.label}}
+            <div class="thInnerWrapper">
+              <span>{{column.label}}</span>
+              <span v-if="column.sortable" class="b-sort-icons">
+                <b-icon 
+                  name="sort-up" 
+                  @click="emitSort(column,'asc')" 
+                  :class="{'active':sortOrder === 'asc' && sortField === column.field}">
+                </b-icon>
+                <b-icon 
+                  name="sort-down" 
+                  @click="emitSort(column,'desc')" 
+                  :class="{'active':sortOrder === 'desc' && sortField === column.field}">
+                </b-icon>
+              </span>
+            </div>
           </th>
         </tr>
       </thead>
@@ -17,7 +31,7 @@
           </td>
           <td v-if="showIndex">{{index+1}}</td>
           <template v-for="(column,index2) in columns">
-            <td :key="index2">{{item[column.filed]}}</td>
+            <td :key="index2">{{item[column.field]}}</td>
           </template>
         </tr>
       </tbody>
@@ -26,8 +40,12 @@
 </template>
 
 <script>
+import Icon from './icon';
 export default {
   name: 'bear-table',
+  components: {
+    'b-icon': Icon,
+  },
   props: {
     data: {
       type: Array,
@@ -58,6 +76,13 @@ export default {
       default: () => [],
     },
   },
+  data(){
+    return { 
+      sortOrder:'',
+      sortField:'',
+      activeField:''
+    }
+  },
   mounted() {},
   computed: {
     classes() {
@@ -73,11 +98,17 @@ export default {
     selectedRows() {
       let { length } = this.selectedRows;
       let { checkboxForAll } = this.$refs;
-      checkboxForAll.checked = length === this.data.length
-      checkboxForAll.indeterminate = length !== 0 && length !== this.data.length
+      checkboxForAll.checked = length === this.data.length;
+      checkboxForAll.indeterminate =
+        length !== 0 && length !== this.data.length;
     },
   },
   methods: {
+    emitSort(column, order){
+      this.sortOrder = order
+      this.sortField = column.field
+      this.$emit('sortChange', {column,field:column.field,order})
+    },
     onChangeRowCheckbox(item, event) {
       let checked = event.target.checked;
       let copy = JSON.parse(JSON.stringify(this.selectedRows));
@@ -110,13 +141,29 @@ export default {
   th {
     padding: 12px 10px;
   }
-
+  th > .thInnerWrapper {
+    display: inline-flex;
+    align-items: center;
+  }
   tbody {
     th {
       //text-align: center;
     }
     tr:hover {
       background: #f4f6f9;
+    }
+  }
+  .b-sort-icons {
+    display: inline-flex;
+    flex-direction: column;
+    margin-left:8px;
+    .icon {
+      width: 0.5em;
+      height: 0.5em;
+      cursor:pointer;
+    }
+    .icon.active{
+      fill: red;
     }
   }
   &.striped {

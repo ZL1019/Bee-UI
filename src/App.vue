@@ -1,7 +1,7 @@
 <template>
   <div id="app" style="padding:16px;">
     {{selectedRows}}
-    <b-table :data="tableData" :columns="tableColumns" border striped align="center" :selectedRows.sync="selectedRows"></b-table>
+    <b-table @sortChange="sortChange" :data="tableData" :columns="tableColumns" border striped align="center" :selectedRows.sync="selectedRows"></b-table>
     <br>
     <br>
     <b-table :data="tableData" :columns="tableColumns" ></b-table>
@@ -361,15 +361,16 @@ export default {
     return {
       selectedRows:[],
       tableData:[
-        {id:1,name:'木木',score:100},
-        {id:2,name:'小小',score:99},
-        {id:3,name:'冰冰',score:98},
-        {id:4,name:'薯片',score:97},
-        {id:5,name:'小龙',score:96},
+        {id:1,name:'木木',score:70,ranking:3},
+        {id:2,name:'小小',score:99,ranking:1},
+        {id:3,name:'冰冰',score:78,ranking:2},
+        {id:4,name:'薯片',score:27,ranking:5},
+        {id:5,name:'小龙',score:46,ranking:4},
       ],
       tableColumns:[
-        {label:'姓名',filed:'name'},
-        {label:'成绩',filed:'score'},
+        {label:'姓名',field:'name',},
+        {label:'成绩',field:'score',sortable:true},
+        {label:'排名',field:'ranking',sortable:true},
       ],
       currentPage:1,
       yyy: ['redApple'],
@@ -423,6 +424,12 @@ export default {
     });
   },
   methods: {
+    sortChange({column,field,order}){
+      // console.log('order: ', order);
+      // console.log('field: ', field);
+      // console.log('column: ', column);
+
+    },
     changeItem({item,index,checked}){
       console.log('checked: ', checked);
       console.log('index: ', index);
