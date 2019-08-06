@@ -1,7 +1,7 @@
 <template>
   <div id="app" style="padding:16px;">
     {{selectedRows}}
-    <b-table expandable expand-field='ds' :loading="loading" @sortChange="sortChange" :data="tableData" :columns="tableColumns" border striped align="center" :selectedRows.sync="selectedRows"></b-table>
+    <b-table checkable expandable expand-field='ds' :loading="loading" @sortChange="sortChange" :data="tableData" :columns="tableColumns" border striped align="center" :selectedRows.sync="selectedRows"></b-table>
     <br>
     <br>
     <!-- <b-table :data="tableData" :columns="tableColumns" ></b-table> -->

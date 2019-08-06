@@ -5,10 +5,10 @@
       <table class="b-table" ref="table">
         <thead>
           <tr>
-            <th v-if="checkable" style="width:50px;">
+            <th v-if="checkable">
               <input type="checkbox" @change="onChangeAllCheckbox" ref="checkboxForAll">
             </th>
-            <th v-if="expandable" style="width:50px;">
+            <th v-if="expandable">
             </th>
             <th v-for="(column,index) in columns" :key="index">
               <div class="thInnerWrapper">
@@ -26,18 +26,18 @@
         <tbody>
           <template v-for="(item,index) in data">
             <tr :key="index">
-              <td v-if="checkable" style="width:50px;">
+              <td v-if="checkable" class="checkableTd">
                 <input type="checkbox" @change="onChangeRowCheckbox(item, $event)" :checked="selectedRows.some( row => row.id === item.id )">
               </td>
-              <td v-if="expandable" style="width:50px;" @click="expandItem(item)">
+              <td v-if="expandable"  @click="expandItem(item)" :class="{expandableTd:true,expandableActive:isInExpandIds(item)}">
                 <b-icon name="right"></b-icon>
               </td>
               <template v-for="(column,index2) in columns">
                 <td :key="index2">{{item[column.field]}}</td>
               </template>
             </tr>
-            <tr :key="'expand'+index" v-show="isInExpandIds(item)">
-              <td colspan="4" style="text-align:left;">
+            <tr :key="'expand'+index" v-show="isInExpandIds(item)" class="expandableTr">
+              <td :colspan="columns.length+1" style="text-align:left;">
                 <span style="margin-left:50px;">{{item[expandField] || '空'}}</span>
               </td> 
             </tr>
@@ -256,12 +256,22 @@ export default {
     width: 100%;
     background: #fff;
   }
+  .checkableTd{
+    width:50px;
+  }
+  .expandableTd{
+    width:50px;
+    cursor: pointer;
+  }
+  .expandableActive{
+    transform: rotate(90deg);
+  }
   &.striped {
     tbody {
-      tr:nth-child(even) {
+      tr:not(.expandableTr):nth-child(even) {
         background: #fff;
       }
-      tr:nth-child(odd) {
+      tr:not(.expandableTr):nth-child(odd) {
         background: #f9f9f9;
       }
       tr:hover {
