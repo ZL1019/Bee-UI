@@ -1,11 +1,15 @@
 <template>
   <div class="b-table-container" :class=classes ref="tableContainer">
-    <div style="height: 200px;overflow: auto;">
+    <!-- <div style="height: 200px;overflow: auto;"> -->
+    <div style="overflow: auto;">
       <table class="b-table" ref="table">
         <thead>
           <tr>
-            <th><input type="checkbox" @change="onChangeAllCheckbox" ref="checkboxForAll"></th>
-            <th v-if="showIndex">#</th>
+            <th v-if="checkable" style="width:50px;">
+              <input type="checkbox" @change="onChangeAllCheckbox" ref="checkboxForAll">
+            </th>
+            <th v-if="expandable" style="width:50px;">
+            </th>
             <th v-for="(column,index) in columns" :key="index">
               <div class="thInnerWrapper">
                 <span>{{column.label}}</span>
@@ -20,15 +24,25 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item,index) in data" :key="index">
-            <td>
-              <input type="checkbox" @change="onChangeRowCheckbox(item, $event)" :checked="selectedRows.some( row => row.id === item.id )">
-            </td>
-            <td v-if="showIndex">{{index+1}}</td>
-            <template v-for="(column,index2) in columns">
-              <td :key="index2">{{item[column.field]}}</td>
-            </template>
-          </tr>
+          <template v-for="(item,index) in data">
+            <tr :key="index">
+              <td v-if="checkable" style="width:50px;">
+                <input type="checkbox" @change="onChangeRowCheckbox(item, $event)" :checked="selectedRows.some( row => row.id === item.id )">
+              </td>
+              <td v-if="expandable" style="width:50px;" @click="expandItem(item)">
+                <b-icon name="right"></b-icon>
+              </td>
+              <template v-for="(column,index2) in columns">
+                <td :key="index2">{{item[column.field]}}</td>
+              </template>
+            </tr>
+            <tr :key="'expand'+index" v-show="isInExpandIds(item)">
+              <td colspan="4" style="text-align:left;">
+                <span style="margin-left:50px;">{{item[expandField] || '空'}}</span>
+              </td> 
+            </tr>
+          </template>
+
         </tbody>
       </table>
     </div>
@@ -70,10 +84,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    showIndex: {
-      type: Boolean,
-      default: false,
-    },
     align: {
       type: String,
       default: 'left',
@@ -82,6 +92,17 @@ export default {
       type: Array,
       default: () => [],
     },
+    expandField:{
+      type: String
+    },
+    checkable:{
+      type: Boolean,
+      default: false
+    },
+    expandable:{
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -90,11 +111,10 @@ export default {
       sortOrder: '',
       sortField: '',
       activeField: '',
+      expandIds:[]
     };
   },
   mounted() {
-
-
     this.listenToWindowResize();
 
     let tableCopy = this.$refs.table.cloneNode(false);
@@ -129,6 +149,18 @@ export default {
     },
   },
   methods: {
+    isInExpandIds({id}){
+      return this.expandIds.indexOf(id) > -1;
+    },
+    expandItem({id}){
+      let index = this.expandIds.indexOf(id)
+      if(index > -1){
+        this.expandIds.splice(index, 1)
+      }else{
+        this.expandIds.push(id)
+      }  
+      console.log('this.expandIds: ', this.expandIds);
+    },
     listenToWindowResize() {
       this.tableHead = this.$refs.table.children[0];
       this.tableBody = this.$refs.table.children[1];

@@ -1,7 +1,7 @@
 <template>
   <div id="app" style="padding:16px;">
     {{selectedRows}}
-    <b-table :loading="loading" @sortChange="sortChange" :data="tableData" :columns="tableColumns" border striped align="center" :selectedRows.sync="selectedRows"></b-table>
+    <b-table expandable expand-field='ds' :loading="loading" @sortChange="sortChange" :data="tableData" :columns="tableColumns" border striped align="center" :selectedRows.sync="selectedRows"></b-table>
     <br>
     <br>
     <!-- <b-table :data="tableData" :columns="tableColumns" ></b-table> -->
@@ -362,7 +362,7 @@ export default {
       loading: false,
       selectedRows:[],
       tableData:[
-        {id:1,name:'木木',score:70,ranking:3},
+        {id:1,name:'木木',score:70,ranking:3,ds:'123 测试'},
         {id:2,name:'小小',score:99,ranking:1},
         {id:3,name:'冰冰',score:78,ranking:2},
         {id:4,name:'薯片',score:27,ranking:5},
