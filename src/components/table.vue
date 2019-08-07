@@ -1,5 +1,5 @@
 <template>
-  <div class="b-table-container" :class=classes ref="tableContainer">
+  <div class="b-table-container" :class=tableClasses ref="tableContainer">
     <!-- <div style="height: 200px;overflow: auto;"> -->
     <div style="overflow: auto;">
       <table class="b-table" ref="table">
@@ -33,8 +33,15 @@
               <td v-if="expandable" @click="expandItem(item)" :class="{expandableTd:true,expandableActive:isInExpandIds(item)}">
                 <b-icon name="right"></b-icon>
               </td>
-              <template v-for="(column,index2) in columns">
-                <td :key="index2">{{item[column.field]}}</td>
+              <template v-for="(column,tdIndex) in columns">
+                <td :key="tdIndex">
+                  <template v-if="column.render">
+                    <vnodes :vnodes="column.render({value: item[column.field]})"></vnodes>
+                  </template>
+                  <template v-else>
+                    {{item[column.field]}}
+                  </template>
+                </td>
               </template>
               <td v-if="showActions">
                 <slot :item="item"></slot>
@@ -49,7 +56,6 @@
         </tbody>
       </table>
     </div>
-
     <div v-if="loading" class="b-table-loading">
       <b-icon name="loading"></b-icon>
     </div>
@@ -62,13 +68,13 @@ export default {
   name: 'bear-table',
   components: {
     'b-icon': Icon,
+    vnodes: {
+      functional: true,
+      render: (h, context) => context.props.vnodes
+    }
   },
   props: {
     data: {
-      type: Array,
-      required: true,
-    },
-    columns: {
       type: Array,
       required: true,
     },
@@ -109,67 +115,70 @@ export default {
   },
   data() {
     return {
-      tableHead: null,
-      tableBody: null,
-      sortOrder: '',
-      sortField: '',
-      activeField: '',
+      columns: [],
       expandIds: [],
-      showActions: false,
+      sortOrder: '',
+      sortField: '',  
+      tableHead: null,
+      tableBody: null,        
     };
   },
   mounted() {
-    this.showActions = this.$scopedSlots.default ? true : false;
-
-    this.listenToWindowResize();
-
-    let tableCopy = this.$refs.table.cloneNode(false);
-    tableCopy.classList.add('b-table-copy');
-
-    let { height } = this.tableHead.getBoundingClientRect();
-    this.$refs.table.style.marginTop = height + 'px';
-
-    tableCopy.appendChild(this.tableHead);
-    this.$refs.tableContainer.appendChild(tableCopy);
+    this.generateColumns();
+    this.listenWindowResize();
+    this.replaceTable()
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.onResizeToChangeTheadWidth);
   },
   computed: {
-    classes() {
-      this.align;
+    tableClasses() {
       return {
-        border: this.border,
-        striped: this.striped,
         [this.align]: true,
+        border: this.border,
+        striped: this.striped,  
       };
     },
     extraColspan() {
       return this.checkable ? 2 : 1;
     },
+    showActions(){
+      return this.$scopedSlots.default ? true : false;
+    }
   },
   watch: {
     selectedRows() {
       let { length } = this.selectedRows;
       let { checkboxForAll } = this.$refs;
       checkboxForAll.checked = length === this.data.length;
-      checkboxForAll.indeterminate =
-        length !== 0 && length !== this.data.length;
+      checkboxForAll.indeterminate = length !== 0 && length !== this.data.length;
     },
   },
   methods: {
+    replaceTable(){
+      let tableCopy = this.$refs.table.cloneNode(false);
+      tableCopy.classList.add('b-table-copy');
+
+      let { height } = this.tableHead.getBoundingClientRect();
+      this.$refs.table.style.marginTop = height + 'px';
+
+      tableCopy.appendChild(this.tableHead);
+      this.$refs.tableContainer.appendChild(tableCopy);
+    },
+    generateColumns(){
+      this.columns = this.$slots.default.map(node => {
+        let { label, field, sortable } = node.componentOptions.propsData;
+        let render = node.data.scopedSlots && node.data.scopedSlots.default;
+        return { label, field, sortable, render };
+      });
+    },
     isInExpandIds({ id }) {
       return this.expandIds.indexOf(id) > -1;
     },
     expandItem({ id }) {
-      let index = this.expandIds.indexOf(id);
-      if (index > -1) {
-        this.expandIds.splice(index, 1);
-      } else {
-        this.expandIds.push(id);
-      }
+      this.expandIds.indexOf(id) > -1 ? this.expandIds.splice(index, 1) : this.expandIds.push(id);
     },
-    listenToWindowResize() {
+    listenWindowResize() {
       this.tableHead = this.$refs.table.children[0];
       this.tableBody = this.$refs.table.children[1];
       this.onResizeToChangeTheadWidth = this.changeTheadWidth;

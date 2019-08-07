@@ -1,8 +1,21 @@
 <template>
   <div id="app" style="padding:16px;">
     {{selectedRows}}
-    <b-table checkable expandable expand-field='ds' :loading="loading" @sortChange="sortChange" :data="tableData" :columns="tableColumns" border striped align="center" :selectedRows.sync="selectedRows">
-      
+    <b-table checkable expandable expand-field='ds' :loading="loading" @sortChange="sortChange" :data="tableData" :columns="tableColumns" border striped align="left" :selectedRows.sync="selectedRows">
+      <b-table-column label="姓名" field="name">
+        <template slot-scope="row">
+          <a href="#">
+            {{row.value}}
+          </a>
+        </template>
+      </b-table-column>
+      <b-table-column label="成绩" field="score" :sortable="true">
+      </b-table-column>
+      <b-table-column label="排名" field="ranking">
+      </b-table-column>
+      <template slot-scope="row">
+        <b-button @click="edit(row)">编辑</b-button>
+      </template>
     </b-table>
     <br>
     <br>
