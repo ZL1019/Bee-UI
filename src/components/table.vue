@@ -176,7 +176,8 @@ export default {
       return this.expandIds.indexOf(id) > -1;
     },
     expandItem({ id }) {
-      this.expandIds.indexOf(id) > -1 ? this.expandIds.splice(index, 1) : this.expandIds.push(id);
+      let index = this.expandIds.indexOf(id)
+      index > -1 ? this.expandIds.splice(index, 1) : this.expandIds.push(id);
     },
     listenWindowResize() {
       this.tableHead = this.$refs.table.children[0];
