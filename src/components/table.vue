@@ -21,6 +21,7 @@
                 </span>
               </div>
             </th>
+            <th v-if="showActions">操作</th>
           </tr>
         </thead>
         <tbody>
@@ -29,20 +30,22 @@
               <td v-if="checkable" class="checkableTd">
                 <input type="checkbox" @change="onChangeRowCheckbox(item, $event)" :checked="selectedRows.some( row => row.id === item.id )">
               </td>
-              <td v-if="expandable"  @click="expandItem(item)" :class="{expandableTd:true,expandableActive:isInExpandIds(item)}">
+              <td v-if="expandable" @click="expandItem(item)" :class="{expandableTd:true,expandableActive:isInExpandIds(item)}">
                 <b-icon name="right"></b-icon>
               </td>
               <template v-for="(column,index2) in columns">
                 <td :key="index2">{{item[column.field]}}</td>
               </template>
+              <td v-if="showActions">
+                <slot :item="item"></slot>
+              </td>
             </tr>
             <tr :key="'expand'+index" v-show="isInExpandIds(item)" class="expandableTr">
-              <td :colspan="columns.length+1" style="text-align:left;">
+              <td :colspan="columns.length+extraColspan" style="text-align:left;">
                 <span style="margin-left:50px;">{{item[expandField] || '空'}}</span>
-              </td> 
+              </td>
             </tr>
           </template>
-
         </tbody>
       </table>
     </div>
@@ -92,17 +95,17 @@ export default {
       type: Array,
       default: () => [],
     },
-    expandField:{
-      type: String
+    expandField: {
+      type: String,
     },
-    checkable:{
+    checkable: {
       type: Boolean,
-      default: false
+      default: false,
     },
-    expandable:{
+    expandable: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
@@ -111,10 +114,13 @@ export default {
       sortOrder: '',
       sortField: '',
       activeField: '',
-      expandIds:[]
+      expandIds: [],
+      showActions: false,
     };
   },
   mounted() {
+    this.showActions = this.$scopedSlots.default ? true : false;
+
     this.listenToWindowResize();
 
     let tableCopy = this.$refs.table.cloneNode(false);
@@ -138,6 +144,9 @@ export default {
         [this.align]: true,
       };
     },
+    extraColspan() {
+      return this.checkable ? 2 : 1;
+    },
   },
   watch: {
     selectedRows() {
@@ -149,17 +158,16 @@ export default {
     },
   },
   methods: {
-    isInExpandIds({id}){
+    isInExpandIds({ id }) {
       return this.expandIds.indexOf(id) > -1;
     },
-    expandItem({id}){
-      let index = this.expandIds.indexOf(id)
-      if(index > -1){
-        this.expandIds.splice(index, 1)
-      }else{
-        this.expandIds.push(id)
-      }  
-      console.log('this.expandIds: ', this.expandIds);
+    expandItem({ id }) {
+      let index = this.expandIds.indexOf(id);
+      if (index > -1) {
+        this.expandIds.splice(index, 1);
+      } else {
+        this.expandIds.push(id);
+      }
     },
     listenToWindowResize() {
       this.tableHead = this.$refs.table.children[0];
@@ -204,9 +212,6 @@ export default {
 
 .b-table-container {
   position: relative;
-  // height:200px;
-  // overflow: auto;
-
   .b-table {
     width: 100%;
     border-collapse: collapse;
@@ -256,14 +261,14 @@ export default {
     width: 100%;
     background: #fff;
   }
-  .checkableTd{
-    width:50px;
+  .checkableTd {
+    width: 50px;
   }
-  .expandableTd{
-    width:50px;
+  .expandableTd {
+    width: 50px;
     cursor: pointer;
   }
-  .expandableActive{
+  .expandableActive {
     transform: rotate(90deg);
   }
   &.striped {

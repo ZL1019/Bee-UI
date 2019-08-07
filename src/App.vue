@@ -1,7 +1,9 @@
 <template>
   <div id="app" style="padding:16px;">
     {{selectedRows}}
-    <b-table checkable expandable expand-field='ds' :loading="loading" @sortChange="sortChange" :data="tableData" :columns="tableColumns" border striped align="center" :selectedRows.sync="selectedRows"></b-table>
+    <b-table checkable expandable expand-field='ds' :loading="loading" @sortChange="sortChange" :data="tableData" :columns="tableColumns" border striped align="center" :selectedRows.sync="selectedRows">
+      
+    </b-table>
     <br>
     <br>
     <!-- <b-table :data="tableData" :columns="tableColumns" ></b-table> -->
@@ -425,6 +427,10 @@ export default {
     });
   },
   methods: {
+    edit(row){
+      console.log('row: ', row);
+
+    },
     sortChange({column,field,order}){
       // console.log('order: ', order);
       // console.log('field: ', field);
