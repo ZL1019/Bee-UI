@@ -26,6 +26,7 @@ import BackTop from "./components/backtop";
 import Pager from "./components/pager";
 import Table from "./components/table";
 import TableColumn from "./components/table-column";
+import Scroll from "./components/scroll";
 
 // import CascaderItem from "./components/cascader-item";
 
@@ -55,4 +56,5 @@ Vue.component("b-backtop", BackTop);
 Vue.component("b-pager", Pager);
 Vue.component("b-table", Table);
 Vue.component("b-table-column", TableColumn);
+Vue.component("b-scroll", Scroll);
 // Vue.component("b-cascader-item", CascaderItem);
