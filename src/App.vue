@@ -108,17 +108,17 @@
       </div>
     </div>
     {{selectedRows}}
-    <b-table checkable expandable expand-field='ds' :loading="loading" @sortChange="sortChange" :data="tableData" :columns="tableColumns" border striped align="left" :selectedRows.sync="selectedRows">
-      <b-table-column label="姓名" field="name">
+    <b-table checkable expandable expand-field='ds' :loading="loading" @sortChange="sortChange" :data="tableData" border striped align="left" :selectedRows.sync="selectedRows">
+      <b-table-column label="姓名" field="name" align="left" header-align="left">
         <template slot-scope="row">
           <a href="#">
             {{row.value}}
           </a>
         </template>
       </b-table-column>
-      <b-table-column label="成绩" field="score" :sortable="true">
+      <b-table-column label="成绩" field="score" :sortable="true" align="center" headerAlign="center">
       </b-table-column>
-      <b-table-column label="排名" field="ranking">
+      <b-table-column label="排名" field="ranking" align="right" headerAlign="right">
       </b-table-column>
       <template slot-scope="row">
         <b-button @click="edit(row)">编辑</b-button>

@@ -5,19 +5,33 @@
 <script>
 export default {
   name: 'bear-table-column',
-  props:{
-    label:{
+  props: {
+    label: {
       type: String,
-      required: true
+      required: true,
     },
-    field:{
+    field: {
       type: String,
-      required: true
+      required: true,
     },
-    sortable:{
+    sortable: {
       type: Boolean,
-      default: false
-    }
-  }
-}
+      default: false,
+    },
+    align: {
+      type: String,
+      default: 'center',
+      validator(value) {
+        return ['center', 'left', 'right'].indexOf(value) > -1;
+      },
+    },
+    headerAlign: {
+      type: String,
+      default: 'center',
+      validator(value) {
+        return ['center', 'left', 'right'].indexOf(value) > -1;
+      },
+    },
+  },
+};
 </script>

@@ -11,7 +11,7 @@
             <th v-if="expandable">
             </th>
             <th v-for="(column,index) in columns" :key="index">
-              <div class="thInnerWrapper">
+              <div class="thInnerWrapper"  :style="{'justifyContent':tableHeaderAlign(column)}">
                 <span>{{column.label}}</span>
                 <span v-if="column.sortable" class="b-sort-icons">
                   <b-icon name="triangle-up" @click="emitSort(column,'asc')" :class="{'active':sortOrder === 'asc' && sortField === column.field}">
@@ -21,7 +21,7 @@
                 </span>
               </div>
             </th>
-            <th v-if="showActions">操作</th>
+            <th v-if="$scopedSlots.default">操作</th>
           </tr>
         </thead>
         <tbody>
@@ -30,11 +30,11 @@
               <td v-if="checkable" class="checkableTd">
                 <input type="checkbox" @change="onChangeRowCheckbox(item, $event)" :checked="selectedRows.some( row => row.id === item.id )">
               </td>
-              <td v-if="expandable" @click="expandItem(item)" :class="{expandableTd:true,expandableActive:isInExpandIds(item)}">
+              <td v-if="expandable" @click="expandItem(item)" :class="{expandableTd:true,expandableActive:isInExpandIds(item)}" >
                 <b-icon name="right"></b-icon>
               </td>
               <template v-for="(column,tdIndex) in columns">
-                <td :key="tdIndex">
+                <td :key="tdIndex" :style="{'textAlign':column.align?column.align:'center'}">
                   <template v-if="column.render">
                     <vnodes :vnodes="column.render({value: item[column.field]})"></vnodes>
                   </template>
@@ -43,7 +43,7 @@
                   </template>
                 </td>
               </template>
-              <td v-if="showActions">
+              <td v-if="$scopedSlots.default" class="b-table-action">
                 <slot :item="item"></slot>
               </td>
             </tr>
@@ -93,10 +93,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    align: {
-      type: String,
-      default: 'left',
-    },
     selectedRows: {
       type: Array,
       default: () => [],
@@ -134,17 +130,16 @@ export default {
   computed: {
     tableClasses() {
       return {
-        [this.align]: true,
         border: this.border,
         striped: this.striped,  
       };
     },
     extraColspan() {
-      return this.checkable ? 2 : 1;
+      let length = 1;
+      this.checkable ? length = length +1 :''
+      this.$scopedSlots.default ? length = length +1 :''
+      return length
     },
-    showActions(){
-      return this.$scopedSlots.default ? true : false;
-    }
   },
   watch: {
     selectedRows() {
@@ -155,6 +150,21 @@ export default {
     },
   },
   methods: {
+    tableHeaderAlign({headerAlign}){
+      let align
+      switch(headerAlign){
+        case 'left':
+          align = 'flex-start'
+          break
+        case 'center':
+          align = 'center'
+          break
+        case 'right':
+          align = 'flex-end'
+          break
+      }
+      return align  
+    },
     replaceTable(){
       let tableCopy = this.$refs.table.cloneNode(false);
       tableCopy.classList.add('b-table-copy');
@@ -166,10 +176,11 @@ export default {
       this.$refs.tableContainer.appendChild(tableCopy);
     },
     generateColumns(){
-      this.columns = this.$slots.default.map(node => {
-        let { label, field, sortable } = node.componentOptions.propsData;
+      let filterSolts = this.$slots.default.filter(node => node.tag)
+      this.columns = filterSolts.map(node => {   
+        let { label, field, sortable, align, headerAlign } = node.componentOptions.propsData;
         let render = node.data.scopedSlots && node.data.scopedSlots.default;
-        return { label, field, sortable, render };
+        return { label, field, sortable, align, headerAlign, render };
       });
     },
     isInExpandIds({ id }) {
@@ -217,7 +228,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../style/var.scss';
 
 .b-table-container {
@@ -236,15 +247,14 @@ export default {
     td,
     th {
       padding: 12px 10px;
+      box-sizing: border-box;
     }
     th > .thInnerWrapper {
-      display: inline-flex;
+      display: flex;
       align-items: center;
+      justify-content:center;
     }
     tbody {
-      th {
-        //text-align: center;
-      }
       tr:hover {
         background: #f4f6f9;
       }
@@ -272,14 +282,26 @@ export default {
     background: #fff;
   }
   .checkableTd {
-    width: 50px;
+    text-align:center;
   }
   .expandableTd {
-    width: 50px;
+    text-align:center;
     cursor: pointer;
+    position:relative;
+    .icon{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -0.5em;
+      margin-left: -0.5em;
+    }
+    
   }
   .expandableActive {
-    transform: rotate(90deg);
+    .icon{
+      transform: rotate(90deg);
+    }
+    
   }
   &.striped {
     tbody {
@@ -301,31 +323,8 @@ export default {
       border: 1px #ebebeb solid;
     }
   }
-  &.left {
-    thead {
-      th {
-        text-align: left;
-      }
-    }
-  }
-  &.center {
-    tbody {
-      td {
-        text-align: center;
-      }
-    }
-  }
-  &.right {
-    thead {
-      th {
-        text-align: right;
-      }
-    }
-    tbody {
-      td {
-        text-align: right;
-      }
-    }
+  .b-table-action{
+    text-align:center;
   }
   .b-table-loading {
     position: absolute;
