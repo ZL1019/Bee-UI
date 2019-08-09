@@ -8,10 +8,10 @@
             <th v-if="checkable">
               <input type="checkbox" @change="onChangeAllCheckbox" ref="checkboxForAll">
             </th>
-            <th v-if="expandable">
+            <th v-if="expandable" style="min-width:50px;">
             </th>
-            <th v-for="(column,index) in columns" :key="index">
-              <div class="thInnerWrapper"  :style="{'justifyContent':tableHeaderAlign(column)}">
+            <th v-for="(column,index) in columns" :key="index" :style="thStyle(column)">
+              <div class="thInnerWrapper"  :style="tableHeaderAlign(column)">
                 <span>{{column.label}}</span>
                 <span v-if="column.sortable" class="b-sort-icons">
                   <b-icon name="triangle-up" @click="emitSort(column,'asc')" :class="{'active':sortOrder === 'asc' && sortField === column.field}">
@@ -21,12 +21,12 @@
                 </span>
               </div>
             </th>
-            <th v-if="$scopedSlots.default">操作</th>
+            <th v-if="$scopedSlots.default" style="min-width:150px;">操作</th>
           </tr>
         </thead>
         <tbody>
           <template v-for="(item,index) in data">
-            <tr :key="index">
+            <tr :key="index" :class="stripedClass(index)">
               <td v-if="checkable" class="checkableTd">
                 <input type="checkbox" @change="onChangeRowCheckbox(item, $event)" :checked="selectedRows.some( row => row.id === item.id )">
               </td>
@@ -34,7 +34,7 @@
                 <b-icon name="right"></b-icon>
               </td>
               <template v-for="(column,tdIndex) in columns">
-                <td :key="tdIndex" :style="{'textAlign':column.align?column.align:'center'}">
+                <td :key="tdIndex" :style="tdStyle(column)">
                   <template v-if="column.render">
                     <vnodes :vnodes="column.render({value: item[column.field]})"></vnodes>
                   </template>
@@ -47,9 +47,9 @@
                 <slot :item="item"></slot>
               </td>
             </tr>
-            <tr :key="'expand'+index" v-show="isInExpandIds(item)" class="expandableTr">
+            <tr :key="'expand'+index" v-show="isInExpandIds(item)">
               <td :colspan="columns.length+extraColspan" style="text-align:left;">
-                <span style="margin-left:50px;">{{item[expandField] || '空'}}</span>
+                <span :style="{paddingLeft:expandTdPaddingLeft}">{{item[expandField] || '空'}}</span>
               </td>
             </tr>
           </template>
@@ -128,6 +128,7 @@ export default {
     window.removeEventListener('resize', this.onResizeToChangeTheadWidth);
   },
   computed: {
+
     tableClasses() {
       return {
         border: this.border,
@@ -140,6 +141,9 @@ export default {
       this.$scopedSlots.default ? length = length +1 :''
       return length
     },
+    expandTdPaddingLeft(){
+      return this.checkable ? '100px': '50px'
+    }
   },
   watch: {
     selectedRows() {
@@ -150,6 +154,24 @@ export default {
     },
   },
   methods: {
+    stripedClass(index){
+      let oddClass = { 'oddTr':true }
+      let evenClass = { 'evenTr':true }
+      return index%2 === 0 ? oddClass:evenClass
+
+    },
+    tdStyle({align,minWidth}){
+      return {
+        'textAlign':align ? align : 'center',
+        'minWidth':minWidth ? minWidth + 'px' : 'auto'
+      }
+    },
+    thStyle({minWidth}){
+      return {
+        'minWidth':minWidth ? minWidth + 'px' : 'auto'
+      }
+    },
+
     tableHeaderAlign({headerAlign}){
       let align
       switch(headerAlign){
@@ -163,7 +185,9 @@ export default {
           align = 'flex-end'
           break
       }
-      return align  
+      return {
+        'justifyContent': align,
+      }
     },
     replaceTable(){
       let tableCopy = this.$refs.table.cloneNode(false);
@@ -178,9 +202,9 @@ export default {
     generateColumns(){
       let filterSolts = this.$slots.default.filter(node => node.tag)
       this.columns = filterSolts.map(node => {   
-        let { label, field, sortable, align, headerAlign } = node.componentOptions.propsData;
+        let { label, field, sortable, align, headerAlign, minWidth } = node.componentOptions.propsData;
         let render = node.data.scopedSlots && node.data.scopedSlots.default;
-        return { label, field, sortable, align, headerAlign, render };
+        return { label, field, sortable, align, headerAlign, minWidth, render };
       });
     },
     isInExpandIds({ id }) {
@@ -233,21 +257,36 @@ export default {
 
 .b-table-container {
   position: relative;
+  border-radius: 2px;
+  box-sizing: border-box;
   .b-table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
-    border-radius: 2px;
+    
     line-height: 1.5;
     position: relative;
 
     tr {
       border-bottom: 1px #ebebeb solid;
+      transition: background-color 0.2s ease;
     }
     td,
     th {
       padding: 12px 10px;
       box-sizing: border-box;
+      
+    }
+    th{
+      color: #909399;
+    }
+    td{
+      color: #515a6e;
+          overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-break: break-all;
+
     }
     th > .thInnerWrapper {
       display: flex;
@@ -256,7 +295,7 @@ export default {
     }
     tbody {
       tr:hover {
-        background: #f4f6f9;
+        background-color: #f4f6f9;
       }
     }
     .b-sort-icons {
@@ -282,9 +321,12 @@ export default {
     background: #fff;
   }
   .checkableTd {
+    width:50px;
     text-align:center;
   }
   .expandableTd {
+    width:50px;
+    min-width:50px;
     text-align:center;
     cursor: pointer;
     position:relative;
@@ -294,6 +336,7 @@ export default {
       left: 50%;
       margin-top: -0.5em;
       margin-left: -0.5em;
+      transition: transform 0.2s ease;
     }
     
   }
@@ -305,12 +348,13 @@ export default {
   }
   &.striped {
     tbody {
-      tr:not(.expandableTr):nth-child(even) {
+      tr.oddTr{
         background: #fff;
       }
-      tr:not(.expandableTr):nth-child(odd) {
+      tr.evenTr{
         background: #f9f9f9;
       }
+
       tr:hover {
         background: #f4f6f9;
       }

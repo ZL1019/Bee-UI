@@ -108,20 +108,20 @@
       </div>
     </div>
     {{selectedRows}}
-    <b-table checkable expandable expand-field='ds' :loading="loading" @sortChange="sortChange" :data="tableData" border striped align="left" :selectedRows.sync="selectedRows">
-      <b-table-column label="姓名" field="name" align="left" header-align="left">
+    <b-table  expandable expand-field='ds' :loading="loading" @sortChange="sortChange" :data="tableData" border striped align="left" :selectedRows.sync="selectedRows">
+      <b-table-column label="姓名" field="name" min-width="100">
         <template slot-scope="row">
-          <a href="#">
             {{row.value}}
-          </a>
         </template>
       </b-table-column>
-      <b-table-column label="成绩" field="score" :sortable="true" align="center" headerAlign="center">
+      <b-table-column label="成绩" field="score" :sortable="true" min-width="100">
       </b-table-column>
-      <b-table-column label="排名" field="ranking" align="right" headerAlign="right">
+      <b-table-column label="排名" field="ranking" align="left" header-align="left" min-width="100">
       </b-table-column>
       <template slot-scope="row">
-        <b-button @click="edit(row)">编辑</b-button>
+        <div style="min-width:150px;">
+          <b-button @click="edit(row)">编辑</b-button>
+        </div> 
       </template>
     </b-table>
     <br>
@@ -484,7 +484,7 @@ export default {
       loading: false,
       selectedRows:[],
       tableData:[
-        {id:1,name:'木木',score:70,ranking:3,ds:'123 测试'},
+        {id:1,name:'木木123',score:70,ranking:3,ds:'123 测试'},
         {id:2,name:'小小',score:99,ranking:1},
         {id:3,name:'冰冰',score:78,ranking:2},
         {id:4,name:'薯片',score:27,ranking:5},

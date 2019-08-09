@@ -24,6 +24,7 @@ export default {
       validator(value) {
         return ['center', 'left', 'right'].indexOf(value) > -1;
       },
+
     },
     headerAlign: {
       type: String,
@@ -32,6 +33,10 @@ export default {
         return ['center', 'left', 'right'].indexOf(value) > -1;
       },
     },
+    minWidth:{
+      type: [String,Number]
+      
+    }
   },
 };
 </script>
