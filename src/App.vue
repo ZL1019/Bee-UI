@@ -108,7 +108,7 @@
       </div>
     </div>
     {{selectedRows}}
-    <b-table  expandable expand-field='ds' :loading="loading" @sortChange="sortChange" :data="tableData" border striped align="left" :selectedRows.sync="selectedRows">
+    <b-table checkable  expandable expand-field='ds' :loading="loading" @sortChange="sortChange" :data="tableData" border striped align="left" :selectedRows.sync="selectedRows">
       <b-table-column label="姓名" field="name" min-width="100">
         <template slot-scope="row">
             {{row.value}}

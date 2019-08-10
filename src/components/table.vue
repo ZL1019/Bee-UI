@@ -5,14 +5,13 @@
       <table class="b-table" ref="table">
         <thead>
           <tr>
-            <th v-if="checkable">
+            <th v-if="checkable" class="checkboxTh">
               <input type="checkbox" @change="onChangeAllCheckbox" ref="checkboxForAll">
             </th>
-            <th v-if="expandable" style="min-width:50px;">
-            </th>
+            <th v-if="expandable" class="expandableTh"></th>
             <th v-for="(column,index) in columns" :key="index" :style="thStyle(column)">
-              <div class="thInnerWrapper"  :style="tableHeaderAlign(column)">
-                <span>{{column.label}}</span>
+              <div class="thInnerWrapper" :style="thAlign(column)">
+                <span class="thLabel">{{column.label}}</span>
                 <span v-if="column.sortable" class="b-sort-icons">
                   <b-icon name="triangle-up" @click="emitSort(column,'asc')" :class="{'active':sortOrder === 'asc' && sortField === column.field}">
                   </b-icon>
@@ -21,42 +20,42 @@
                 </span>
               </div>
             </th>
-            <th v-if="$scopedSlots.default" style="min-width:150px;">操作</th>
+            <th v-if="$scopedSlots.default" class="actionTh">操作</th>
           </tr>
         </thead>
         <tbody>
           <template v-for="(item,index) in data">
             <tr :key="index" :class="stripedClass(index)">
-              <td v-if="checkable" class="checkableTd">
+              <td v-if="checkable" class="checkIcon">
                 <input type="checkbox" @change="onChangeRowCheckbox(item, $event)" :checked="selectedRows.some( row => row.id === item.id )">
               </td>
-              <td v-if="expandable" @click="expandItem(item)" :class="{expandableTd:true,expandableActive:isInExpandIds(item)}" >
+              <td v-if="expandable" @click="expandItem(item)" :class="expandIconClass(item)">
                 <b-icon name="right"></b-icon>
               </td>
               <template v-for="(column,tdIndex) in columns">
-                <td :key="tdIndex" :style="tdStyle(column)">
+                <td :style="tdStyle(column)" :key="tdIndex">
                   <template v-if="column.render">
                     <vnodes :vnodes="column.render({value: item[column.field]})"></vnodes>
                   </template>
                   <template v-else>
-                    {{item[column.field]}}
+                    <span class="tdContent">{{item[column.field]}}</span>  
                   </template>
                 </td>
               </template>
-              <td v-if="$scopedSlots.default" class="b-table-action">
+              <td v-if="$scopedSlots.default" class="actionTd">
                 <slot :item="item"></slot>
               </td>
             </tr>
-            <tr :key="'expand'+index" v-show="isInExpandIds(item)">
-              <td :colspan="columns.length+extraColspan" style="text-align:left;">
-                <span :style="{paddingLeft:expandTdPaddingLeft}">{{item[expandField] || '空'}}</span>
+            <tr v-show="isInExpandIds(item)" :key="'expand'+index">
+              <td :colspan="expandTdColspan" class="expandTd">
+                <span :style="expandTdStyle">{{item[expandField]}}</span>
               </td>
             </tr>
           </template>
         </tbody>
       </table>
     </div>
-    <div v-if="loading" class="b-table-loading">
+    <div v-if="loading" class="tableLoading">
       <b-icon name="loading"></b-icon>
     </div>
   </div>
@@ -70,8 +69,8 @@ export default {
     'b-icon': Icon,
     vnodes: {
       functional: true,
-      render: (h, context) => context.props.vnodes
-    }
+      render: (h, context) => context.props.vnodes,
+    },
   },
   props: {
     data: {
@@ -114,82 +113,90 @@ export default {
       columns: [],
       expandIds: [],
       sortOrder: '',
-      sortField: '',  
+      sortField: '',
       tableHead: null,
-      tableBody: null,        
+      tableBody: null,
     };
   },
   mounted() {
     this.generateColumns();
     this.listenWindowResize();
-    this.replaceTable()
+    this.replaceTable();
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.onResizeToChangeTheadWidth);
   },
   computed: {
-
     tableClasses() {
       return {
         border: this.border,
-        striped: this.striped,  
+        striped: this.striped,
       };
     },
-    extraColspan() {
+
+    expandTdColspan() {
       let length = 1;
-      this.checkable ? length = length +1 :''
-      this.$scopedSlots.default ? length = length +1 :''
-      return length
+      this.checkable ? (length = length + 1) : '';
+      this.$scopedSlots.default ? (length = length + 1) : '';
+      return this.columns.length + length;
     },
-    expandTdPaddingLeft(){
-      return this.checkable ? '100px': '50px'
-    }
+    expandTdStyle() {
+      return {
+        paddingLeft: this.checkable ? '100px' : '50px',
+      };
+    },
   },
   watch: {
     selectedRows() {
       let { length } = this.selectedRows;
       let { checkboxForAll } = this.$refs;
       checkboxForAll.checked = length === this.data.length;
-      checkboxForAll.indeterminate = length !== 0 && length !== this.data.length;
+      checkboxForAll.indeterminate =
+        length !== 0 && length !== this.data.length;
     },
   },
   methods: {
-    stripedClass(index){
-      let oddClass = { 'oddTr':true }
-      let evenClass = { 'evenTr':true }
-      return index%2 === 0 ? oddClass:evenClass
-
+    stripedClass(index) {
+      let oddClass = { oddTr: true };
+      let evenClass = { evenTr: true };
+      return index % 2 !== 0 ? oddClass : evenClass;
     },
-    tdStyle({align,minWidth}){
+    expandIconClass(item){
       return {
-        'textAlign':align ? align : 'center',
-        'minWidth':minWidth ? minWidth + 'px' : 'auto'
+        expandIcon: true,
+        expandIconActive: this.isInExpandIds(item)
       }
     },
-    thStyle({minWidth}){
+    tdStyle({ align, minWidth }) {
       return {
-        'minWidth':minWidth ? minWidth + 'px' : 'auto'
-      }
+        textAlign: align ? align : 'center',
+        minWidth: minWidth ? minWidth + 'px' : 'auto',
+      };
+    },
+    thStyle({ minWidth }) {
+      return {
+        minWidth: minWidth ? minWidth + 'px' : 'auto',
+      };
     },
 
-    tableHeaderAlign({headerAlign}){
-      let align
-      switch(headerAlign){
+    thAlign({ headerAlign }) {
+      let align;
+      switch (headerAlign) {
         case 'left':
-          align = 'flex-start'
-          break
+          align = 'flex-start';
+          break;
         case 'center':
-          align = 'center'
-          break
+          align = 'center';
+          break;
         case 'right':
-          align = 'flex-end'
-          break
+          align = 'flex-end';
+          break;
       }
       return {
-        'justifyContent': align,
-      }
+        justifyContent: align,
+      };
     },
-    replaceTable(){
+    replaceTable() {
       let tableCopy = this.$refs.table.cloneNode(false);
       tableCopy.classList.add('b-table-copy');
 
@@ -199,10 +206,17 @@ export default {
       tableCopy.appendChild(this.tableHead);
       this.$refs.tableContainer.appendChild(tableCopy);
     },
-    generateColumns(){
-      let filterSolts = this.$slots.default.filter(node => node.tag)
-      this.columns = filterSolts.map(node => {   
-        let { label, field, sortable, align, headerAlign, minWidth } = node.componentOptions.propsData;
+    generateColumns() {
+      let filterSolts = this.$slots.default.filter(node => node.tag);
+      this.columns = filterSolts.map(node => {
+        let {
+          label,
+          field,
+          sortable,
+          align,
+          headerAlign,
+          minWidth,
+        } = node.componentOptions.propsData;
         let render = node.data.scopedSlots && node.data.scopedSlots.default;
         return { label, field, sortable, align, headerAlign, minWidth, render };
       });
@@ -211,7 +225,7 @@ export default {
       return this.expandIds.indexOf(id) > -1;
     },
     expandItem({ id }) {
-      let index = this.expandIds.indexOf(id)
+      let index = this.expandIds.indexOf(id);
       index > -1 ? this.expandIds.splice(index, 1) : this.expandIds.push(id);
     },
     listenWindowResize() {
@@ -263,7 +277,7 @@ export default {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
-    
+
     line-height: 1.5;
     position: relative;
 
@@ -275,23 +289,21 @@ export default {
     th {
       padding: 12px 10px;
       box-sizing: border-box;
-      
     }
-    th{
+    th {
       color: #909399;
     }
-    td{
+    td {
       color: #515a6e;
-          overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
-    word-break: break-all;
-
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: normal;
+      word-break: break-all;
     }
     th > .thInnerWrapper {
       display: flex;
       align-items: center;
-      justify-content:center;
+      justify-content: center;
     }
     tbody {
       tr:hover {
@@ -320,17 +332,25 @@ export default {
     width: 100%;
     background: #fff;
   }
-  .checkableTd {
-    width:50px;
-    text-align:center;
+  .expandableTh,
+  .checkboxTh {
+    min-width: 50px;
   }
-  .expandableTd {
-    width:50px;
-    min-width:50px;
-    text-align:center;
+  .actionTh {
+    min-width: 150px;
+  }
+  .checkIcon {
+    width: 50px;
+    min-width: 50px;
+    text-align: center;
+  }
+  .expandIcon {
+    width: 50px;
+    min-width: 50px;
+    text-align: center;
     cursor: pointer;
-    position:relative;
-    .icon{
+    position: relative;
+    .icon {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -338,21 +358,19 @@ export default {
       margin-left: -0.5em;
       transition: transform 0.2s ease;
     }
-    
   }
-  .expandableActive {
-    .icon{
+  .expandIconActive {
+    .icon {
       transform: rotate(90deg);
     }
-    
   }
   &.striped {
     tbody {
-      tr.oddTr{
-        background: #fff;
-      }
-      tr.evenTr{
+      tr.oddTr {
         background: #f9f9f9;
+      }
+      tr.evenTr {
+        background: #fff;
       }
 
       tr:hover {
@@ -367,10 +385,10 @@ export default {
       border: 1px #ebebeb solid;
     }
   }
-  .b-table-action{
-    text-align:center;
+  .actionTd {
+    text-align: center;
   }
-  .b-table-loading {
+  .tableLoading {
     position: absolute;
     top: 0;
     left: 0;
