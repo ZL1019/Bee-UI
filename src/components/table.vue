@@ -20,7 +20,7 @@
                 </span>
               </div>
             </th>
-            <th v-if="$scopedSlots.default" class="actionTh">操作</th>
+            <th v-if="$scopedSlots.action" class="actionTh">操作</th>
           </tr>
         </thead>
         <tbody>
@@ -42,8 +42,8 @@
                   </template>
                 </td>
               </template>
-              <td v-if="$scopedSlots.default" class="actionTd">
-                <slot :item="item"></slot>
+              <td v-if="$scopedSlots.action" class="actionTd">
+                <slot name="action" :item="item"></slot>
               </td>
             </tr>
             <tr v-show="isInExpandIds(item)" :key="'expand'+index">
