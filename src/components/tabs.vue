@@ -14,6 +14,11 @@ export default {
       type: [String, Number],
     },
   },
+  data() {
+    return {
+      eventBus: new Vue(),
+    };
+  },
   provide() {
     return {
       eventBus: this.eventBus,
@@ -21,16 +26,16 @@ export default {
   },
   watch: {
     value() {
-      //this.eventBus.$emit('updateSelected', currentTabName);
-      this.$children.forEach(tabsChild => {
-        if (tabsChild.$options.name === 'bear-tabs-head') {
-          tabsChild.$children.forEach(currentTab => {
-            if (currentTab.name === this.value) {
-              this.eventBus.$emit('updateSelected', this.value, currentTab);
-            }
-          });
-        }
-      });
+      this.checkChildren()
+      // this.$children.forEach(tabsChild => {
+      //   if (tabsChild.$options.name === 'bear-tabs-head') {
+      //     tabsChild.$children.forEach(currentTab => {
+      //       if (currentTab.name === this.value) {
+      //         this.eventBus.$emit('updateSelected', this.value, currentTab);
+      //       }
+      //     });
+      //   }
+      // });
     },
   },
   mounted() {
@@ -42,11 +47,6 @@ export default {
       this.$emit('input', tabName ? tabName : this.value);
     });
     this.checkChildren();
-  },
-  data() {
-    return {
-      eventBus: new Vue(),
-    };
   },
   methods: {
     checkChildren() {

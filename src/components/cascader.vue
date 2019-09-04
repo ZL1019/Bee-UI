@@ -7,9 +7,10 @@
           :options="options" 
           :selected="selected" 
           :load-data="loadData" 
-          :load-item="loadItem" 
+          :load-item="loadItem"
+          :popover-height="popoverHeight"
           @update:selected="updateSelected" 
-          :popover-height="popoverHeight">
+        >
         </cascader-items>
       </template>
       <div class="b-cascader-trigger">

@@ -1,24 +1,43 @@
 <template>
   <div class="b-cascader-items" :style="{height:popoverHeight+'px'}">
     <div class="b-cascader-items-left">
-      <div v-for="(item,index) in options" :key="index" @click="onClick(item)" class="b-cascader-label">
+      <div     
+        :key="index" 
+        @click="onClick(item)" 
+        class="b-cascader-label"
+        v-for="(item,index) in options"
+      >
         <span 
           class="b-cascader-label-text" 
           :class="{'label-active': labels.indexOf(item.label) > -1}"
-          >
+        >
           {{item.label}}
         </span>
-        <bear-icon v-if="loadData ? loadItem.id === item.id : null" name="loading" class="b-cascader-loading-icon" />
+        <bear-icon
+          name="loading"  
+          class="b-cascader-loading-icon"
+          v-if="loadData ? loadItem.id === item.id : null"
+         />
         <template v-else>
-          <bear-icon v-if="loadData ? !item.isLeaf : item.children" name="right" 
-          class="b-cascader-arrow-icon" 
-          :class="{'icon-active': labels.indexOf(item.label) > -1}"
+          <bear-icon
+            name="right" 
+            class="b-cascader-arrow-icon"
+            v-if="loadData ? !item.isLeaf : item.children"        
+            :class="{'icon-active': labels.indexOf(item.label) > -1}" 
           />
         </template>
       </div>
     </div>
     <div class="b-cascader-items-right" v-if="rightItem">
-      <bear-cascader-items @close="$emit('close')" :level="level+1" :options="rightItem" :selected="selected" :load-data="loadData" :load-item="loadItem" @update:selected="updateSelected">
+      <bear-cascader-items 
+        :level="level+1" 
+        :options="rightItem" 
+        :selected="selected" 
+        :load-data="loadData" 
+        :load-item="loadItem"
+        @close="$emit('close')" 
+        @update:selected="updateSelected"
+      >
       </bear-cascader-items>
     </div>
   </div>

@@ -451,7 +451,7 @@
       <b-button>STICKY</b-button>
     </b-sticky> -->
 
-      <b-backtop>
+      <b-backtop @click="abc">
         UP
       </b-backtop>
 
@@ -571,6 +571,9 @@ export default {
     })
   },
   methods: {
+    abc(){
+      console.log(222);
+    },
     edit(row){
       console.log('row: ', row);
 
